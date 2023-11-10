@@ -16,7 +16,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function(){
+Route::get('/beranda-siswa', function(){
     return Inertia::render('Student/Beranda', [
         'title' => 'Beranda Siswa',
         'description' => 'Daftar Mata Pelajaran'
