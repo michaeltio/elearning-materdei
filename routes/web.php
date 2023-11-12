@@ -35,4 +35,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/timeline', function () {
+    return Inertia::render('Student/Timeline');
+});
+
+Route::get('/timeline-guru', function () {
+    return Inertia::render('Guru/Timeline');
+});
+
+Route::get('/timeline-input-guru', function () {
+    return Inertia::render('Guru/TimelineInput');
+});
+
+Route::get('/history-presensi', function () {
+    return Inertia::render('Student/HistoryPresensi');
+});
+
+Route::get('/mapel', function () {
+    return Inertia::render('Student/Mapel');
+});
+
 require __DIR__.'/auth.php';
