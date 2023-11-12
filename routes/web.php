@@ -35,4 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/absensi', function () {
+    return Inertia::render('Guru/Absensi');
+});
+
+Route::get('/averifikasi', function () {
+    return Inertia::render('Guru/AVerifikasi');
+});
+
 require __DIR__.'/auth.php';
