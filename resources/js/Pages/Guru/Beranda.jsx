@@ -5,6 +5,9 @@ import IconPanah from '../../Icon/panah-kanan.png'
 import Footer from '../../Components/Footer'; 
 
 export default function Beranda(props) {
+    const handleButtonClick = () => {
+        console.log('Button clicked!');
+    };
     const cards = [
         {
             content: "Matematika - A",
@@ -39,9 +42,9 @@ export default function Beranda(props) {
             <p className='flex justify-center items-center mt-12 text-black text-2xl '>
                 <span className="border-b border-black">{props.description}</span>
             </p>
-            <div className="flex items-center justify-end mt-3">
-                <input type="text" placeholder="Search" className="mr-3 rounded-md" />
-                <img src={searchIcon} alt="Search Icon" className="w-5 h-5 mr-4" />
+            <div className="flex flex-col items-center justify-center mt-3 sm:flex-row sm:justify-end">
+                <input type="text" placeholder="Search" className="mb-2 sm:mb-0 sm:mr-3 rounded-md" />
+                <img src={searchIcon} alt="Search Icon" className="w-5 h-5 mb-2 sm:mb-0 sm:mr-4" />
             </div>
 
             <div className="flex flex-wrap mt-12">
@@ -55,9 +58,9 @@ export default function Beranda(props) {
                                 <p className="text-gray-600">{card.content}</p>
                             </div>
                         </div>
-                        <div className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${card.arrowColor} rounded-md border border-stone-200`}>
+                        <button className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${card.arrowColor} rounded-md border border-stone-200`} onClick={handleButtonClick}>
                             <img src={IconPanah} alt="Image" className="w-4 h-4 m-auto" />
-                        </div>
+                        </button>
                     </div>
                 ))}
             </div>

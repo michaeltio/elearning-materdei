@@ -16,14 +16,14 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/beranda-siswa', function(){
+Route::get('/siswa', function(){
     return Inertia::render('Student/Beranda', [
         'title' => 'Beranda Siswa',
         'description' => 'Daftar Mata Pelajaran'
     ]);
 });
 
-Route::get('/beranda-guru', function(){
+Route::get('/guru', function(){
     return Inertia::render('Guru/Beranda', [
         'title' => 'Beranda Guru',
         'description' => 'Daftar Mata Pelajaran'
