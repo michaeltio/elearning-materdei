@@ -56,10 +56,60 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect('Dummy');
         }
     });
+Route::get('/student', function(){
+    return Inertia::render('Student/Home', [
+        'title' => 'Beranda Siswa',
+        'description' => 'Daftar Mata Pelajaran'
+    ]);
+});
+
+Route::get('/teacher', function(){
+    return Inertia::render('Teacher/Home', [
+        'title' => 'Beranda Guru',
+        'description' => 'Daftar Mata Pelajaran'
+    ]);
+});
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/teacher/attendance', function () {
+    return Inertia::render('Teacher/Attendance');
+});
+
+Route::get('/averifikasi', function () {
+    return Inertia::render('Teacher/AVerifikasi');
+});
+
+Route::get('/student/timeline', function () {
+    return Inertia::render('Student/Timeline');
+});
+
+Route::get('/teacher/timeline', function () {
+    return Inertia::render('Teacher/Timeline');
+});
+
+Route::get('/teacher/subject/score', function () {
+    return Inertia::render('Teacher/TimelineInput');
+});
+
+Route::get('/history-presensi', function () {
+    return Inertia::render('Student/HistoryPresensi');
+});
+
+
+
+Route::get('/student/subject', function () {
+    return Inertia::render('Student/Subject');
+});
+Route::get('/teacher/subject', function () {
+    return Inertia::render('Student/Subject');
 });
 
 require __DIR__.'/auth.php';
