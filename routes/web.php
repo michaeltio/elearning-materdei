@@ -16,22 +16,8 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/siswa', function(){
-    return Inertia::render('Student/Beranda', [
-        'title' => 'Beranda Siswa',
-        'description' => 'Daftar Mata Pelajaran'
-    ]);
-});
-
-Route::get('/guru', function(){
-    return Inertia::render('Guru/Beranda', [
-        'title' => 'Beranda Guru',
-        'description' => 'Daftar Mata Pelajaran'
-    ]);
-});
-
-Route::get('/welcome', function () {
-    return Inertia::render('Welcome', [
+Route::get('/', function () {
+    return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -39,11 +25,38 @@ Route::get('/welcome', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+    Route::get('/admin', function () {
+        // Check if the authenticated user has the 'admin' role
+        if (auth()->user()->role === 'admin') {
+            return 'This is admin';
+        } else {
+            return redirect('Dummy');
+        }
+    });
+
+    Route::get('/student', function () {
+        // Check if the authenticated user has the 'student' role
+        if (auth()->user()->role === 'student') {
+            return 'This is student';
+        } else {
+            return redirect('Dummy');
+        }
+    });
+
+    Route::get('/teacher', function () {
+        // Check if the authenticated user has the 'teacher' role
+        if (auth()->user()->role === 'teacher') {
+            return 'This is teacher';
+        } else {
+            return redirect('Dummy');
+        }
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
