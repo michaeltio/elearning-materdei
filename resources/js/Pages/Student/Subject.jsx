@@ -1,6 +1,6 @@
 import imageMapel from "../../Icon/gambar-abstrak.png"
 
-export default function Mapel() {
+export default function Subject() {
     return (
         <div className="p-6">
             <p className="font-bold text-sm text-slate-400 cursor-pointer">Mapel / Matematika</p>

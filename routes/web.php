@@ -16,26 +16,27 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/siswa', function(){
-    return Inertia::render('Student/Beranda', [
-        'title' => 'Beranda Siswa',
-        'description' => 'Daftar Mata Pelajaran'
-    ]);
-});
 
-Route::get('/guru', function(){
-    return Inertia::render('Guru/Beranda', [
-        'title' => 'Beranda Guru',
-        'description' => 'Daftar Mata Pelajaran'
-    ]);
-});
-
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+Route::get('/student', function(){
+    return Inertia::render('Student/Home', [
+        'title' => 'Beranda Siswa',
+        'description' => 'Daftar Mata Pelajaran'
+    ]);
+});
+
+Route::get('/teacher', function(){
+    return Inertia::render('Teacher/Home', [
+        'title' => 'Beranda Guru',
+        'description' => 'Daftar Mata Pelajaran'
     ]);
 });
 
@@ -49,32 +50,37 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/absensi', function () {
-    return Inertia::render('Guru/Absensi');
+Route::get('/teacher/attendance', function () {
+    return Inertia::render('Teacher/Attendance');
 });
 
 Route::get('/averifikasi', function () {
-    return Inertia::render('Guru/AVerifikasi');
+    return Inertia::render('Teacher/AVerifikasi');
 });
 
-Route::get('/timeline', function () {
+Route::get('/student/timeline', function () {
     return Inertia::render('Student/Timeline');
 });
 
-Route::get('/timeline-guru', function () {
-    return Inertia::render('Guru/Timeline');
+Route::get('/teacher/timeline', function () {
+    return Inertia::render('Teacher/Timeline');
 });
 
-Route::get('/timeline-input-guru', function () {
-    return Inertia::render('Guru/TimelineInput');
+Route::get('/teacher/subject/score', function () {
+    return Inertia::render('Teacher/TimelineInput');
 });
 
 Route::get('/history-presensi', function () {
     return Inertia::render('Student/HistoryPresensi');
 });
 
-Route::get('/mapel', function () {
-    return Inertia::render('Student/Mapel');
+
+
+Route::get('/student/subject', function () {
+    return Inertia::render('Student/Subject');
+});
+Route::get('/teacher/subject', function () {
+    return Inertia::render('Student/Subject');
 });
 
 require __DIR__.'/auth.php';

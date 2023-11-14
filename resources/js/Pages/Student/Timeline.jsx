@@ -1,7 +1,7 @@
 import submission from "../../Icon/logo-submission.png"
 import jam from "../../Icon/jam.png"
 
-export default function TimelineSiswa() {
+export default function Timeline() {
     return (
         <div className="p-6">
             <div className="flex flex-col items-center">

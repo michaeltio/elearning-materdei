@@ -2,7 +2,7 @@ import Back from '../../Icon/back.png';
 import Next from '../../Icon/next.png';
 import imageMapel from '../../Icon/imagemapel.png';
 
-export default function Absensi() {
+export default function Attendance() {
     return(
         <div className='flex flex-col p-10'>
             <div className="flex justify-between items-center mb-10">
