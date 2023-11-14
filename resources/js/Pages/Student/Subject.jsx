@@ -11,7 +11,7 @@ export default function Subject() {
             </div>
 
             <div className="flex flex-col w-full text-white">
-                <div className="bg-slate-400 p-4 mb-6">
+                <div className="bg-slate-400 p-4 mb-6 rounded-xl">
                     <h1 className="font-bold text-xl mb-2">Minggu 1</h1>
                     <div className="flex flex-row items-center border-b w-full border-black">
                         <h2>Pertemuan 1</h2>
@@ -24,7 +24,7 @@ export default function Subject() {
                 </div>
 
                 <div className="bg-slate-400 p-4 mb-6">
-                    <h1 className="font-bold text-xl mb-2">Minggu 2</h1>
+                    <h1 className="font-bold text-xl mb-2 rounded-xl">Minggu 2</h1>
                     <div className="flex flex-row items-center border-b w-full border-black">
                         <h2>Pertemuan 2</h2>
                         <input type="checkbox" className="ml-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
