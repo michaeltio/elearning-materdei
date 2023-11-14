@@ -25,7 +25,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect('Dummy');
         }
     });
+    
 Route::get('/student', function(){
     return Inertia::render('Student/Home', [
         'title' => 'Beranda Siswa',
@@ -110,6 +111,32 @@ Route::get('/student/subject', function () {
 });
 Route::get('/teacher/subject', function () {
     return Inertia::render('Student/Subject');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/student', function () {
+        if (auth()->user()->role == 'student') {
+            return 'This is student';
+        } else {
+            return redirect()->route('dashboard');
+        }
+    })->name('student');
+
+    Route::get('/teacher', function () {
+        if (auth()->user()->role == 'teacher') {
+            return 'This is teacher';
+        } else {
+            return redirect()->route('dashboard');
+        }
+    })->name('teacher');
+
+    Route::get('/admin', function () {
+        if (auth()->user()->role == 'admin') {
+            return 'This is admin';
+        } else {
+            return redirect()->route('dashboard');
+        }
+    })->name('admin');
 });
 
 require __DIR__.'/auth.php';
