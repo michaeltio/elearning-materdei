@@ -17,7 +17,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -35,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if (auth()->user()->role === 'admin') {
             return 'This is admin';
         } else {
-            return redirect('/');
+            return redirect('Dummy');
         }
     });
 
@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if (auth()->user()->role === 'student') {
             return 'This is student';
         } else {
-            return redirect('/');
+            return redirect('Dummy');
         }
     });
 
@@ -53,7 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if (auth()->user()->role === 'teacher') {
             return 'This is teacher';
         } else {
-            return redirect('/');
+            return redirect('Dummy');
         }
     });
 
