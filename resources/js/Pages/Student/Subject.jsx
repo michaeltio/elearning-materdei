@@ -7,7 +7,7 @@ export default function Subject() {
 
             <div className="flex flex-row justify-between items-center mb-6">
                 <h1 className="font-bold text-xl">Matematika</h1>
-                <img src={imageMapel} className="w-22 bg-slate-300 py-2 px-6 rounded-lg hidden md:block"/>
+                <img src={imageMapel} className="w-24 bg-slate-300 py-2 px-6 rounded-lg hidden md:block"/>
             </div>
 
             <div className="flex flex-col w-full text-white">
@@ -17,14 +17,14 @@ export default function Subject() {
                         <h2>Pertemuan 1</h2>
                         <input type="checkbox" className="ml-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
                     </div>
-                    <div className="flex flex-row items-center mt-2">
+                    <div className="flex flex-row items-center mt-2 ">
                         <input type="checkbox" className="mr-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
                         <h2 className="text-sm">Bab 1 - Perpangkatan</h2>
                     </div>
                 </div>
 
-                <div className="bg-slate-400 p-4 mb-6">
-                    <h1 className="font-bold text-xl mb-2 rounded-xl">Minggu 2</h1>
+                <div className="bg-slate-400 p-4 mb-6 rounded-xl">
+                    <h1 className="font-bold text-xl mb-2 ">Minggu 2</h1>
                     <div className="flex flex-row items-center border-b w-full border-black">
                         <h2>Pertemuan 2</h2>
                         <input type="checkbox" className="ml-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
