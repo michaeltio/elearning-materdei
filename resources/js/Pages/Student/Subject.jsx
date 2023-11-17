@@ -1,46 +1,77 @@
-import imageMapel from "../../Icon/gambar-abstrak.png"
+import React from "react";
+import imageMapel from "../../Icon/gambar-abstrak.png";
+import SubjectCard from "../../Components/SubjectCard";
 
 export default function Subject() {
-    return (
-        <div className="p-6">
-            <p className="font-bold text-sm text-slate-400 cursor-pointer">Mapel / Matematika</p>
+  const cards = [
+    {
+      week: "Minggu 1",
+      desc: "Pertemuan 1",
+      content: "Bab 1 - Perpangkatan",
+    },
+    {
+      week: "Minggu 1",
+      desc: "Pertemuan 2",
+      content: "Bab 2 - Aljabar",
+    },
+    {
+      week: "Minggu 2",
+      desc: "Pertemuan 3",
+      content: "Bab 3 - Aljabar",
+    },
+    {
+      week: "Minggu 2",
+      desc: "Pertemuan 4",
+      content: "Bab 4 - Aljabar Linier",
+    },
+    {
+      week: "Minggu 3",
+      desc: "Pertemuan ",
+      content: "Bab 5 - Percobaan",
+    },
+  ];
 
-            <div className="flex flex-row justify-between items-center mb-6">
-                <h1 className="font-bold text-xl">Matematika</h1>
-                <img src={imageMapel} className="w-24 bg-slate-300 py-2 px-6 rounded-lg hidden md:block"/>
-            </div>
+  const additionalCards = [
+    {
+      content: "Matematika",
+      bgColor: "bg-red-300",
+    },
+    // {
+    //   content: "IPA",
+    //   bgColor: "bg-yellow-200",
+    // },
+    // {
+    //   content: "IPS",
+    //   bgColor: "bg-blue-300",
+    // },
+    // {
+    //   content: "Bahasa Indonesia",
+    //   bgColor: "bg-red-300",
+    // },
+    // {
+    //   content: "Bahasa Inggris",
+    //   bgColor: "bg-yellow-200",
+    // },
+  ];
 
-            <div className="flex flex-col w-full text-white">
-                <div className="bg-slate-400 p-4 mb-6 rounded-xl">
-                    <h1 className="font-bold text-xl mb-2">Minggu 1</h1>
-                    <div className="flex flex-row items-center border-b w-full border-black">
-                        <h2>Pertemuan 1</h2>
-                        <input type="checkbox" className="ml-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
-                    </div>
-                    <div className="flex flex-row items-center mt-2 ">
-                        <input type="checkbox" className="mr-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
-                        <h2 className="text-sm">Bab 1 - Perpangkatan</h2>
-                    </div>
-                </div>
+  return (
+    <div className="p-6">
+      {additionalCards.map((card, index) => (
+        <div key={index}>
+          <p className="font-bold text-sm text-slate-400 cursor-pointer">
+            Mapel / {card.content}
+          </p>
 
-                <div className="bg-slate-400 p-4 mb-6 rounded-xl">
-                    <h1 className="font-bold text-xl mb-2 ">Minggu 2</h1>
-                    <div className="flex flex-row items-center border-b w-full border-black">
-                        <h2>Pertemuan 2</h2>
-                        <input type="checkbox" className="ml-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
-                    </div>
-                    <div className="flex flex-col">
-                        <div className="flex flex-row items-center mt-2">
-                            <input type="checkbox" className="mr-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
-                            <h2 className="text-sm">Bab 2 - Perpangkatan</h2>
-                        </div>
-                        <div className="flex flex-row items-center mt-2">
-                            <input type="checkbox" className="mr-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
-                            <h2 className="text-sm">Latihan Buku Paket Hal. 30  </h2>
-                        </div>
-                    </div>    
-                </div>
-            </div>
+          <div className="flex flex-row justify-between items-center mb-6">
+            <h1 className="font-bold text-xl">{card.content}</h1>
+            <img src={imageMapel} className={`rounded-lg hidden md:block w-24 py-2 px-6 ${card.bgColor}`} alt="imageMapel" />
+          </div>
+
+          {cards.map((card, index) => (
+            <SubjectCard key={index} {...card} />
+          ))}
         </div>
-    );
+      ))}
+    </div>
+  );
 }
