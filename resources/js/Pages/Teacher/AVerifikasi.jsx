@@ -1,5 +1,4 @@
-import ListAttend from "../../Components/Averifikasi";
-import Averifikasi from "../../Components/Averifikasi"
+import ListAttend from "../../Components/Averifikasi"
 
 export default function AVerifikasi() {
     const handleButtonClick = () => {

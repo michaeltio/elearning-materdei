@@ -83,4 +83,16 @@ Route::get('/teacher/subject', function () {
     return Inertia::render('Student/Subject');
 });
 
+Route::get('/murid', function() {
+    return inertia::render('Admin/Murid');
+});
+
+Route::get('/guru', function() {
+    return inertia::render('Admin/Guru');
+});
+
+Route::get('/mapel', function() {
+    return inertia::render('Admin/MataPelajaran');
+});
+
 require __DIR__.'/auth.php';
