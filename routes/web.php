@@ -31,15 +31,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('/admin', function () {
-        if (auth()->user()->role === 'admin') {
-            return 'This is admin';
+        if (auth()->user()->role == 'admin') {
+            return Inertia::render('Dashboard');
         } else {
             return redirect()->route('dashboard');
         }
     })->name('admin');
 
     Route::get('/student', function () {
-        if (auth()->user()->role === 'student') {
+        if (auth()->user()->role == 'student') {
             return Inertia::render('Student/Home');
         } else {
             return redirect()->route('dashboard');
@@ -47,7 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('student');
 
     Route::get('/teacher', function () {
-        if (auth()->user()->role === 'teacher') {
+        if (auth()->user()->role == 'teacher') {
             return Inertia::render('Teacher/Home');
         } else {
             return redirect()->route('dashboard');
@@ -58,27 +58,34 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+    
 
-
-//buatan kelompok
 Route::get('/teacher/attendance', function () {
     return Inertia::render('Teacher/Attendance');
 });
+
 Route::get('/averifikasi', function () {
     return Inertia::render('Teacher/AVerifikasi');
 });
+
 Route::get('/student/timeline', function () {
     return Inertia::render('Student/Timeline');
 });
+
 Route::get('/teacher/timeline', function () {
     return Inertia::render('Teacher/Timeline');
 });
+
 Route::get('/teacher/subject/score', function () {
     return Inertia::render('Teacher/TimelineInput');
 });
+
 Route::get('/history-presensi', function () {
     return Inertia::render('Student/HistoryPresensi');
 });
+
+
+
 Route::get('/student/subject', function () {
     return Inertia::render('Student/Subject');
 });
