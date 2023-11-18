@@ -25,87 +25,60 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
     Route::get('/admin', function () {
-        // Check if the authenticated user has the 'admin' role
         if (auth()->user()->role === 'admin') {
             return 'This is admin';
         } else {
-            return redirect('Dummy');
+            return redirect()->route('dashboard');
         }
-    });
+    })->name('admin');
 
     Route::get('/student', function () {
-        // Check if the authenticated user has the 'student' role
         if (auth()->user()->role === 'student') {
-            return 'This is student';
+            return Inertia::render('Student/Home');
         } else {
-            return redirect('Dummy');
+            return redirect()->route('dashboard');
         }
-    });
+    })->name('student');
 
     Route::get('/teacher', function () {
-        // Check if the authenticated user has the 'teacher' role
         if (auth()->user()->role === 'teacher') {
-            return 'This is teacher';
+            return Inertia::render('Teacher/Home');
         } else {
-            return redirect('Dummy');
+            return redirect()->route('dashboard');
         }
-    });
-    
-Route::get('/student', function(){
-    return Inertia::render('Student/Home', [
-        'title' => 'Beranda Siswa',
-        'description' => 'Daftar Mata Pelajaran'
-    ]);
-});
-
-Route::get('/teacher', function(){
-    return Inertia::render('Teacher/Home', [
-        'title' => 'Beranda Guru',
-        'description' => 'Daftar Mata Pelajaran'
-    ]);
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    })->name('teacher');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+//buatan kelompok
 Route::get('/teacher/attendance', function () {
     return Inertia::render('Teacher/Attendance');
 });
-
 Route::get('/averifikasi', function () {
     return Inertia::render('Teacher/AVerifikasi');
 });
-
 Route::get('/student/timeline', function () {
     return Inertia::render('Student/Timeline');
 });
-
 Route::get('/teacher/timeline', function () {
     return Inertia::render('Teacher/Timeline');
 });
-
 Route::get('/teacher/subject/score', function () {
     return Inertia::render('Teacher/TimelineInput');
 });
-
 Route::get('/history-presensi', function () {
     return Inertia::render('Student/HistoryPresensi');
 });
-
-
-
 Route::get('/student/subject', function () {
     return Inertia::render('Student/Subject');
 });
@@ -113,30 +86,6 @@ Route::get('/teacher/subject', function () {
     return Inertia::render('Student/Subject');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/student', function () {
-        if (auth()->user()->role == 'student') {
-            return 'This is student';
-        } else {
-            return redirect()->route('dashboard');
-        }
-    })->name('student');
 
-    Route::get('/teacher', function () {
-        if (auth()->user()->role == 'teacher') {
-            return 'This is teacher';
-        } else {
-            return redirect()->route('dashboard');
-        }
-    })->name('teacher');
-
-    Route::get('/admin', function () {
-        if (auth()->user()->role == 'admin') {
-            return 'This is admin';
-        } else {
-            return redirect()->route('dashboard');
-        }
-    })->name('admin');
-});
 
 require __DIR__.'/auth.php';

@@ -24,7 +24,7 @@ export default function Authenticated({ user, header, children }) {
                                 <b>E-Learning SMPK Mater Dei</b>
                             </h1>
                         </div>
-                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex text-white">
                             <NavLink
                                 href={route("dashboard")}
                                 active={route().current("dashboard")}
@@ -32,7 +32,7 @@ export default function Authenticated({ user, header, children }) {
                                 Dashboard
                             </NavLink>
                         </div>
-                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex text-orange-700">
                             <NavLink
                                 href={route("student")}
                                 active={route().current("student")}
