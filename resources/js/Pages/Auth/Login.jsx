@@ -36,7 +36,10 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             )}
 
-            <form onSubmit={submit} className="w-1/3">
+            <form
+                onSubmit={submit}
+                className="w-10/12 md:w-1/2 lg:w-1/3 xl:w-1/4"
+            >
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
 
