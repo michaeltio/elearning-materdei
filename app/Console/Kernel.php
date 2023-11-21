@@ -14,8 +14,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         // $schedule->command('attendance:daily')->daily();
-        // $schedule->command('attendance:daily')->dailyAt('08:00')->timezone('America/Chicago');
-        $schedule->command('app:daily-attendance')->everyMinute();
+        $schedule->command('app:daily-attendance')
+        ->dailyAt('07:30')
+        ->timezone('Asia/Jakarta')
+        ->unless(function () {
+            return now()->isWeekend();
+        });
+        // $schedule->command('app:daily-attendance')->everyMinute();
     }
 
     /**
