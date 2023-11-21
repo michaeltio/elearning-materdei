@@ -7,6 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 
+import LogoMaterDei from "/public/Assets/Logo-MaterDei.png";
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
@@ -27,7 +28,7 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <GuestLayout className="flex w-screen h-screen items-center justify-center">
+        <GuestLayout className="flex flex-col w-screen h-screen items-center justify-center">
             <Head title="Log in" />
 
             {status && (
@@ -35,13 +36,24 @@ export default function Login({ status, canResetPassword }) {
                     {status}
                 </div>
             )}
+            {/* logo materdei */}
+            <div className="">
+                <img src={LogoMaterDei} alt="" className="w-32 mx-auto" />
+                <h1 className="text-white text-center text-2xl">
+                    SMPK Mater Dei Pamulang
+                </h1>
+            </div>
 
             <form
                 onSubmit={submit}
                 className="w-10/12 md:w-1/2 lg:w-1/3 xl:w-1/4"
             >
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel
+                        htmlFor="email"
+                        value="Email"
+                        className="text-white"
+                    />
 
                     <TextInput
                         id="email"
@@ -54,11 +66,18 @@ export default function Login({ status, canResetPassword }) {
                         onChange={(e) => setData("email", e.target.value)}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError
+                        message={errors.email}
+                        className="mt-2 text-white"
+                    />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel
+                        htmlFor="password"
+                        value="Password"
+                        className="text-white"
+                    />
 
                     <TextInput
                         id="password"
@@ -70,7 +89,10 @@ export default function Login({ status, canResetPassword }) {
                         onChange={(e) => setData("password", e.target.value)}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError
+                        message={errors.password}
+                        className="mt-2 text-white"
+                    />
                 </div>
 
                 <div className="block mt-4">
@@ -82,7 +104,7 @@ export default function Login({ status, canResetPassword }) {
                                 setData("remember", e.target.checked)
                             }
                         />
-                        <span className="ml-2 text-sm text-gray-600">
+                        <span className="ml-2 text-sm text-white">
                             Remember me
                         </span>
                     </label>
@@ -92,7 +114,7 @@ export default function Login({ status, canResetPassword }) {
                     {canResetPassword && (
                         <Link
                             href={route("password.request")}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="underline text-sm text-white hover:text-slate-400 rounded-md focus:outline-none"
                         >
                             Forgot your password?
                         </Link>
