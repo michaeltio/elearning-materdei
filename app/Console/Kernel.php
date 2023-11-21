@@ -13,6 +13,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->command('attendance:daily')->daily();
+        // $schedule->command('attendance:daily')->dailyAt('08:00')->timezone('America/Chicago');
+        $schedule->command('app:daily-attendance')->everyMinute();
     }
 
     /**
