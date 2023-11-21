@@ -33,6 +33,9 @@ Route::get('/shome', function () {
     return Inertia::render('Student/SHome');
 })->middleware(['auth', 'verified'])->name('shome');
 
+Route::get('/attendancehistory', function () {
+    return Inertia::render('Student/HistoryAttendance');
+})->middleware(['auth', 'verified'])->name('attendancehistory');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
