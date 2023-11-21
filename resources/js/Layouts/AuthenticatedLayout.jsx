@@ -11,7 +11,7 @@ export default function Authenticated({ user, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+            {/* <nav className="bg-white border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -158,12 +158,40 @@ export default function Authenticated({ user, children }) {
                         </div>
                     </div>
                 </div>
-            </nav>
+            </nav> */}
 
             <nav className="h-24 flex items-center justify-between bg-primaryBlue text-white">
                 <div className="px-8">
                     <h1>E-Learning SMPK Mater Dei</h1>
                 </div>
+
+                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                    <NavLink
+                        href={route("dashboard")}
+                        active={route().current("dashboard")}
+                    >
+                        Home
+                    </NavLink>
+                </div>
+
+                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                    <NavLink
+                        href={route("dashboard")}
+                        active={route().current("dashboard")}
+                    >
+                        Attendance
+                    </NavLink>
+                </div>
+
+                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                    <NavLink
+                        href={route("dashboard")}
+                        active={route().current("dashboard")}
+                    >
+                        Schedule
+                    </NavLink>
+                </div>
+
                 <div className="hidden px-8 sm:flex sm:items-center sm:ml-6">
                     <div className="ml-3 relative">
                         <Dropdown>
@@ -207,7 +235,7 @@ export default function Authenticated({ user, children }) {
                     </div>
                 </div>
 
-                <div className="-mr-2 flex items-center sm:hidden">
+                <div className="flex px-8 items-center sm:hidden">
                     <button
                         onClick={() =>
                             setShowingNavigationDropdown(
@@ -250,6 +278,51 @@ export default function Authenticated({ user, children }) {
             </nav>
 
             <main>{children}</main>
+
+            <footer className="fixed bottom-0 text-white">
+                <div className="flex bg-primaryBlue justify-between p-8">
+                    <div className="flex items-center">
+                        <img
+                            src="#"
+                            alt="Logo Sekolah"
+                            className="w-20 mr-1 "
+                        />
+                        <div>
+                            <b>SMPK Mater Dei</b>
+                            <p>Unggul</p>
+                            <p>Kasih</p>
+                            <p>Bermartabat</p>
+                        </div>
+                    </div>
+                    <div className="w-1/6">
+                        <h1 className="text-xl font-bold">Alamat</h1>
+                        <p className="text-xs">
+                            Jl. Pamulang Permai, Pamulang Bar., Pamulang, Kota
+                            Tangerang Selatan, Banten 15417, Indonesia.
+                        </p>
+                    </div>
+                    <div>
+                        <h1 className="font-extrabold text-xl font-bold">
+                            Kontak
+                        </h1>
+                        <p className="text-xs">(Phone) 021-7407148</p>
+                    </div>
+                    <div className="w-1/6">
+                        <p className="text-xs">
+                            Sebagai lembaga pendidikan yang telah terbukti
+                            memberikan layanan sesuai dengan kebutuhan pasar dan
+                            menghasilkan generasi muda yang berprestasi, Sekolah
+                            Mater Dei - Pamulang terus menerus meningkatkan mutu
+                            layanannya. Di era globalisasi, tetap memberikan
+                            pendidikan karakter untuk keberhasilan peserta didik
+                            di masa datang.
+                        </p>
+                    </div>
+                </div>
+                <div className="bg-[#0f75ce] pt-1 pb-1">
+                    <p className="text-center">&copy; Copyright 2023</p>
+                </div>
+            </footer>
         </div>
     );
 }
