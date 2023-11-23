@@ -1,11 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
+import SubjectCard from "@/Components/SubjectCard/SubjectCard";
+
+//icon
+import SearchIcon from "/public/Assets/search-icon.svg";
 
 export default function SHome({ auth, ...props }) {
-    const handleButtonClick = () => {
-        console.log("Button clicked!");
-    };
-
     const cards = [
         {
             content: "Mtk",
@@ -32,9 +32,6 @@ export default function SHome({ auth, ...props }) {
             bgColor: "bg-yellow-200",
             arrowColor: "bg-yellow-200",
         },
-    ];
-
-    const additionalCards = [
         {
             content: "Biologi",
             bgColor: "bg-blue-300",
@@ -77,7 +74,7 @@ export default function SHome({ auth, ...props }) {
                     className="mb-2 sm:mb-0 sm:mr-3 rounded-md"
                 />
                 <img
-                    src="#"
+                    src={SearchIcon}
                     alt="Search Icon"
                     className="w-5 h-5 mb-2 sm:mb-0 sm:mr-4"
                 />
@@ -85,65 +82,12 @@ export default function SHome({ auth, ...props }) {
 
             <div className="flex flex-wrap mt-12">
                 {cards.map((card, index) => (
-                    <div
+                    <SubjectCard
                         key={index}
-                        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2 relative"
-                    >
-                        <div className="p-4 rounded-md shadow-md bg-stone-100">
-                            <div
-                                className={`p-4 rounded-md shadow-md ${card.bgColor}`}
-                            >
-                                <img
-                                    src="#"
-                                    alt="Image"
-                                    className="w-16 h-16 m-auto"
-                                />
-                            </div>
-                            <div className="p-2 text-center">
-                                <p className="text-gray-600">{card.content}</p>
-                            </div>
-                        </div>
-                        <button
-                            className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${card.arrowColor} rounded-md border border-stone-200`}
-                            onClick={handleButtonClick}
-                        >
-                            <h1 className="w-4 h-4 m-auto">&gt;</h1>
-                        </button>
-                    </div>
-                ))}
-            </div>
-
-            <div className="flex flex-wrap mt-12">
-                {additionalCards.map((card, index) => (
-                    <div
-                        key={index}
-                        className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2 relative"
-                    >
-                        <div className="p-4 rounded-md shadow-md bg-stone-100">
-                            <div
-                                className={`p-4 rounded-md shadow-md ${card.bgColor}`}
-                            >
-                                <img
-                                    src="#"
-                                    alt="Image"
-                                    className="w-16 h-16 m-auto"
-                                />
-                            </div>
-                            <div className="p-2 text-center">
-                                <p className="text-gray-600">{card.content}</p>
-                            </div>
-                        </div>
-                        <button
-                            className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${card.arrowColor} rounded-md border border-stone-200`}
-                            onClick={handleButtonClick}
-                        >
-                            <img
-                                src="#"
-                                alt="Image"
-                                className="w-4 h-4 m-auto"
-                            />
-                        </button>
-                    </div>
+                        bgColor={card.bgColor}
+                        content={card.content}
+                        arrowColor={card.arrowColor}
+                    />
                 ))}
             </div>
         </AuthenticatedLayout>
