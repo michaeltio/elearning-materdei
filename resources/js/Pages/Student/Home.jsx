@@ -5,7 +5,7 @@ import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 //icon
 import SearchIcon from "/public/Assets/search-icon.svg";
 
-export default function SHome({ auth, ...props }) {
+export default function SHome({ auth }) {
     const cards = [
         {
             content: "Mtk",
@@ -61,11 +61,9 @@ export default function SHome({ auth, ...props }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title={props.title} />
+            <Head title="Home" />
             <p className="flex justify-center items-center mt-12 text-black text-2xl ">
-                <span className="border-b border-black">
-                    {props.description}
-                </span>
+                <span className="border-b border-black">Subject Overview</span>
             </p>
             <div className="flex flex-col items-center justify-center mt-3 sm:flex-row sm:justify-end">
                 <input

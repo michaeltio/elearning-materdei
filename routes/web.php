@@ -29,13 +29,13 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/shome', function () {
-    return Inertia::render('Student/SHome');
-})->middleware(['auth', 'verified'])->name('shome');
+Route::get('/student', function () {
+    return Inertia::render('Student/Home');
+})->middleware(['auth', 'verified'])->name('studentHome');
 
-Route::get('/attendancehistory', function () {
-    return Inertia::render('Student/HistoryAttendance');
-})->middleware(['auth', 'verified'])->name('attendancehistory');
+Route::get('/student/attendance', function () {
+    return Inertia::render('Student/Attendance');
+})->middleware(['auth', 'verified'])->name('studentAttendance');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

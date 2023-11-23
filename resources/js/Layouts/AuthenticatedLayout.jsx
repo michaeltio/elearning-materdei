@@ -176,8 +176,8 @@ export default function Authenticated({ user, children }) {
 
                     <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                         <NavLink
-                            href={route("shome")}
-                            active={route().current("shome")}
+                            href={route("studentHome")}
+                            active={route().current("studentHome")}
                         >
                             Home
                         </NavLink>
@@ -185,8 +185,8 @@ export default function Authenticated({ user, children }) {
 
                     <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                         <NavLink
-                            href={route("attendancehistory")}
-                            active={route().current("attendancehistory")}
+                            href={route("studentAttendance")}
+                            active={route().current("studentAttendance")}
                         >
                             Attendance
                         </NavLink>
@@ -290,7 +290,7 @@ export default function Authenticated({ user, children }) {
 
                 {/* footer for desktop */}
 
-                <footer className="hidden md:block text-white mt-auto">
+                <footer className="hidden lg:block text-white mt-auto">
                     <div className="flex bg-primaryBlue justify-between p-8">
                         <div className="flex items-center">
                             <img
@@ -331,13 +331,13 @@ export default function Authenticated({ user, children }) {
                             </p>
                         </div>
                     </div>
-                    <div className="bg-[#0f75ce] pt-1 pb-1">
+                    <div className="bg-secondaryBlue pt-1 pb-1">
                         <p className="text-center">&copy; Copyright 2023</p>
                     </div>
                 </footer>
             </div>
             {/* footer for mobile */}
-            <footer className="block md:hidden text-white">
+            <footer className="block lg:hidden text-white">
                 <div className="flex flex-col bg-primaryBlue justify-between p-8">
                     <div className="flex justify-center gap-8">
                         <div className="flex flex-col items-between justify-between w-2/5 text-center">
