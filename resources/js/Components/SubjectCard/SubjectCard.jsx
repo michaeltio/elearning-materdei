@@ -1,8 +1,9 @@
+import { Link } from "@inertiajs/react";
 import Abstract from "/public/Assets/abstract.png";
 import Arrow from "/public/Assets/right-arrow.svg";
 export default function SubjectCard({ index, bgColor, content, arrowColor }) {
     const handleButtonClick = () => {
-        console.log("Button clicked!");
+        <Link href={route("studentSubject")} />;
     };
     return (
         <div
@@ -21,12 +22,14 @@ export default function SubjectCard({ index, bgColor, content, arrowColor }) {
                     <p className="text-gray-600">{content}</p>
                 </div>
             </div>
-            <button
+
+            <Link
                 className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
-                onClick={handleButtonClick}
+                href={route("studentSubject")}
             >
+                {" "}
                 <img className="w-4" src={Arrow} alt="" />
-            </button>
+            </Link>
         </div>
     );
 }
