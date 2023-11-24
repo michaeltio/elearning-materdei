@@ -78,7 +78,7 @@ export default function SHome({ auth }) {
                 />
             </div>
 
-            <div className="flex flex-wrap mt-12">
+            <div className="flex flex-wrap my-12">
                 {cards.map((card, index) => (
                     <SubjectCard
                         key={index}

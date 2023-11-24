@@ -13,21 +13,20 @@ export default function Attendance({ auth }) {
     };
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="attendance" />
+            <Head title="attendance"/>
             {/* page */}
-            <div>
-                <div className="text-center bg-primaryBlue rounded-xl w-64 md:w-96 mx-auto text-white mt-8 md:mt-28 p-4">
+            <div className="z-0 h-full flex flex-col items-center justify-center sm:-mt-20 mt-8">
+                <div className="text-center bg-primaryBlue rounded-xl w-64 md:w-96 mx-auto mb-6 text-white sm:mt-28 p-4">
                     <h1>30 January 1993</h1>
                     <h1>Evan Afton</h1>
                     <h1>Status : Attended</h1>
                     <div
-                        className={`w-full h-4 rounded-xl ${
-                            isAttend ? "bg-green-500" : "bg-red-600"
-                        }`}
+                        className={`w-full h-4 rounded-xl ${isAttend ? "bg-green-500" : "bg-red-600"
+                            }`}
                     ></div>
                 </div>
                 <button
-                    className="w-64 h-64 rounded-full bg-primaryBlue transform translate-x-[-50%] translate-y-[-50%] absolute top-1/2 left-1/2 hover:bg-secondaryBlue "
+                    className="w-64 h-64 mb-6 rounded-full bg-primaryBlue justify-center hover:bg-secondaryBlue "
                     onClick={handleAttend}
                 >
                     <img
@@ -40,6 +39,7 @@ export default function Attendance({ auth }) {
                     </h1>
                 </button>
             </div>
+
         </AuthenticatedLayout>
     );
 }

@@ -7,7 +7,7 @@ import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-export default function Schedule() {
+export default function Schedule({ auth }) {
     const calendarRef = useRef(null);
     const [showInfo, setShowInfo] = useState(false);
     const [eventCounter, setEventCounter] = useState(1); // Counter for event IDs
@@ -193,150 +193,152 @@ export default function Schedule() {
         setEventEnd(null);
         setShowInfo(false);
     };
-    
-    <AuthenticatedLayout>
-        <div className='container-toast-ui'>
-            <div className='mb-5'>
-                <button onClick={handlePrevButtonClick} className='mr-5'>
-                    Previous
-                </button>
-                <button onClick={handleNextButtonClick} className='mr-5'>
-                    Next
-                </button>
-                <button onClick={handleTodayButtonClick} className='mr-5'>
-                    Today
-                </button>
-                <button onClick={handleViewButtonClick} className='mr-5'>
-                    Change View
-                </button>
-                <button
-                    onClick={() =>
-                        handleButton()
-                    }
-                >
-                    Add
-                </button>
-            </div>
-            {showInfo && (
-                <div className="fixed inset-0 flex items-center justify-center z-50">
-                    <div className="fixed inset-0 bg-black opacity-60"></div>{" "}
-                    <div className="relative p-4">
-                        <div className="relative bg-white rounded-lg shadow">
-                            <button
-                                type="button"
-                                className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-red-500 hover:text-gray-50 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
-                                onClick={() => setShowInfo(false)}
-                            >
-                                <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                            </button>
-                            <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0">
-                                <div className="w-full py-4 md:pr-12 md:max-w-md sm:max-w-sm">
-                                    <div className="p-4 space-y-4 md:space-y-6 sm:p-8">
-                                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                                            Add a new Event
-                                        </h1>
-                                        <form className="space-y-4 md:space-y-6" onSubmit={handleFormSubmit}>
-                                            <div className="grid grid-cols-2 gap-x-4">
+
+    return (
+        <AuthenticatedLayout user={auth.user}>
+            <div className='mt-5 container-toast-ui'>
+                <div className='mb-5'>
+                    <button onClick={handlePrevButtonClick} className='mr-5'>
+                        Previous
+                    </button>
+                    <button onClick={handleNextButtonClick} className='mr-5'>
+                        Next
+                    </button>
+                    <button onClick={handleTodayButtonClick} className='mr-5'>
+                        Today
+                    </button>
+                    <button onClick={handleViewButtonClick} className='mr-5'>
+                        Change View
+                    </button>
+                    <button
+                        onClick={() =>
+                            handleButton()
+                        }
+                    >
+                        Add
+                    </button>
+                </div>
+                {showInfo && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50">
+                        <div className="fixed inset-0 bg-black opacity-60"></div>{" "}
+                        <div className="relative p-4">
+                            <div className="relative bg-white rounded-lg shadow">
+                                <button
+                                    type="button"
+                                    className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-red-500 hover:text-gray-50 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
+                                    onClick={() => setShowInfo(false)}
+                                >
+                                    <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                </button>
+                                <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0">
+                                    <div className="w-full py-4 md:pr-12 md:max-w-md sm:max-w-sm">
+                                        <div className="p-4 space-y-4 md:space-y-6 sm:p-8">
+                                            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                                                Add a new Event
+                                            </h1>
+                                            <form className="space-y-4 md:space-y-6" onSubmit={handleFormSubmit}>
+                                                <div className="grid grid-cols-2 gap-x-4">
+                                                    <div>
+                                                        <label htmlFor="event_name" className="block mb-2 text-sm font-medium text-gray-900">
+                                                            Event Name
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            name="event_name"
+                                                            id="event_name"
+                                                            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                                                            placeholder="Event Name"
+                                                            required=""
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label htmlFor="event_location" className="block mb-2 text-sm font-medium text-gray-900">
+                                                            Location
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            name="event_location"
+                                                            id="event_location"
+                                                            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                                                            placeholder="Location"
+                                                        />
+                                                    </div>
+                                                </div>
+
                                                 <div>
-                                                    <label htmlFor="event_name" className="block mb-2 text-sm font-medium text-gray-900">
-                                                        Event Name
+                                                    <label htmlFor="event_attendees" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        Attendees (comma-separated)
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        name="event_name"
-                                                        id="event_name"
+                                                        name="event_attendees"
+                                                        id="event_attendees"
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder="Event Name"
-                                                        required=""
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label htmlFor="event_location" className="block mb-2 text-sm font-medium text-gray-900">
-                                                        Location
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        name="event_location"
-                                                        id="event_location"
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder="Location"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <label htmlFor="event_attendees" className="block mb-2 text-sm font-medium text-gray-900">
-                                                    Attendees (comma-separated)
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    name="event_attendees"
-                                                    id="event_attendees"
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                    placeholder="Attendees"
-                                                />
-                                            </div>
-
-                                            <div className="grid grid-cols-2 gap-x-4">
-                                                <div>
-                                                    <label htmlFor="event_start" className="block mb-2 text-sm font-medium text-gray-900">
-                                                        Start Time
-                                                    </label>
-                                                    <input
-                                                        type="date"
-                                                        name="event_start_date"
-                                                        id="event_start_date"
-                                                        className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder="Day, Month, Year"
-                                                    />
-                                                    <input
-                                                        type="time"
-                                                        name="event_start_time"
-                                                        id="event_start_time"
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder="Time"
+                                                        placeholder="Attendees"
                                                     />
                                                 </div>
 
-                                                <div>
-                                                    <label htmlFor="event_end" className="block mb-2 text-sm font-medium text-gray-900">
-                                                        End Time
-                                                    </label>
-                                                    <input
-                                                        type="date"
-                                                        name="event_end_date"
-                                                        id="event_end_date"
-                                                        className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder="Day, Month, Year"
-                                                    />
-                                                    <input
-                                                        type="time"
-                                                        name="event_end_time"
-                                                        id="event_end_time"
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder="Time"
-                                                    />
-                                                </div>
-                                            </div>
+                                                <div className="grid grid-cols-2 gap-x-4">
+                                                    <div>
+                                                        <label htmlFor="event_start" className="block mb-2 text-sm font-medium text-gray-900">
+                                                            Start Time
+                                                        </label>
+                                                        <input
+                                                            type="date"
+                                                            name="event_start_date"
+                                                            id="event_start_date"
+                                                            className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                                                            placeholder="Day, Month, Year"
+                                                        />
+                                                        <input
+                                                            type="time"
+                                                            name="event_start_time"
+                                                            id="event_start_time"
+                                                            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                                                            placeholder="Time"
+                                                        />
+                                                    </div>
 
-                                            <button
-                                                type="submit"
-                                                className="w-full bg-primary-600 hover:bg-primary-700 ring-1 focus:outline-none ring-slate-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                            >
-                                                Add New Event
-                                            </button>
-                                        </form>
+                                                    <div>
+                                                        <label htmlFor="event_end" className="block mb-2 text-sm font-medium text-gray-900">
+                                                            End Time
+                                                        </label>
+                                                        <input
+                                                            type="date"
+                                                            name="event_end_date"
+                                                            id="event_end_date"
+                                                            className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                                                            placeholder="Day, Month, Year"
+                                                        />
+                                                        <input
+                                                            type="time"
+                                                            name="event_end_time"
+                                                            id="event_end_time"
+                                                            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                                                            placeholder="Time"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <button
+                                                    type="submit"
+                                                    className="w-full bg-primary-600 hover:bg-primary-700 ring-1 focus:outline-none ring-slate-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                                >
+                                                    Add New Event
+                                                </button>
+                                            </form>
+                                        </div>
+
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
-            <Calendar ref={calendarRef} />
-        </div>
-    </AuthenticatedLayout>
+                )}
+                <Calendar ref={calendarRef} />
+            </div>
+        </AuthenticatedLayout>
+    )
 }

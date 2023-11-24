@@ -194,8 +194,8 @@ export default function Authenticated({ user, children }) {
 
                     <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                         <NavLink
-                            href={route("dashboard")}
-                            active={route().current("dashboard")}
+                            href={route("studentSchedule")}
+                            active={route().current("studentSchedule")}
                         >
                             Schedule
                         </NavLink>
