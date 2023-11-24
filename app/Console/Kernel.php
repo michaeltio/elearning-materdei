@@ -13,6 +13,14 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->command('attendance:daily')->daily();
+        $schedule->command('app:daily-attendance')
+        ->dailyAt('07:30')
+        ->timezone('Asia/Jakarta')
+        ->unless(function () {
+            return now()->isWeekend();
+        });
+        // $schedule->command('app:daily-attendance')->everyMinute();
     }
 
     /**
