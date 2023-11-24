@@ -14,6 +14,7 @@ class UserTest extends Seeder
     public function run(): void
     {
         User::create([
+            'id' => '0000000001',
             'email' => 'admin@sch.id',
             'password' => Hash::make('password'),
             'role' => 'admin',
@@ -21,6 +22,7 @@ class UserTest extends Seeder
 
         for($i = 1; $i <= 2; $i++){
             User::create([
+                'id' => "100000000$i",
                 'email' => "$i@student.sch.id",
                 'password' => Hash::make("password"),
                 'role' => 'student'
@@ -29,6 +31,7 @@ class UserTest extends Seeder
 
         for($i = 1; $i <= 2; $i++){
             User::create([
+                'id' => "200000000$i",
                 'email' => "$i@teacher.sch.id",
                 'password' => Hash::make("password"),
                 'role' => 'teacher',

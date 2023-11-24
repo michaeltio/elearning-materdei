@@ -18,7 +18,7 @@ export default function Attendance({ auth }) {
             <div>
                 <div className="text-center bg-primaryBlue rounded-xl w-64 md:w-96 mx-auto text-white mt-8 md:mt-28 p-4">
                     <h1>30 January 1993</h1>
-                    <h1>Evan Afton</h1>
+                    <h1>{auth.user.user_details.full_name}</h1>
                     <h1>Status : Attended</h1>
                     <div
                         className={`w-full h-4 rounded-xl ${
