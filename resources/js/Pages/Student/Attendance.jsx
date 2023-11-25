@@ -25,9 +25,12 @@ export default function Attendance({ auth }) {
     }, []);
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <AuthenticatedLayout
+            user={auth.user}
+            className="flex justify-center items-center"
+        >
             <Head title="attendance" />
-            <div className="flex flex-col">
+            <div className="my-8 flex flex-col">
                 <div className="text-center bg-primaryBlue rounded-xl w-64 text-white p-4">
                     <h1>{date}</h1>
                     <h1>{auth.user.user_details.full_name}</h1>

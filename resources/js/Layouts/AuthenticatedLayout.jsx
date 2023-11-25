@@ -9,7 +9,7 @@ import { Link } from "@inertiajs/react";
 import LogoMaterDei from "/public/Assets/Logo-MaterDei.png";
 import LineFooter from "/public/Assets/line-footer.png";
 
-export default function Authenticated({ user, children }) {
+export default function Authenticated({ user, children, className }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -198,9 +198,7 @@ export default function Authenticated({ user, children }) {
                     </div>
                 </nav>
 
-                <main className="flex-grow flex justify-center items-center">
-                    {children}
-                </main>
+                <main className={"flex-grow " + className}>{children}</main>
 
                 {/* footer for mobile */}
                 <footer className="mt-auto block md:hidden text-white">
