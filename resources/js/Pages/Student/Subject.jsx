@@ -7,7 +7,7 @@ export default function Subject({ auth }) {
         subject: "Math",
         meeting: [
             {
-                title: "Jumat",
+                title: "Jumat, 30 Oktober 2023",
                 content: [
                     { title: "materi pertemuan 1" },
                     { title: "materi pertemuan 2" },
