@@ -1,3 +1,11 @@
 .container-toast-ui .container {
-    height: 600px !important;
+    height: 500px !important;
+}
+
+.toastui-calendar-time {
+    height: 400px !important;
+}
+
+.toastui-calendar-layout {
+    padding: 2vw;
 }
