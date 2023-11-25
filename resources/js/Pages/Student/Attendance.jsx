@@ -43,7 +43,10 @@ export default function Attendance({ auth }) {
                         }`}
                     ></div>
                 </div>
-                <button className="mt-8 flex flex-col rounded-full justify-center items-center bg-primaryBlue w-64 h-64">
+                <button
+                    className="mt-8 flex flex-col rounded-full justify-center items-center bg-primaryBlue w-64 h-64"
+                    onClick={handleAttend}
+                >
                     <img
                         className="flex w-32 brightness-0 invert"
                         src={isAttend ? CheckIcon : AttendanceIcon}
