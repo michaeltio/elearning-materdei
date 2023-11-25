@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Head } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
@@ -7,19 +7,36 @@ import AttendanceIcon from "/public/Assets/attendance-icon.svg";
 import CheckIcon from "/public/Assets/check-icon.svg";
 export default function Attendance({ auth }) {
     const [isAttend, setIsAttend] = useState(false);
+    const [date, setDate] = useState("");
 
     const handleAttend = () => {
         setIsAttend(true);
     };
+
+    useEffect(() => {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString("id-ID", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+        setDate(formattedDate);
+    }, []);
+
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <AuthenticatedLayout
+            user={auth.user}
+            className="flex justify-center items-center"
+        >
             <Head title="attendance" />
-            {/* page */}
-            <div>
-                <div className="text-center bg-primaryBlue rounded-xl w-64 md:w-96 mx-auto text-white mt-8 md:mt-28 p-4">
-                    <h1>30 January 1993</h1>
+            <div className="my-8 flex flex-col">
+                <div className="text-center bg-primaryBlue rounded-xl w-64 text-white p-4">
+                    <h1>{date}</h1>
                     <h1>{auth.user.user_details.full_name}</h1>
-                    <h1>Status : Attended</h1>
+                    <h1>
+                        Status : {isAttend == true ? "Attended" : "Absence"}
+                    </h1>
                     <div
                         className={`w-full h-4 rounded-xl ${
                             isAttend ? "bg-green-500" : "bg-red-600"
@@ -27,11 +44,11 @@ export default function Attendance({ auth }) {
                     ></div>
                 </div>
                 <button
-                    className="w-64 h-64 rounded-full bg-primaryBlue transform translate-x-[-50%] translate-y-[-50%] absolute top-1/2 left-1/2 hover:bg-secondaryBlue "
+                    className="mt-8 flex flex-col rounded-full justify-center items-center bg-primaryBlue w-64 h-64"
                     onClick={handleAttend}
                 >
                     <img
-                        className="w-32 mx-auto brightness-0 invert"
+                        className="flex w-32 brightness-0 invert"
                         src={isAttend ? CheckIcon : AttendanceIcon}
                         alt=""
                     />
