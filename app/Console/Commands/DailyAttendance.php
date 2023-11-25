@@ -8,26 +8,12 @@ use Illuminate\Console\Command;
 
 class DailyAttendance extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'app:daily-attendance';
+    protected $signature = 'attendance:daily';
+    protected $description = 'Update daily attendance';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
-
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
-        $users = User::all();
+        $users = User::where('role', 'student')->get();
 
         foreach ($users as $user) {
             Attendance::create([

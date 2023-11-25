@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Head } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import axios from "axios";
 
 //icon
 import AttendanceIcon from "/public/Assets/attendance-icon.svg";
 import CheckIcon from "/public/Assets/check-icon.svg";
+
 export default function Attendance({ auth }) {
     const [isAttend, setIsAttend] = useState(false);
     const [date, setDate] = useState("");
@@ -14,6 +16,7 @@ export default function Attendance({ auth }) {
     };
 
     useEffect(() => {
+        //create date today
         const currentDate = new Date();
         const formattedDate = currentDate.toLocaleDateString("id-ID", {
             weekday: "long",
@@ -21,6 +24,41 @@ export default function Attendance({ auth }) {
             month: "long",
             year: "numeric",
         });
+
+        //fetch student attendance from database
+        const fetchSpecificAttendance = async () => {
+            const studentId = auth.user.id;
+            const date = currentDate.toISOString("id-ID").substring(0, 10);
+
+            console.log(`student id ${studentId}`);
+            console.log(`date ${date}`);
+            try {
+                const response = await axios.get(
+                    "/api/showAttendance",
+                    {
+                        params: {
+                            student_id: studentId,
+                            date: date,
+                        },
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+
+                if (response.status === 200) {
+                    console.log("success");
+                    setIsAttend(response.data.student.is_present);
+                } else {
+                    console.error("failed");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchSpecificAttendance();
         setDate(formattedDate);
     }, []);
 
@@ -29,7 +67,7 @@ export default function Attendance({ auth }) {
             user={auth.user}
             className="flex justify-center items-center"
         >
-            <Head title="attendance" />
+            <Head title="Attendance" />
             <div className="my-8 flex flex-col">
                 <div className="text-center bg-primaryBlue rounded-xl w-64 text-white p-4">
                     <h1>{date}</h1>
