@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('user_details', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('full_name');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->date('birthdate');
             $table->string('role');
+            $table->string('class');
             $table->timestamps();
         });
     }
