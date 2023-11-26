@@ -11,27 +11,53 @@ export default function Attendance({ auth }) {
     const [isAttend, setIsAttend] = useState(false);
     const [date, setDate] = useState("");
 
-    const handleAttend = () => {
-        setIsAttend(true);
+    //buat data date sekarang
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString("id-ID", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+
+    //button untuk absen
+    const handleAttend = async () => {
+        const studentId = auth.user.id;
+        const date = currentDate.toISOString("id-ID").substring(0, 10);
+
+        try {
+            const response = await axios.post(
+                "/api/updateAttendance",
+                {
+                    student_id: studentId,
+                    date: date,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (response.status === 200) {
+                // console.log("success");
+                // console.log(response.data.is_present);
+                // console.log(studentId);
+                setIsAttend(response.data.is_present);
+            } else {
+                console.error("failed");
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     useEffect(() => {
-        //create date today
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleDateString("id-ID", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        });
-
         //fetch student attendance from database
         const fetchSpecificAttendance = async () => {
             const studentId = auth.user.id;
             const date = currentDate.toISOString("id-ID").substring(0, 10);
 
-            console.log(`student id ${studentId}`);
-            console.log(`date ${date}`);
             try {
                 const response = await axios.get(
                     "/api/showAttendance",
@@ -49,8 +75,7 @@ export default function Attendance({ auth }) {
                 );
 
                 if (response.status === 200) {
-                    console.log("success");
-                    setIsAttend(response.data.student.is_present);
+                    setIsAttend(response.data.is_present);
                 } else {
                     console.error("failed");
                 }
@@ -77,23 +102,38 @@ export default function Attendance({ auth }) {
                     </h1>
                     <div
                         className={`w-full h-4 rounded-xl ${
-                            isAttend ? "bg-green-500" : "bg-red-600"
+                            isAttend ? "bg-green-500" : "bg-red-500"
                         }`}
                     ></div>
                 </div>
-                <button
-                    className="mt-8 flex flex-col rounded-full justify-center items-center bg-primaryBlue w-64 h-64"
-                    onClick={handleAttend}
-                >
-                    <img
-                        className="flex w-32 brightness-0 invert"
-                        src={isAttend ? CheckIcon : AttendanceIcon}
-                        alt=""
-                    />
-                    <h1 className="text-center items-center text-white">
-                        {isAttend ? "Class Attended" : "Click to Attend"}
-                    </h1>
-                </button>
+                <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
+                    {isAttend ? (
+                        <div className="rounded-full bg-green-500 w-full h-full flex flex-col justify-center items-center">
+                            <img
+                                src={CheckIcon}
+                                alt=""
+                                className="flex w-32 brightness-0 invert"
+                            />
+                            <p className="text-center items-center text-white">
+                                Class Attended
+                            </p>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={handleAttend}
+                            className="rounded-full bg-red-500 w-full h-full flex flex-col justify-center items-center"
+                        >
+                            <img
+                                className="flex w-32 brightness-0 invert"
+                                src={AttendanceIcon}
+                                alt=""
+                            />
+                            <h1 className="text-center items-center text-white">
+                                Click to Attend
+                            </h1>
+                        </button>
+                    )}
+                </div>
             </div>
         </AuthenticatedLayout>
     );
