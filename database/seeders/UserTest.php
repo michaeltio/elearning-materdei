@@ -17,7 +17,6 @@ class UserTest extends Seeder
             'id' => '0000000001',
             'email' => 'admin@sch.id',
             'password' => Hash::make('password'),
-            'role' => 'admin',
         ]);
 
         for($i = 1; $i <= 2; $i++){
@@ -25,7 +24,6 @@ class UserTest extends Seeder
                 'id' => "100000000$i",
                 'email' => "$i@student.sch.id",
                 'password' => Hash::make("password"),
-                'role' => 'student'
             ]);
         }
 
@@ -34,7 +32,6 @@ class UserTest extends Seeder
                 'id' => "200000000$i",
                 'email' => "$i@teacher.sch.id",
                 'password' => Hash::make("password"),
-                'role' => 'teacher',
             ]);
         }
     }

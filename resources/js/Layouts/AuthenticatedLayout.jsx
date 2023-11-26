@@ -27,32 +27,93 @@ export default function Authenticated({ user, children, className }) {
                             <h1>E-Learning SMPK Mater Dei</h1>
                         </div>
 
-                        <div className="hidden sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink
-                                href={route("studentHome")}
-                                active={route().current("studentHome")}
-                            >
-                                Home
-                            </NavLink>
-                        </div>
+                        {user.user_details.role === "admin" && (
+                            <>
+                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                    <NavLink
+                                        href={route("studentHome")}
+                                        active={route().current("studentHome")}
+                                    >
+                                        Home
+                                    </NavLink>
+                                </div>
 
-                        <div className="hidden sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink
-                                href={route("studentAttendance")}
-                                active={route().current("studentAttendance")}
-                            >
-                                Attendance
-                            </NavLink>
-                        </div>
+                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                    <NavLink
+                                        href={route("studentAttendance")}
+                                        active={route().current(
+                                            "studentAttendance"
+                                        )}
+                                    >
+                                        Attendance
+                                    </NavLink>
+                                </div>
 
-                        <div className="hidden sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink
-                                href={route("dashboard")}
-                                active={route().current("dashboard")}
-                            >
-                                Schedule
-                            </NavLink>
-                        </div>
+                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                    <NavLink
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
+                                    >
+                                        Schedule
+                                    </NavLink>
+                                </div>
+                            </>
+                        )}
+
+                        {user.user_details.role === "teacher" && (
+                            <>
+                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                    <NavLink
+                                        href={route("studentHome")}
+                                        active={route().current("studentHome")}
+                                    >
+                                        Home
+                                    </NavLink>
+                                </div>
+
+                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                    <NavLink
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
+                                    >
+                                        Schedule
+                                    </NavLink>
+                                </div>
+                            </>
+                        )}
+
+                        {user.user_details.role === "student" && (
+                            <>
+                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                    <NavLink
+                                        href={route("studentHome")}
+                                        active={route().current("studentHome")}
+                                    >
+                                        Home
+                                    </NavLink>
+                                </div>
+
+                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                    <NavLink
+                                        href={route("studentAttendance")}
+                                        active={route().current(
+                                            "studentAttendance"
+                                        )}
+                                    >
+                                        Attendance
+                                    </NavLink>
+                                </div>
+
+                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
+                                    <NavLink
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
+                                    >
+                                        Schedule
+                                    </NavLink>
+                                </div>
+                            </>
+                        )}
 
                         <div className="hidden px-8 sm:flex sm:items-center sm:ml-6">
                             <div className="ml-3 relative">
@@ -147,30 +208,93 @@ export default function Authenticated({ user, children, className }) {
                             " sm:hidden"
                         }
                     >
-                        <div className="pt-2 pb-3 space-y-1">
-                            <ResponsiveNavLink
-                                href={route("studentHome")}
-                                active={route().current("studentHome")}
-                            >
-                                Home
-                            </ResponsiveNavLink>
-                        </div>
-                        <div className="pt-2 pb-3 space-y-1">
-                            <ResponsiveNavLink
-                                href={route("studentAttendance")}
-                                active={route().current("studentAttendance")}
-                            >
-                                Attendance
-                            </ResponsiveNavLink>
-                        </div>
-                        <div className="pt-2 pb-3 space-y-1">
-                            <ResponsiveNavLink
-                                href={route("dashboard")}
-                                active={route().current("dashboard")}
-                            >
-                                Schedule
-                            </ResponsiveNavLink>
-                        </div>
+                        {user.user_details.role === "admin" && (
+                            <>
+                                <div className="pt-2 pb-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route("studentHome")}
+                                        active={route().current("studentHome")}
+                                    >
+                                        Home
+                                    </ResponsiveNavLink>
+                                </div>
+
+                                <div className="pt-2 pb-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route("studentAttendance")}
+                                        active={route().current(
+                                            "studentAttendance"
+                                        )}
+                                    >
+                                        Attendance
+                                    </ResponsiveNavLink>
+                                </div>
+
+                                <div className="pt-2 pb-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
+                                    >
+                                        Schedule
+                                    </ResponsiveNavLink>
+                                </div>
+                            </>
+                        )}
+
+                        {user.user_details.role === "teacher" && (
+                            <>
+                                <div className="pt-2 pb-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route("studentHome")}
+                                        active={route().current("studentHome")}
+                                    >
+                                        Home
+                                    </ResponsiveNavLink>
+                                </div>
+
+                                <div className="pt-2 pb-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
+                                    >
+                                        Schedule
+                                    </ResponsiveNavLink>
+                                </div>
+                            </>
+                        )}
+
+                        {user.user_details.role === "student" && (
+                            <>
+                                <div className="pt-2 pb-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route("studentHome")}
+                                        active={route().current("studentHome")}
+                                    >
+                                        Home
+                                    </ResponsiveNavLink>
+                                </div>
+
+                                <div className="pt-2 pb-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route("studentAttendance")}
+                                        active={route().current(
+                                            "studentAttendance"
+                                        )}
+                                    >
+                                        Attendance
+                                    </ResponsiveNavLink>
+                                </div>
+
+                                <div className="pt-2 pb-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
+                                    >
+                                        Schedule
+                                    </ResponsiveNavLink>
+                                </div>
+                            </>
+                        )}
 
                         <div className="pt-4 pb-1 border-t border-gray-200">
                             <div className="px-4">

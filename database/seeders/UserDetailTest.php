@@ -17,26 +17,31 @@ class UserDetailTest extends Seeder
         UserDetail::create([
             'id' => '0000000001',
             'full_name' => 'Admin',
+            'role' => 'admin',
         ]);
 
         UserDetail::create([
             'id' => '1000000001',
             'full_name' => 'Michael Tio',
+            'role' => 'student'
         ]);
 
         UserDetail::create([
             'id' => '1000000002',
             'full_name' => 'Abigael Xyla',
+            'role' => 'student'
         ]);
 
         UserDetail::create([
             'id' => '2000000001',
             'full_name' => 'Ms. Santi',
+            'role' => 'teacher',
         ]);
 
         UserDetail::create([
             'id' => '2000000002',
             'full_name' => 'Mr. Santo',
+            'role' => 'teacher',
         ]);
     }
 }
