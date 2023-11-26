@@ -10,14 +10,9 @@ class Kernel extends ConsoleKernel
    
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('attendance:daily')->daily();
-        // $schedule->command('attendance:daily')
-        // ->dailyAt('07:30')
-        // ->timezone('Asia/Jakarta')
-        // ->unless(function () {
-        //     return now()->isWeekend();
-        // });
-        $schedule->command('attendance:daily')->everyMinute();
+        $schedule->command('attendance:daily')
+        ->weekdays()
+        ->at('06:30');
     }
 
     protected function commands(): void
