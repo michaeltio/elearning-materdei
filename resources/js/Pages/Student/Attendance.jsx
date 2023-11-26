@@ -15,7 +15,7 @@ export default function Attendance({ auth }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="attendance"/>
             {/* page */}
-            <div className="z-0 h-full flex flex-col items-center justify-center sm:-mt-20 mt-8">
+            <div className="z-0 h-full flex flex-col items-center justify-center">
                 <div className="text-center bg-primaryBlue rounded-xl w-64 md:w-96 mx-auto mb-6 text-white sm:mt-28 p-4">
                     <h1>30 January 1993</h1>
                     <h1>Evan Afton</h1>

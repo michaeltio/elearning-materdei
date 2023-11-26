@@ -9,3 +9,34 @@
 .toastui-calendar-layout {
     padding: 2vw;
 }
+
+@media only screen and (max-width: 768px) {
+    .toastui-calendar-day-name__date {
+        font-size: 20px !important; /* Adjust the font size to be smaller */
+        margin-right: -1px !important; /* Remove the right margin (one space) */
+    }
+    
+    .toastui-calendar-day-name__name {
+        font-size: 10px !important;
+    }
+}
+
+@media only screen and (min-width: 468px) and (max-width: 560px) {
+    .toastui-calendar-day-name__date {
+        font-size: 18px !important; /* Adjust the font size to be smaller */
+        margin-right: -1px !important; /* Remove the right margin (one space) */
+    }
+    
+    .toastui-calendar-day-name__name {
+        font-size: 9px !important;
+    }
+    .toastui-calendar-day-name-item {
+        padding: 0px 6px !important;
+    }
+}
+
+@media only screen and (max-width: 468px) {
+    .triple-view-button {
+        display: none;
+    }
+}

@@ -9,42 +9,65 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 export default function Schedule({ auth }) {
     const calendarRef = useRef(null);
-    const [eventCounter, setEventCounter] = useState(1); // Counter for event IDs
-    const [currentMonth, setCurrentMonth] = useState('');
+    const [eventCounter, setEventCounter] = useState(1);
+    const [currentDateRange, setCurrentDateRange] = useState('');
+    const [currentView, setCurrentView] = useState('');
+
+    const updateDateRange = () => {
+        const calendarInstance = calendarRef.current.getInstance();
+        const getDate = calendarInstance.getDate().toDate();
+
+        const options = { month: 'long', year: 'numeric' };
+
+        const formattedDate = getDate.toLocaleDateString('en-US', options);
+
+        setCurrentDateRange(`${formattedDate}`);
+    };
+
+    const updateCurrentView = () => {
+        const calendarInstance = calendarRef.current.getInstance();
+        const view = calendarInstance.getViewName();
+        setCurrentView(view);
+    };
 
     const handlePrevButtonClick = () => {
         const calendarInstance = calendarRef.current.getInstance();
         calendarInstance.prev();
+        updateDateRange();
+        updateCurrentView();
     };
 
     const handleNextButtonClick = () => {
         const calendarInstance = calendarRef.current.getInstance();
         calendarInstance.next();
+        updateDateRange();
+        updateCurrentView();
     };
 
     const handleTodayButtonClick = () => {
         const calendarInstance = calendarRef.current.getInstance();
         calendarInstance.today();
+        updateDateRange();
+        updateCurrentView();
     };
 
     const handleViewButtonClick = (view) => {
         const calendarInstance = calendarRef.current.getInstance();
         calendarInstance.changeView(view);
+        updateDateRange();
+        updateCurrentView();
     };
 
     useEffect(() => {
-        // Access the calendar instance using the ref
         const calendarInstance = calendarRef.current.getInstance();
 
-        // Set options for the calendar
         calendarInstance.setOptions({
             useFormPopup: false,
-            useCreationPopup: false, // Disable the default creation popup
+            useCreationPopup: false,
             useDetailPopup: false,
             week: {
-                hourStart: 7,
-                hourEnd: 18,
-                showNowIndicator: true,
+                hourStart: 6,
+                hourEnd: 19,
                 taskView: false,
                 eventView: ['time'],
                 today: {
@@ -54,10 +77,8 @@ export default function Schedule({ auth }) {
             isReadOnly: true,
         });
 
-        // Change the view to the week view
         calendarInstance.changeView('week');
 
-        // Create the initial event outside useEffect
         const initialEvent = {
             id: `event${eventCounter}`,
             calendarId: `cal${eventCounter}`,
@@ -68,15 +89,12 @@ export default function Schedule({ auth }) {
             end: '2023-11-22T10:00:00',
         };
 
-        // Create the initial event here
         calendarInstance.createEvents([initialEvent]);
         setEventCounter((prevCounter) => prevCounter + 1);
 
-        // Set the current month
-        const currentDate = new Date();
-        const currentMonth = currentDate.toLocaleString('default', { month: 'long' });
-        const currentYear = currentDate.getFullYear();
-        setCurrentMonth(`${currentMonth} ${currentYear}`);
+        updateDateRange();
+        updateCurrentView();
+
     }, []);
 
     useEffect(() => {
@@ -84,21 +102,14 @@ export default function Schedule({ auth }) {
             const calendarInstance = calendarRef.current.getInstance();
 
             if (window.innerWidth <= 468) {
-                // Change the view to day when the screen width is 468px or less
                 calendarInstance.changeView('day');
             } else {
-                // Change the view back to week for larger screens
                 calendarInstance.changeView('week');
             }
         };
 
-        // Attach the resize event listener
         window.addEventListener('resize', handleResize);
-
-        // Call handleResize once to set the initial view based on the screen width
         handleResize();
-
-        // Detach the event listener when the component is unmounted
         return () => {
             window.removeEventListener('resize', handleResize);
         };
@@ -107,44 +118,77 @@ export default function Schedule({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className='container-toast-ui bg-white'>
-                <div className='pt-5 px-5 flex justify-between'>
-                    <div className='flex items-center space-x-2'>
-                        <button onClick={handleTodayButtonClick}>
+                <div className='pt-3 sm:pt-5 px-5 flex justify-between'>
+                    <div className='flex items-center space-x-1 sm:space-x-4'>
+                        <button
+                            onClick={handlePrevButtonClick}
+                            type="button"
+                            className="rounded-full p-2.5 items-center"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-4 h-4"
+                            >
+                                <path d="M14.2893 5.70708C13.8988 5.31655 13.2657 5.31655 12.8751 5.70708L7.98768 10.5993C7.20729 11.3805 7.2076 12.6463 7.98837 13.427L12.8787 18.3174C13.2693 18.7079 13.9024 18.7079 14.293 18.3174C14.6835 17.9269 14.6835 17.2937 14.293 16.9032L10.1073 12.7175C9.71678 12.327 9.71678 11.6939 10.1073 11.3033L14.2893 7.12129C14.6799 6.73077 14.6799 6.0976 14.2893 5.70708Z" fill="#0F0F0F">
+                                </path>
+                            </svg>
+                        </button>
+                        <span className='font-medium text-sm sm:text-md md:text-lg'>{currentDateRange}</span>
+                        <button
+                            onClick={handleNextButtonClick}
+                            type="button"
+                            className="rounded-full p-2.5 items-center"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-4 h-4"
+                            >
+                                <path
+                                    d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655 6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016 17.2692 9.32016 17.9023 9.71069 18.2929Z"
+                                    fill="#0F0F0F"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div className='flex items-center space-x-4'>
+                        <button
+                            onClick={handleTodayButtonClick}
+                            className='today-button py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500'
+                        >
                             Today
                         </button>
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <button onClick={handlePrevButtonClick}>
-                            Previous
-                        </button>
-                        <div className=''>{currentMonth}</div>
-                        <button onClick={handleNextButtonClick}>
-                            Next
-                        </button>
-                    </div>
-                    <div className="inline-flex rounded-lg shadow-sm">
-                        <button
-                            onClick={() => handleViewButtonClick('day')}
-                            type="button"
-                            className="py-3 px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                            Day
-                        </button>
-                        <button
-                            onClick={() => handleViewButtonClick('week')}
-                            type="button"
-                            className="py-3 px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                            Week
-                        </button>
-                        <button
-                            onClick={() => handleViewButtonClick('month')}
-                            type="button"
-                            className="py-3 px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                            Month
-                        </button>
+                        <div className="inline-flex rounded-lg shadow-sm triple-view-button">
+                            <button
+                                onClick={() => handleViewButtonClick('day')}
+                                type="button"
+                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${currentView === 'day' ? 'bg-white text-blue-500' : 'border-gray-200 text-gray-800 shadow-sm bg-gray-50'}`}
+                            >
+                                Day
+                            </button>
+                            <button
+                                onClick={() => handleViewButtonClick('week')}
+                                type="button"
+                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${currentView === 'week' ? 'bg-white text-blue-500' : 'border-gray-200 text-gray-800 shadow-sm bg-gray-50'}`}
+                            >
+                                Week
+                            </button>
+                            <button
+                                onClick={() => handleViewButtonClick('month')}
+                                type="button"
+                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${currentView === 'month' ? 'bg-white text-blue-500' : 'border-gray-200 text-gray-800 shadow-sm bg-gray-50'}`}
+                            >
+                                Month
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <Calendar ref={calendarRef} />
             </div>
-        </AuthenticatedLayout>
-    )
+        </AuthenticatedLayout >
+    );
 }
