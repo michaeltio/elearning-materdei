@@ -6,6 +6,7 @@ import axios from "axios";
 //icon
 import AttendanceIcon from "/public/Assets/attendance-icon.svg";
 import CheckIcon from "/public/Assets/check-icon.svg";
+import WeekendIcon from "/public/Assets/weekend-icon.svg";
 
 export default function Attendance({ auth }) {
     const [isAttend, setIsAttend] = useState(false);
@@ -20,8 +21,6 @@ export default function Attendance({ auth }) {
         month: "long",
         year: "numeric",
     });
-
-    //detect if weekday
 
     //button untuk absen
     const handleAttend = async () => {
@@ -127,34 +126,50 @@ export default function Attendance({ auth }) {
                         }`}
                     ></div>
                 </div>
-                <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
-                    {isAttend ? (
+
+                {isWeekend ? (
+                    <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
                         <div className="rounded-full bg-green-500 w-full h-full flex flex-col justify-center items-center">
                             <img
-                                src={CheckIcon}
+                                src={WeekendIcon}
                                 alt=""
                                 className="flex w-32 brightness-0 invert"
                             />
                             <p className="text-center items-center text-white">
-                                Class Attended
+                                Happy Weekend
                             </p>
                         </div>
-                    ) : (
-                        <button
-                            onClick={handleAttend}
-                            className="rounded-full bg-red-500 w-full h-full flex flex-col justify-center items-center"
-                        >
-                            <img
-                                className="flex w-32 brightness-0 invert"
-                                src={AttendanceIcon}
-                                alt=""
-                            />
-                            <h1 className="text-center items-center text-white">
-                                Click to Attend
-                            </h1>
-                        </button>
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
+                        {isAttend ? (
+                            <div className="rounded-full bg-green-500 w-full h-full flex flex-col justify-center items-center">
+                                <img
+                                    src={CheckIcon}
+                                    alt=""
+                                    className="flex w-32 brightness-0 invert"
+                                />
+                                <p className="text-center items-center text-white">
+                                    Class Attended
+                                </p>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={handleAttend}
+                                className="rounded-full bg-red-500 w-full h-full flex flex-col justify-center items-center"
+                            >
+                                <img
+                                    src={AttendanceIcon}
+                                    alt=""
+                                    className="flex w-32 brightness-0 invert"
+                                />
+                                <h1 className="text-center items-center text-white">
+                                    Click to Attend
+                                </h1>
+                            </button>
+                        )}
+                    </div>
+                )}
             </div>
         </AuthenticatedLayout>
     );
