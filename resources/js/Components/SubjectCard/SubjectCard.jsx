@@ -27,7 +27,6 @@ export default function SubjectCard({ index, bgColor, content, arrowColor }) {
                 className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
                 href={route("studentSubject")}
             >
-                {" "}
                 <img className="w-4" src={Arrow} alt="" />
             </Link>
         </div>

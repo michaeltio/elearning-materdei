@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,21 +26,27 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::get('/student', function () {
-    return Inertia::render('Student/Home');
-})->middleware(['auth', 'verified'])->name('studentHome');
+    Route::get('/student', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Student/Home');
+    })->name('studentHome');
 
-Route::get('/student/attendance', function () {
-    return Inertia::render('Student/Attendance');
-})->middleware(['auth', 'verified'])->name('studentAttendance');
+    Route::get('/student/attendance', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Student/Attendance');
+    })->name('studentAttendance');
 
-Route::get('/student/subject', function () {
-    return Inertia::render('Student/Subject');
-})->middleware(['auth', 'verified'])->name('studentSubject');
+    Route::get('/student/subject', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Student/Subject');
+    })->name('studentSubject');
+});
 
 Route::get('/student/schedule', function () {
     return Inertia::render('Teacher/Schedule');
