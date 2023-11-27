@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreign('id')->references('id')->on('user_details')->onDelete('cascade');
+            $table->id()->unique();
             $table->string('email');
             $table->string('password');
             $table->rememberToken();
