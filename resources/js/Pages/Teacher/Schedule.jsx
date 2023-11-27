@@ -7,14 +7,16 @@ import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
+import axios from 'axios';
+
 export default function Schedule({ auth }) {
     const calendarRef = useRef(null);
-    const [eventCounter, setEventCounter] = useState(1);
     const [currentDateRange, setCurrentDateRange] = useState('');
     const [currentView, setCurrentView] = useState('');
     const [showInfo, setShowInfo] = useState(false);
     const [eventStart, setEventStart] = useState(null);
     const [eventEnd, setEventEnd] = useState(null);
+    const [eventData, setEventData] = useState([]);
 
     const updateDateRange = () => {
         const calendarInstance = calendarRef.current.getInstance();
@@ -70,7 +72,31 @@ export default function Schedule({ auth }) {
     };
 
     useEffect(() => {
+        const getEventData = async () => {
+            try {
+                const response = await axios.get('/api/scheduleEvent');
+                const formattedEventData = response.data.map(event => ({
+                    ...event,
+                    start_date: new Date(event.start_date).toISOString(),
+                    end_date: new Date(event.end_date).toISOString(),
+                }));
+                setEventData(formattedEventData);
+            } catch (error) {
+                console.error('Error fetching events:', error);
+                // Handle error and return empty data
+            }
+        };
+
+        getEventData();
+    }, []);
+
+    useEffect(() => {
+        console.log(eventData);
+    }, [eventData]);
+
+    useEffect(() => {
         const calendarInstance = calendarRef.current.getInstance();
+        calendarInstance.clear(); // Clear existing events
 
         calendarInstance.setOptions({
             useFormPopup: true,
@@ -90,72 +116,28 @@ export default function Schedule({ auth }) {
 
         calendarInstance.changeView('week');
 
-        // const initialEvent = [
-        //     {
-        //         id: `event${eventCounter}`,
-        //         calendarId: `cal${eventCounter}`,
-        //         title: 'Weekly Meeting',
-        //         location: 'UMN',
-        //         attendees: ['7C'],
-        //         start: '2023-11-27T09:00:00',
-        //         end: '2023-11-27T10:00:00',
-        //     },
-        // ];
-
-        calendarInstance.createEvents([
-            {
-                id: `event1`,
-                calendarId: `cal1`,
-                title: 'Event Title1',
-                location: 'UMN',
-                attendees: ['7C'],
-                start: '2023-11-27T09:00:00',
-                end: '2023-11-27T10:00:00',
-            },
-            {
-                id: `event2`,
-                calendarId: `cal2`,
-                title: 'Event Title2',
-                location: 'UMN',
-                attendees: ['7C'],
-                start: '2023-11-28T09:00:00',
-                end: '2023-11-28T10:00:00',
-            },
-            {
-                id: `event3`,
-                calendarId: `cal3`,
-                title: 'Event Title3',
-                location: 'UMN',
-                attendees: ['7C'],
-                start: '2023-11-29T09:00:00',
-                end: '2023-11-29T10:00:00',
-            },
-            {
-                id: `event4`,
-                calendarId: `cal4`,
-                title: 'Event Title4',
-                location: 'UMN',
-                attendees: ['7C'],
-                start: '2023-11-30T09:00:00',
-                end: '2023-11-30T10:00:00',
-            },
-            {
-                id: `event5`,
-                calendarId: `cal5`,
-                title: 'Event Title5',
-                location: 'UMN',
-                attendees: ['7C'],
-                start: '2023-12-01T09:00:00',
-                end: '2023-12-01T10:00:00',
-            }
-        ]);
-
-        // calendarInstance.createEvents([initialEvent]);
-        // setEventCounter((prevCounter) => prevCounter + 1);
+        const formattedEventData = eventData.map(event => ({
+            ...event,
+            start: new Date(event.start_date).toISOString(),
+            end: new Date(event.end_date).toISOString(),
+        }));
+        calendarInstance.createEvents(formattedEventData);
 
         // Basic example of deleting an event
-        calendarInstance.on('beforeDeleteEvent', (event) => {
-            calendarInstance.deleteEvent(event.id, event.calendarId);
+        calendarInstance.on('beforeDeleteEvent', async (event) => {
+            const calendarInstance = calendarRef.current.getInstance();
+
+            try {
+                // Make a DELETE request to the backend to delete the event
+                await axios.delete(`/api/scheduleEvent/${event.id}/${event.calendarId}`);
+
+                // Optionally, you can refresh the calendar view
+                calendarInstance.clear();
+                calendarInstance.createEvents(eventData);
+            } catch (error) {
+                console.error('Error deleting event:', error);
+                // Handle error
+            }
         });
 
         calendarInstance.on('clickEvent', (event) => {
@@ -190,23 +172,31 @@ export default function Schedule({ auth }) {
             calendarInstance.on('click', removeUpdateHandler);
         });
 
-        calendarInstance.on('beforeCreateEvent', (eventObj) => {
-            // Calling the instance method when the instance event is invoked
-            calendarInstance.createEvents([
-                {
-                    ...eventObj,
-                    id: `event${eventCounter}`,
-                    calendarId: `cal${eventCounter}`,
-                },
-            ]);
-            setEventCounter((prevCounter) => prevCounter + 1);
+        calendarInstance.on('beforeCreateEvent', async (eventObj) => {
+            const newEvent = {
+                title: eventObj.title,
+                location: eventObj.location,
+                attendees: eventObj.attendees ? eventObj.attendees.split(',') : [],
+                start: eventObj.start,
+                end: eventObj.end,
+            };
+
+            try {
+                const response = await axios.post('/api/createEvent', newEvent);
+                // Handle success, if needed
+                console.log(response.data);
+            } catch (error) {
+                // Handle error
+                console.error('Error creating event:', error);
+            }
+
             setShowInfo(false);
         });
 
         updateDateRange();
         updateCurrentView();
 
-    }, []);
+    }, [eventData]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -226,7 +216,7 @@ export default function Schedule({ auth }) {
         };
     }, []);
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
         const calendarInstance = calendarRef.current.getInstance();
@@ -235,25 +225,30 @@ export default function Schedule({ auth }) {
         if (e.target.event_name.value.trim() !== '') {
 
             const newEvent = {
-                id: `event${eventCounter}`,
-                calendarId: `cal${eventCounter}`,
                 title: e.target.event_name.value,
-                location: e.target.event_location.value, // Added location
-                attendees: e.target.event_attendees.value.split(','), // Added attendees
-                start: new Date(`${e.target.event_start_date.value}T${e.target.event_start_time.value}`).toISOString(),
-                end: new Date(`${e.target.event_end_date.value}T${e.target.event_end_time.value}`).toISOString(),
+                location: e.target.event_location.value,
+                attendees: e.target.event_attendees.value.split(','),
+                start_date: `${e.target.event_start_date.value} ${e.target.event_start_time.value}`,
+                end_date: `${e.target.event_end_date.value} ${e.target.event_end_time.value}`,
+                // calendarId will be handled on the server side
             };
 
-            calendarInstance.createEvents([newEvent]);
+            try {
+                const response = await axios.post('/api/scheduleEvent', newEvent);
+                const createdEvent = response.data;
 
-            // Increment the eventCounter for the next event
-            setEventCounter((prevCounter) => prevCounter + 1);
+                // Update the client-side state with the new event
+                setEventData((prevData) => [...prevData, createdEvent]);
+
+                // Clear the form and close the popup
+                setEventStart(null);
+                setEventEnd(null);
+                setShowInfo(false);
+            } catch (error) {
+                console.error('Error creating event:', error);
+                // Handle error
+            }
         }
-
-        // Reset the state, whether the form was submitted or canceled
-        setEventStart(null);
-        setEventEnd(null);
-        setShowInfo(false);
     };
 
     return (
