@@ -125,7 +125,6 @@ export default function Schedule({ auth }) {
                             type="button"
                             className="rounded-full p-2.5 items-center"
                         >
-
                             <svg
                                 viewBox="0 0 24 24"
                                 fill="none"

@@ -42,7 +42,7 @@ Route::get('/student/subject', function () {
 })->middleware(['auth', 'verified'])->name('studentSubject');
 
 Route::get('/student/schedule', function () {
-    return Inertia::render('Student/Schedule');
+    return Inertia::render('Teacher/Schedule');
 })->middleware(['auth', 'verified'])->name('studentSchedule');
 
 Route::middleware('auth')->group(function () {
