@@ -6,10 +6,12 @@ import axios from "axios";
 //icon
 import AttendanceIcon from "/public/Assets/attendance-icon.svg";
 import CheckIcon from "/public/Assets/check-icon.svg";
+import WeekendIcon from "/public/Assets/weekend-icon.svg";
 
 export default function Attendance({ auth }) {
     const [isAttend, setIsAttend] = useState(false);
     const [date, setDate] = useState("");
+    const [isWeekend, setIsWeekend] = useState(false);
 
     //buat data date sekarang
     const currentDate = new Date();
@@ -53,6 +55,16 @@ export default function Attendance({ auth }) {
     };
 
     useEffect(() => {
+        const weekdayHandler = () => {
+            const weekday = formattedDate.split(", ")[0];
+            if (weekday === "Minggu" || weekday === "Sabtu") {
+                setIsWeekend(true);
+                // console.log(isWeekDay);
+            } else {
+                setIsWeekend(false);
+                console.log("test");
+            }
+        };
         //fetch student attendance from database
         const fetchSpecificAttendance = async () => {
             const studentId = auth.user.id;
@@ -84,6 +96,7 @@ export default function Attendance({ auth }) {
             }
         };
         fetchSpecificAttendance();
+        weekdayHandler();
         setDate(formattedDate);
     }, []);
 
@@ -98,42 +111,65 @@ export default function Attendance({ auth }) {
                     <h1>{date}</h1>
                     <h1>{auth.user.user_details.full_name}</h1>
                     <h1>
-                        Status : {isAttend == true ? "Attended" : "Absence"}
+                        Status :{" "}
+                        {isWeekend
+                            ? "Weekend"
+                            : isAttend == true
+                            ? "Attended"
+                            : "Absence"}
                     </h1>
                     <div
                         className={`w-full h-4 rounded-xl ${
-                            isAttend ? "bg-green-500" : "bg-red-500"
+                            isAttend || isWeekend
+                                ? "bg-green-500"
+                                : "bg-red-500"
                         }`}
                     ></div>
                 </div>
-                <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
-                    {isAttend ? (
+
+                {isWeekend ? (
+                    <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
                         <div className="rounded-full bg-green-500 w-full h-full flex flex-col justify-center items-center">
                             <img
-                                src={CheckIcon}
+                                src={WeekendIcon}
                                 alt=""
                                 className="flex w-32 brightness-0 invert"
                             />
                             <p className="text-center items-center text-white">
-                                Class Attended
+                                Happy Weekend
                             </p>
                         </div>
-                    ) : (
-                        <button
-                            onClick={handleAttend}
-                            className="rounded-full bg-red-500 w-full h-full flex flex-col justify-center items-center"
-                        >
-                            <img
-                                className="flex w-32 brightness-0 invert"
-                                src={AttendanceIcon}
-                                alt=""
-                            />
-                            <h1 className="text-center items-center text-white">
-                                Click to Attend
-                            </h1>
-                        </button>
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
+                        {isAttend ? (
+                            <div className="rounded-full bg-green-500 w-full h-full flex flex-col justify-center items-center">
+                                <img
+                                    src={CheckIcon}
+                                    alt=""
+                                    className="flex w-32 brightness-0 invert"
+                                />
+                                <p className="text-center items-center text-white">
+                                    Class Attended
+                                </p>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={handleAttend}
+                                className="rounded-full bg-red-500 w-full h-full flex flex-col justify-center items-center"
+                            >
+                                <img
+                                    src={AttendanceIcon}
+                                    alt=""
+                                    className="flex w-32 brightness-0 invert"
+                                />
+                                <h1 className="text-center items-center text-white">
+                                    Click to Attend
+                                </h1>
+                            </button>
+                        )}
+                    </div>
+                )}
             </div>
         </AuthenticatedLayout>
     );
