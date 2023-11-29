@@ -19,34 +19,29 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'location' => 'nullable',
-            'attendees' => 'nullable',
+        $validatedData = $request->validate([
+            'classId' => 'required|string',
+            'title' => 'required|string',
+            'location' => 'nullable|string',
+            'attendees' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
         ]);
 
-        // Get the last event in the database
-        $lastEvent = Event::latest('id')->first();
+        $event = Event::create($validatedData);
 
-        // Increment the last calendarId to generate a new one
-        $data['calendarId'] = 'cal' . ($lastEvent ? ($lastEvent->id + 1) : 1);
-
-        $event = Event::create($data);
-
-        return response()->json($event, 201);
+        return response()->json(['message' => 'Event created successfully', 'event' => $event]);
     }
 
-    public function destroy($id, $calendarId)
-    {
-        $event = Event::where('id', $id)->where('calendarId', $calendarId)->first();
+    // public function destroy($id, $calendarId)
+    // {
+    //     $event = Event::where('id', $id)->where('calendarId', $calendarId)->first();
 
-        if ($event) {
-            $event->delete();
-            return response()->json(['message' => 'Event deleted successfully']);
-        } else {
-            return response()->json(['message' => 'Event not found'], 404);
-        }
-    }
+    //     if ($event) {
+    //         $event->delete();
+    //         return response()->json(['message' => 'Event deleted successfully']);
+    //     } else {
+    //         return response()->json(['message' => 'Event not found'], 404);
+    //     }
+    // }
 }

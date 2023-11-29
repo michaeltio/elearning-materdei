@@ -39,7 +39,6 @@ export default function Attendance({ auth }) {
                     </h1>
                 </button>
             </div>
-
         </AuthenticatedLayout>
     );
 }

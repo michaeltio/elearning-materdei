@@ -14,7 +14,7 @@ class EventSeeder extends Seeder
     public function run(): void
     {
         Event::create([
-            'calendarId' => 'cal1',
+            'classId' => '7c',
             'title' => 'event',
             'location' => 'UMN',
             'attendees' => '7',
