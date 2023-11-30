@@ -21,13 +21,5 @@ class UserDetail extends Model
         return $this->hasOne(Classe::class, 'classId', 'class');
     }
 
-    //conditional redirect (tio)
-    public function getRedirectRoute()
-    {
-        return match (strtolower($this->role)) {
-            'admin' => 'admin',
-            'teacher' => 'teacher',
-            'student' => 'student',
-        };
-    }
+   
 }
