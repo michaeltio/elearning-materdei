@@ -32,28 +32,30 @@ export default function UpdateProfileInformation({
                     <p className="mt-1 block w-full">{user.email}</p>
                 </div>
 
-                {mustVerifyEmail && user.email_verified_at === null && (
-                    <div>
-                        <p className="text-sm mt-2 text-gray-800">
-                            Your email address is unverified.
-                            <Link
-                                href={route("verification.send")}
-                                method="post"
-                                as="button"
-                                className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Click here to re-send the verification email.
-                            </Link>
-                        </p>
+                <div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                        Address
+                    </h3>
+                    <p className="mt-1 block w-full">
+                        {user.user_details.address}
+                    </p>
+                </div>
 
-                        {status === "verification-link-sent" && (
-                            <div className="mt-2 font-medium text-sm text-green-600">
-                                A new verification link has been sent to your
-                                email address.
-                            </div>
-                        )}
-                    </div>
-                )}
+                <div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                        Phone Number
+                    </h3>
+                    <p className="mt-1 block w-full">
+                        {user.user_details.phone_number}
+                    </p>
+                </div>
+
+                <div>
+                    <h3 className="text-lg font-medium text-gray-900">Class</h3>
+                    <p className="mt-1 block w-full">
+                        {user.user_details.class}
+                    </p>
+                </div>
             </div>
         </section>
     );

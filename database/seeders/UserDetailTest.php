@@ -15,31 +15,37 @@ class UserDetailTest extends Seeder
     public function run(): void
     {
         UserDetail::create([
-            'id' => '0000000001',
+            'userId' => '0000000001',
             'full_name' => 'Admin',
             'role' => 'admin',
         ]);
 
         UserDetail::create([
-            'id' => '1000000001',
+            'userId' => '1000000001',
             'full_name' => 'Michael Tio',
-            'role' => 'student'
+            'address' => 'Jl.apalah',
+            'phone_number' => '021774400',
+            'role' => 'student',
+            'class' => '7A'
         ]);
 
         UserDetail::create([
-            'id' => '1000000002',
+            'userId' => '1000000002',
             'full_name' => 'Abigael Xyla',
-            'role' => 'student'
+            'address' => 'Jl.gatau',
+            'phone_number' => '02132432',
+            'role' => 'student',
+            'class' => '9C'
         ]);
 
         UserDetail::create([
-            'id' => '2000000001',
+            'userId' => '2000000001',
             'full_name' => 'Ms. Santi',
             'role' => 'teacher',
         ]);
 
         UserDetail::create([
-            'id' => '2000000002',
+            'userId' => '2000000002',
             'full_name' => 'Mr. Santo',
             'role' => 'teacher',
         ]);

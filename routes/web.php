@@ -33,7 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('/student', function () {
-        optional(Auth::user()->userDetails);
+        optional(optional(optional(Auth::user()->userDetails)->classes)->classSubjects)->load('subjectDetails');
         return Inertia::render('Student/Home');
     })->name('studentHome');
 
