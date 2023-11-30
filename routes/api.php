@@ -22,5 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/showAttendance', [AttendanceController::class,'show']);
-Route::post('/updateAttendance', [AttendanceController::class,'update']);
+Route::get('/showAttendance', [AttendanceController::class, 'show']);
+Route::post('/updateAttendance', [AttendanceController::class, 'update']);

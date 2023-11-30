@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Console\Commands;
+
 use App\Models\User;
 use App\Models\Attendance;
+use App\Models\UserDetail;
 use Illuminate\Console\Command;
 
 
@@ -13,11 +15,11 @@ class DailyAttendance extends Command
 
     public function handle()
     {
-        $users = User::where('role', 'student')->get();
+        $users = UserDetail::where('role', 'student')->get();
 
         foreach ($users as $user) {
             Attendance::create([
-                'student_id' => $user->id,
+                'student_id' => $user->userId,
                 'attendance_date' => now()->toDateString(),
                 'is_present' => false,
             ]);
@@ -26,4 +28,3 @@ class DailyAttendance extends Command
         $this->info('Daily attendance recorded successfully.');
     }
 }
-

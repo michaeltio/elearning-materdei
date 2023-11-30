@@ -11,11 +11,23 @@ class UserDetail extends Model
 {
     use HasFactory;
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsTo(User::class, 'id', 'userId');
     }
 
-    public function classes(){
+    public function classes()
+    {
         return $this->hasOne(Classe::class, 'classId', 'class');
+    }
+
+    //conditional redirect (tio)
+    public function getRedirectRoute()
+    {
+        return match (strtolower($this->role)) {
+            'admin' => 'admin',
+            'teacher' => 'teacher',
+            'student' => 'student',
+        };
     }
 }

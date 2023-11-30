@@ -44,18 +44,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    //conditional redirect (tio)
-    public function getRedirectRoute()
-    {
-        return match(strtolower($this->role)) {
-            'admin' => 'admin',
-            'teacher' => 'teacher',
-            'student' => 'student',
-            
-        };
-    }
 
-    public function userDetails(){
+
+    public function userDetails()
+    {
         return $this->hasOne(UserDetail::class, 'userId', 'id');
     }
 }
