@@ -6,58 +6,9 @@ import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 import SearchIcon from "/public/Assets/search-icon.svg";
 
 export default function SHome({ auth }) {
-    const cards = [
-        {
-            content: "Mtk",
-            bgColor: "bg-red-300",
-            arrowColor: "bg-red-300",
-        },
-        {
-            content: "IPA",
-            bgColor: "bg-yellow-200",
-            arrowColor: "bg-yellow-200",
-        },
-        {
-            content: "IPS",
-            bgColor: "bg-blue-300",
-            arrowColor: "bg-blue-300",
-        },
-        {
-            content: "Bahasa Indonesia",
-            bgColor: "bg-red-300",
-            arrowColor: "bg-red-300",
-        },
-        {
-            content: "Bahasa Inggris",
-            bgColor: "bg-yellow-200",
-            arrowColor: "bg-yellow-200",
-        },
-        {
-            content: "Biologi",
-            bgColor: "bg-blue-300",
-            arrowColor: "bg-blue-300",
-        },
-        {
-            content: "Kimia",
-            bgColor: "bg-red-300",
-            arrowColor: "bg-red-300",
-        },
-        {
-            content: "Sejarah",
-            bgColor: "bg-yellow-200",
-            arrowColor: "bg-yellow-300",
-        },
-        {
-            content: "Fisika",
-            bgColor: "bg-blue-300",
-            arrowColor: "bg-blue-300",
-        },
-        {
-            content: "Seni Budaya",
-            bgColor: "bg-red-300",
-            arrowColor: "bg-red-300",
-        },
-    ];
+    // console.log(auth.user.user_details.classes.class_subjects);
+    const subjects = auth.user.user_details.classes.class_subjects;
+    // console.log(subjects);
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -78,13 +29,13 @@ export default function SHome({ auth }) {
                 />
             </div>
 
-            <div className="flex flex-wrap mt-12">
-                {cards.map((card, index) => (
+            <div className="flex flex-wrap  justify-center mt-12">
+                {subjects.map((card, index) => (
                     <SubjectCard
                         key={index}
-                        bgColor={card.bgColor}
-                        content={card.content}
-                        arrowColor={card.arrowColor}
+                        bgColor="bg-red-500"
+                        content={card.subject_details.subjectName}
+                        arrowColor="bg-red-500"
                     />
                 ))}
             </div>
