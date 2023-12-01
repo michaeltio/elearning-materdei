@@ -46,6 +46,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         optional(Auth::user()->userDetails);
         return Inertia::render('Student/Subject');
     })->name('studentSubject');
+
+    Route::get('/teacher', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Teacher/Home');
+    })->name('teacherHome');
+
+    Route::get('/admin', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/Home');
+    })->name('adminHome');
 });
 
 Route::middleware('auth')->group(function () {
@@ -54,4 +64,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

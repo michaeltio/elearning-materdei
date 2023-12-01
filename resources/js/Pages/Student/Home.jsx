@@ -5,7 +5,7 @@ import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 //icon
 import SearchIcon from "/public/Assets/search-icon.svg";
 
-export default function SHome({ auth }) {
+export default function StudentHome({ auth }) {
     // console.log(auth.user.user_details.classes.class_subjects);
     const subjects = auth.user.user_details.classes.class_subjects;
     // console.log(subjects);
