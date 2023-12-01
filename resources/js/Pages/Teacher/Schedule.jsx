@@ -208,6 +208,7 @@ export default function Schedule({ auth }) {
             start_date: formatDate(e.target.event_start_date.value, e.target.event_start_time.value),
             end_date: formatDate(e.target.event_end_date.value, e.target.event_end_time.value),
         };
+        // belom selesai, tanggalnya masih salah
 
         try {
             const response = await axios.post(`/api/updateEvent/${eventId}/${classId}`, updatedEventForm);
