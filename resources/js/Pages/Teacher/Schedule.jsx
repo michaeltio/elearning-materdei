@@ -18,11 +18,14 @@ export default function Schedule({ auth }) {
     const [showInfo, setShowInfo] = useState(false);
     const [eventStart, setEventStart] = useState(null);
     const [eventEnd, setEventEnd] = useState(null);
+
     const [isPopUpClass, setIsPopUpClass] = useState(false);
     const [isEventPopUpDesc, setIsEventPopUpDesc] = useState(false);
     const [isEventPopUpEdit, setIsEventPopUpEdit] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isEventPopUpDelete, setIsEventPopUpDelete] = useState(false);
+
+    const [events, setEvents] = useState([]);
 
     const updateDateRange = () => {
         const calendarInstance = calendarRef.current.getInstance();
@@ -110,18 +113,43 @@ export default function Schedule({ auth }) {
 
         calendarInstance.changeView('week');
 
-        const initialEvent = {
-            id: `event1`,
-            calendarId: `cal1`,
-            title: 'Weekly Meeting',
-            location: 'UMN',
-            attendees: ['7C'],
-            start: '2023-11-30T11:00:00',
-            end: '2023-11-30T15:00:00',
-        };
+        // const initialEvent = {
+        //     id: `event1`,
+        //     calendarId: `cal1`,
+        //     title: 'Weekly Meeting',
+        //     location: 'UMN',
+        //     attendees: ['7C'],
+        //     start: '2023-11-30T11:00:00',
+        //     end: '2023-11-30T15:00:00',
+        // };
 
-        // Create the initial event here
-        calendarInstance.createEvents([initialEvent]);
+        // // Create the initial event here
+        // calendarInstance.createEvents([initialEvent]);
+
+        const userClassId = '7a'; // replace this with your actual logic to get user's classId
+
+        // Make an API request to fetch events based on the user's classId
+        axios.get(`/api/showEvent/${userClassId}`)
+            .then(response => {
+                const fetchedEvents = response.data;
+                setEvents(fetchedEvents);
+
+                // Assuming calendarInstance is the instance of your Toast UI calendar
+                fetchedEvents.forEach(eventData => {
+                    calendarInstance.createEvents([{
+                        id: eventData.id,
+                        calendarId: eventData.classId,
+                        title: eventData.title,
+                        location: eventData.location,
+                        attendees: eventData.attendees,
+                        start: eventData.start_date,
+                        end: eventData.end_date,
+                    }]);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching events:', error);
+            });
 
         calendarInstance.on('clickEvent', (event) => {
             const eventDesc = calendarInstance.getEvent(event.event.id, event.event.calendarId);
@@ -167,30 +195,34 @@ export default function Schedule({ auth }) {
     const handleUpdateFormSubmit = async (e, eventId, classId) => {
         e.preventDefault();
 
+        const formatDate = (date, time) => {
+            const formattedDate = new Date(`${date}T${time}`);
+            return formattedDate.toISOString();
+        };
+
         const updatedEventForm = {
             classId: e.target.event_classes.value,
             title: e.target.event_name.value,
             location: e.target.event_location.value,
             attendees: e.target.event_classes.value,
-            start_date: new Date(`${e.target.event_start_date.value}T${e.target.event_start_time.value}`).toISOString(),
-            end_date: new Date(`${e.target.event_end_date.value}T${e.target.event_end_time.value}`).toISOString(),
+            start_date: formatDate(e.target.event_start_date.value, e.target.event_start_time.value),
+            end_date: formatDate(e.target.event_end_date.value, e.target.event_end_time.value),
         };
 
-        if (e.target.event_name.value.trim() !== '') {
-            try {
-                const response = await axios.post(`/api/updateEvent/${eventId}/${classId}`, updatedEventForm);
+        try {
+            const response = await axios.post(`/api/updateEvent/${eventId}/${classId}`, updatedEventForm);
 
-                // Handle the response as needed
-                console.log(response.data);
+            // Handle the response as needed
+            console.log(response.data);
 
-                // Clear form and any other necessary state updates
-                setIsEventPopUpEdit(false);
-            } catch (error) {
-                // Handle errors
-                console.error('Error updating event:', error);
-            }
+            // Clear form and any other necessary state updates
+            setIsEventPopUpEdit(false);
+        } catch (error) {
+            // Handle errors
+            console.error('Error updating event:', error);
         }
     };
+
 
 
     useEffect(() => {

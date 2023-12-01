@@ -17,22 +17,38 @@ class UserTest extends Seeder
             'email' => 'admin@sch.id',
             'password' => Hash::make('password'),
             'role' => 'admin',
+            'classId' => 'admin'
         ]);
 
-        for($i = 1; $i <= 2; $i++){
-            User::create([
-                'email' => "$i@student.sch.id",
-                'password' => Hash::make("password"),
-                'role' => 'student'
-            ]);
-        }
+        // for($i = 1; $i <= 2; $i++){
+        //     User::create([
+        //         'email' => "$i@student.sch.id",
+        //         'password' => Hash::make("password"),
+        //         'role' => 'student',
+        //         'classId' => '7a'
+        //     ]);
+        // }
 
-        for($i = 1; $i <= 2; $i++){
-            User::create([
-                'email' => "$i@teacher.sch.id",
-                'password' => Hash::make("password"),
-                'role' => 'teacher',
-            ]);
-        }
+        User::create([
+            'email' => "1@student.sch.id",
+            'password' => Hash::make("password"),
+            'role' => 'student',
+            'classId' => '7a'
+        ]);
+
+        User::create([
+            'email' => "2@student.sch.id",
+            'password' => Hash::make("password"),
+            'role' => 'student',
+            'classId' => '7b'
+        ]);
+
+        // for($i = 1; $i <= 2; $i++){
+        //     User::create([
+        //         'email' => "$i@teacher.sch.id",
+        //         'password' => Hash::make("password"),
+        //         'role' => 'teacher',
+        //     ]);
+        // }
     }
 }
