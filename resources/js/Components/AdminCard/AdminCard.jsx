@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 export default function AdminCard({ title, icon, qty, path }) {
     const handleView = () => {
         console.log(path);
@@ -12,12 +13,12 @@ export default function AdminCard({ title, icon, qty, path }) {
                 </div>
                 <img src={icon} alt="" className="w-20" />
             </div>
-            <button
-                onClick={handleView}
-                className="bg-red-300 px-4 py-2  rounded-xl text-2xl"
+            <Link
+                className={`bg-red-300 px-4 py-2  rounded-xl text-2xl text-center`}
+                href={route(`${path}`)}
             >
                 View
-            </button>
+            </Link>
         </div>
     );
 }

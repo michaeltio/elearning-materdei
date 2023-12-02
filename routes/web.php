@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    //student
     Route::get('/student', function () {
         optional(optional(optional(Auth::user()->userDetails)->classes)->classSubjects)->load('subjectDetails');
         return Inertia::render('Student/Home');
@@ -47,15 +48,37 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Student/Subject');
     })->name('studentSubject');
 
+    //teacher
     Route::get('/teacher', function () {
         optional(Auth::user()->userDetails);
         return Inertia::render('Teacher/Home');
     })->name('teacherHome');
 
+    //admin
     Route::get('/admin', function () {
         optional(Auth::user()->userDetails);
         return Inertia::render('Admin/Home');
     })->name('adminHome');
+    Route::get('/admin/student-list', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/StudentList');
+    })->name('adminStudentList');
+    Route::get('/admin/teacher-list', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/TeacherList');
+    })->name('adminTeacherList');
+    Route::get('/admin/schedule', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/Schedule');
+    })->name('adminSchedule');
+    Route::get('/admin/history-attendance', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/HistoryAttendance');
+    })->name('adminHistoryAttendance');
+    Route::get('/admin/subject-list', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/SubjectList');
+    })->name('adminSubjectList');
 });
 
 Route::middleware('auth')->group(function () {

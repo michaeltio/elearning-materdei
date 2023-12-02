@@ -15,31 +15,31 @@ export default function AdminHome({ auth }) {
             </h1>
             <div className="flex justify-center items-center gap-12">
                 <AdminCard
-                    title="Siswa"
+                    title="Students"
                     qty={72}
                     icon={StudentIcon}
-                    path="/admin/siswa"
+                    path="adminStudentList"
                 />
                 <AdminCard
-                    title="Guru"
+                    title="Teachers"
                     qty={40}
                     icon={TeacherIcon}
-                    path="/admin/siswa"
+                    path="adminTeacherList"
                 />
                 <AdminCard
-                    title="Attendance"
+                    title="History Attendance"
                     icon={AttendanceIcon}
-                    path="/admin/siswa"
+                    path="adminHistoryAttendance"
                 />
                 <AdminCard
                     title="Shedule"
                     icon={ScheduleIcon}
-                    path="/admin/siswa"
+                    path="adminSchedule"
                 />
                 <AdminCard
-                    title="Mata Pelajaran"
+                    title="Subjects"
                     icon={MapelIcon}
-                    path="/admin/siswa"
+                    path="adminSubjectList"
                 />
             </div>
         </AuthenticatedLayout>
