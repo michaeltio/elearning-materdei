@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\UserDetail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -42,14 +44,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    //conditional redirect (tio)
-    public function getRedirectRoute()
+
+
+    public function userDetails()
     {
-        return match(strtolower($this->role)) {
-            'admin' => 'admin',
-            'teacher' => 'teacher',
-            'student' => 'student',
-            
-        };
+        return $this->hasOne(UserDetail::class, 'userId', 'id');
     }
 }

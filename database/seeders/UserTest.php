@@ -14,41 +14,25 @@ class UserTest extends Seeder
     public function run(): void
     {
         User::create([
+            'id' => '0000000001',
             'email' => 'admin@sch.id',
             'password' => Hash::make('password'),
-            'role' => 'admin',
-            'classId' => 'admin'
         ]);
 
-        // for($i = 1; $i <= 2; $i++){
-        //     User::create([
-        //         'email' => "$i@student.sch.id",
-        //         'password' => Hash::make("password"),
-        //         'role' => 'student',
-        //         'classId' => '7a'
-        //     ]);
-        // }
+        for($i = 1; $i <= 2; $i++){
+            User::create([
+                'id' => "100000000$i",
+                'email' => "$i@student.sch.id",
+                'password' => Hash::make("password"),
+            ]);
+        }
 
-        User::create([
-            'email' => "1@student.sch.id",
-            'password' => Hash::make("password"),
-            'role' => 'student',
-            'classId' => '7a'
-        ]);
-
-        User::create([
-            'email' => "2@student.sch.id",
-            'password' => Hash::make("password"),
-            'role' => 'student',
-            'classId' => '7b'
-        ]);
-
-        // for($i = 1; $i <= 2; $i++){
-        //     User::create([
-        //         'email' => "$i@teacher.sch.id",
-        //         'password' => Hash::make("password"),
-        //         'role' => 'teacher',
-        //     ]);
-        // }
+        for($i = 1; $i <= 2; $i++){
+            User::create([
+                'id' => "200000000$i",
+                'email' => "$i@teacher.sch.id",
+                'password' => Hash::make("password"),
+            ]);
+        }
     }
 }

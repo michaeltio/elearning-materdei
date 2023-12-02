@@ -32,3 +32,5 @@ Route::delete('/deleteEvent/{id}', [EventController::class, 'destroy']);
 // delete
 // patch
 // post, buat nambah data
+Route::get('/showAttendance', [AttendanceController::class, 'show']);
+Route::post('/updateAttendance', [AttendanceController::class, 'update']);
