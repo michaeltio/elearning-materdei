@@ -27,6 +27,8 @@ export default function Schedule({ auth, user }) {
 
     const [events, setEvents] = useState([]);
 
+    const [selectedClass, setSelectedClass] = useState(null);
+
     const updateDateRange = () => {
         const calendarInstance = calendarRef.current.getInstance();
         const getDate = calendarInstance.getDate().toDate();
@@ -113,44 +115,6 @@ export default function Schedule({ auth, user }) {
         });
 
         calendarInstance.changeView('week');
-
-        // const initialEvent = {
-        //     id: `event1`,
-        //     calendarId: `cal1`,
-        //     title: 'Weekly Meeting',
-        //     location: 'UMN',
-        //     attendees: ['7C'],
-        //     start: '2023-11-30T11:00:00',
-        //     end: '2023-11-30T15:00:00',
-        // };
-
-        // // Create the initial event here
-        // calendarInstance.createEvents([initialEvent]);
-
-        const userClassId = user.user_details.classId; // replace this with your actual logic to get user's classId
-
-        // Make an API request to fetch events based on the user's classId
-        axios.get(`/api/showEvent/${userClassId}`)
-            .then(response => {
-                const fetchedEvents = response.data;
-                setEvents(fetchedEvents);
-
-                // Assuming calendarInstance is the instance of your Toast UI calendar
-                fetchedEvents.forEach(eventData => {
-                    calendarInstance.createEvents([{
-                        id: eventData.id,
-                        calendarId: eventData.classId,
-                        title: eventData.title,
-                        location: eventData.location,
-                        attendees: eventData.attendees,
-                        start: eventData.start_date,
-                        end: eventData.end_date,
-                    }]);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching events:', error);
-            });
 
         calendarInstance.on('clickEvent', (event) => {
             const eventDesc = calendarInstance.getEvent(event.event.id, event.event.calendarId);
@@ -251,6 +215,36 @@ export default function Schedule({ auth, user }) {
 
             // Close the delete popup in case of an error
             setIsEventPopUpDelete(false);
+        }
+    };
+
+    const showClassEvent = async () => {
+        const calendarInstance = calendarRef.current.getInstance();
+
+        calendarInstance.clear();
+
+        try {
+            const response = await axios.get(`/api/showEvent/${selectedClass}`);
+            console.log(response.data); // Log the response for debugging
+
+            const fetchedEvents = response.data;
+            setEvents(fetchedEvents);
+
+            // Assuming calendarInstance is the instance of your Toast UI calendar
+            fetchedEvents.forEach(eventData => {
+                calendarInstance.createEvents([{
+                    id: eventData.id,
+                    calendarId: eventData.class,
+                    title: eventData.title,
+                    location: eventData.location,
+                    attendees: eventData.attendees,
+                    start: eventData.start_date,
+                    end: eventData.end_date,
+                }]);
+            });
+        } catch (error) {
+            // Handle errors
+            console.error('Error fetching events:', error);
         }
     };
 
@@ -669,7 +663,7 @@ export default function Schedule({ auth, user }) {
                                     onClick={() => setIsPopUpClass(false)}
                                 >
                                     <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" strokeinecap="round" strokelinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                     </svg>
                                 </button>
                                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -677,27 +671,33 @@ export default function Schedule({ auth, user }) {
                                         <div className="z-10">
                                             <div className="">
                                                 <ul className="py-2 text-sm text-gray-700 grid grid-cols-3">
-                                                    {["7", "8", "9"].map((classHeader) => (
-                                                        <li key={classHeader}>
-                                                            <a href="#" className="block p-3">
-                                                                {classHeader}
-                                                            </a>
-                                                        </li>
-                                                    ))}
+                                                    <li>
+                                                        <a href="#" className="block p-3" onClick={() => setIsPopUpClass(false)}>
+                                                            7
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" className="block p-3" onClick={() => setIsPopUpClass(false)}>
+                                                            8
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" className="block p-3" onClick={() => setIsPopUpClass(false)}>
+                                                            9
+                                                        </a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <ul className="py-2 text-sm items-center text-gray-700 grid grid-cols-3">
-                                                {["7", "8", "9"].map((classHeader) => (
-                                                    <li key={classHeader}>
-                                                        {Array.from({ length: 6 }, (_, index) => (
-                                                            <a
-                                                                href="#"
-                                                                key={`${classHeader}${String.fromCharCode(97 + index)}`}
-                                                                className="block p-3 hover:bg-gray-100 rounded-full"
-                                                            >
-                                                                {classHeader + String.fromCharCode(97 + index)}
-                                                            </a>
-                                                        ))}
+                                                {Array.from({ length: 6 }).map((_, index) => (
+                                                    <li key={index}>
+                                                        <a
+                                                            href="#"
+                                                            className="block p-3 hover:bg-gray-100 rounded-full"
+                                                            onClick={() => setIsPopUpClass(false)}
+                                                        >
+                                                            {(parseInt(classHeader) + index).toString() + String.fromCharCode(65 + index)}
+                                                        </a>
                                                     </li>
                                                 ))}
                                             </ul>

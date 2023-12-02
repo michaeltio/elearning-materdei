@@ -7,11 +7,14 @@ import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-export default function Schedule({ auth }) {
+import axios from 'axios';
+
+export default function Schedule({ auth, user }) {
     const calendarRef = useRef(null);
-    const [eventCounter, setEventCounter] = useState(1);
     const [currentDateRange, setCurrentDateRange] = useState('');
     const [currentView, setCurrentView] = useState('');
+
+    const [events, setEvents] = useState([]);
 
     const updateDateRange = () => {
         const calendarInstance = calendarRef.current.getInstance();
@@ -60,11 +63,13 @@ export default function Schedule({ auth }) {
 
     useEffect(() => {
         const calendarInstance = calendarRef.current.getInstance();
+        // calendarInstance.clear(); // Clear existing events
 
         calendarInstance.setOptions({
             useFormPopup: false,
             useCreationPopup: false,
             useDetailPopup: false,
+            disableDblClick: false,
             week: {
                 hourStart: 6,
                 hourEnd: 19,
@@ -79,22 +84,34 @@ export default function Schedule({ auth }) {
 
         calendarInstance.changeView('week');
 
-        const initialEvent = {
-            id: `event${eventCounter}`,
-            calendarId: `cal${eventCounter}`,
-            title: 'Weekly Meeting',
-            location: 'UMN',
-            attendees: ['7C'],
-            start: '2023-11-22T09:00:00',
-            end: '2023-11-22T10:00:00',
-        };
+        // replace this with your actual logic to get user's classId
+        const userClassId = auth.user.user_details.class;
 
-        calendarInstance.createEvents([initialEvent]);
-        setEventCounter((prevCounter) => prevCounter + 1);
+        // Make an API request to fetch events based on the user's classId
+        axios.get(`/api/showEvent/${userClassId}`)
+            .then(response => {
+                const fetchedEvents = response.data;
+                setEvents(fetchedEvents);
+
+                // Assuming calendarInstance is the instance of your Toast UI calendar
+                fetchedEvents.forEach(eventData => {
+                    calendarInstance.createEvents([{
+                        id: eventData.id,
+                        calendarId: eventData.class,
+                        title: eventData.title,
+                        location: eventData.location,
+                        attendees: eventData.attendees,
+                        start: eventData.start_date,
+                        end: eventData.end_date,
+                    }]);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching events:', error);
+            });
 
         updateDateRange();
         updateCurrentView();
-
     }, []);
 
     useEffect(() => {
@@ -118,8 +135,8 @@ export default function Schedule({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className='container-toast-ui bg-white'>
-                <div className='pt-3 sm:pt-5 px-5 flex justify-between'>
-                    <div className='flex items-center space-x-1 sm:space-x-4'>
+                <div className='pt-3 sm:pt-5 px-5 flex flex-col md:flex-row justif-center sm:justify-between '>
+                    <div className='flex items-center justify-center space-x-1 sm:space-x-4 sm:mb-3'>
                         <button
                             onClick={handlePrevButtonClick}
                             type="button"
@@ -154,10 +171,10 @@ export default function Schedule({ auth }) {
                             </svg>
                         </button>
                     </div>
-                    <div className='flex items-center space-x-4'>
+                    <div className='flex items-center justify-center space-x-4'>
                         <button
                             onClick={handleTodayButtonClick}
-                            className='today-button py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500'
+                            className='py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500'
                         >
                             Today
                         </button>

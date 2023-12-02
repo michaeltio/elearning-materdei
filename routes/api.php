@@ -21,10 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::get('api/scheduleEvent', [EventController::class,'index']);
 Route::post('/scheduleEvent', [EventController::class, 'store']);
-Route::get('/showEvent/{classId}', [EventController::class, 'getEvents']);
-// Route::get('/showEvent', [EventController::class, 'getEvents']);
+Route::get('/showEvent/{class}', [EventController::class, 'getEvents']);
 
-Route::post('/updateEvent/{id}/{classId}', [EventController::class, 'update']);
+Route::post('/updateEvent/{id}/{class}', [EventController::class, 'update']);
 Route::delete('/deleteEvent/{id}', [EventController::class, 'destroy']);
 
 // Route::delete('/api/scheduleEvent/{id}/{calendarId}', [EventController::class, 'destroy']);

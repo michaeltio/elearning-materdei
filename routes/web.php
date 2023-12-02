@@ -46,6 +46,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         optional(Auth::user()->userDetails);
         return Inertia::render('Student/Subject');
     })->name('studentSubject');
+    
+    Route::get('/student/schedule', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Student/Schedule');
+    })->name('studentSchedule');
 
     Route::get('/teacher', function () {
         optional(Auth::user()->userDetails);
@@ -56,6 +61,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         optional(Auth::user()->userDetails);
         return Inertia::render('Admin/Home');
     })->name('adminHome');
+
+    Route::get('/admin/schedule', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/Schedule');
+    })->name('adminSchedule');
 });
 
 Route::middleware('auth')->group(function () {

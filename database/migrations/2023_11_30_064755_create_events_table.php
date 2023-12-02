@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id(); // id event/subject itu
-            $table->string('classId'); // jadwal kelas mana
+            $table->string('class'); // jadwal kelas mana
             $table->string('title');
             $table->string('location')->nullable();
             $table->string('attendees')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->timestamps();
-            $table->foreign('classId')->references('classId')->on('users')->onDelete('cascade');
         });
     }
 

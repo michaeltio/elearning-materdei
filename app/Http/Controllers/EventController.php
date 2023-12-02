@@ -22,28 +22,11 @@ class EventController extends Controller
         return response()->json($events);
     }
 
-    public function getEvents(Request $request, $classId)
+    public function getEvents(Request $request, $class)
     {
-        $events = Event::where('classId', $classId)->get();
+        $events = Event::where('class', $class)->get();
         return response()->json($events);
     }
-
-    // public function getEvents(Request $request)
-    // {
-    //     // Get the authenticated user
-    //     $user = auth()->user();
-
-    //     // Check if the user is authenticated
-    //     if ($user) {
-    //         // User is authenticated, fetch events based on the user's classId
-    //         $classId = $user->classId;
-    //         $events = Event::where('classId', $classId)->get();
-    //         return response()->json($events);
-    //     } else {
-    //         // User is not authenticated, return an appropriate response or handle accordingly
-    //         return response()->json(['error' => 'User not authenticated'], 401);
-    //     }
-    // }
 
     /**
      * Store a newly created event in storage.
@@ -54,7 +37,7 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'classId' => 'required|string',
+            'class' => 'required|string',
             'title' => 'required|string',
             'location' => 'nullable|string',
             'attendees' => 'nullable|string',
@@ -63,12 +46,12 @@ class EventController extends Controller
         ]);
 
         // Explode the comma-separated classId string into an array
-        $classIds = explode(',', $validatedData['classId']);
+        $classes = explode(',', $validatedData['class']);
 
         // Iterate through each classId and create a new event row
-        foreach ($classIds as $classId) {
+        foreach ($classes as $class) {
             $eventData = [
-                'classId' => trim($classId), // Trim to remove extra spaces
+                'class' => trim($class), // Trim to remove extra spaces
                 'title' => $validatedData['title'],
                 'location' => $validatedData['location'],
                 'attendees' => $validatedData['attendees'],
@@ -85,7 +68,7 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'classId' => 'required|string',
+            'class' => 'required|string',
             'title' => 'required|string',
             'location' => 'nullable|string',
             'attendees' => 'nullable|string',
@@ -94,7 +77,7 @@ class EventController extends Controller
         ]);
 
         // Explode the comma-separated classId string into an array
-        $classIds = explode(',', $validatedData['classId']);
+        $classes = explode(',', $validatedData['class']);
 
         // Find the existing event
         $event = Event::find($id);
@@ -113,13 +96,13 @@ class EventController extends Controller
         ]);
 
         // Iterate through each additional classId
-        foreach ($classIds as $classId) {
-            $classId = trim($classId); // Trim to remove extra spaces
+        foreach ($classes as $class) {
+            $class = trim($class); // Trim to remove extra spaces
 
             // Skip creating a new event for the original classId being updated
-            if ($classId != $event->classId) {
+            if ($class != $event->class) {
                 Event::create([
-                    'classId' => $classId,
+                    'class' => $class,
                     'title' => $validatedData['title'],
                     'location' => $validatedData['location'],
                     'attendees' => $validatedData['attendees'],
