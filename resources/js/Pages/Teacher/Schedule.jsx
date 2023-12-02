@@ -86,6 +86,7 @@ export default function Schedule({ auth }) {
         setIsEventPopUpDesc(!isEventPopUpDesc);
         setIsEventPopUpEdit(!isEventPopUpEdit);
     };
+
     const handleEventButtonDelete = () => {
         setIsEventPopUpDelete(!isEventPopUpDelete);
     };
@@ -195,9 +196,13 @@ export default function Schedule({ auth }) {
     const handleUpdateFormSubmit = async (e, eventId, classId) => {
         e.preventDefault();
 
+        console.log('Raw date input:', e.target.event_start_date.value);
+        console.log('Raw time input:', e.target.event_start_time.value);
+
         const formatDate = (date, time) => {
-            const formattedDate = new Date(`${date}T${time}`);
-            return formattedDate.toISOString();
+            const isoString = `${date}T${time}`;
+            console.log('Formatted date:', isoString);
+            return isoString;
         };
 
         const updatedEventForm = {
@@ -208,9 +213,9 @@ export default function Schedule({ auth }) {
             start_date: formatDate(e.target.event_start_date.value, e.target.event_start_time.value),
             end_date: formatDate(e.target.event_end_date.value, e.target.event_end_time.value),
         };
-        // belom selesai, tanggalnya masih salah
 
         try {
+            console.log('Request Payload:', updatedEventForm);
             const response = await axios.post(`/api/updateEvent/${eventId}/${classId}`, updatedEventForm);
 
             // Handle the response as needed
@@ -224,7 +229,30 @@ export default function Schedule({ auth }) {
         }
     };
 
+    const confirmDelete = async () => {
+        const calendarInstance = calendarRef.current.getInstance();
 
+        try {
+            // Remove the event from the calendar visually
+            calendarInstance.deleteEvent(selectedEvent.id, selectedEvent.calendarId);
+
+            // Perform the deletion
+            const response = await axios.delete(`/api/deleteEvent/${selectedEvent.id}`);
+            console.log(response.data); // Log the response for debugging
+
+            // Optionally, you can update your state or perform any other necessary actions after deletion
+
+            // Close the delete popup
+            setIsEventPopUpDelete(false);
+            setIsEventPopUpDesc(false);
+        } catch (error) {
+            // Handle errors
+            console.error('Error deleting event:', error);
+
+            // Close the delete popup in case of an error
+            setIsEventPopUpDelete(false);
+        }
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -512,7 +540,7 @@ export default function Schedule({ auth }) {
                                     onClick={() => setIsEventPopUpEdit(false)}
                                 >
                                     <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" strokeLinecap="round" strokLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                     </svg>
                                 </button>
                                 <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -690,7 +718,7 @@ export default function Schedule({ auth }) {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16 flex items-center text-red-500 mx-auto" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
                                     </svg>
                                     <p className="text-xl font-bold py-4">Are you sure?</p>
                                     <p className="text-sm text-gray-500 px-8">Do you really want to delete this event?
@@ -710,6 +738,7 @@ export default function Schedule({ auth }) {
                                         onClick={() => {
                                             setIsEventPopUpDelete(false);
                                             setIsEventPopUpDesc(false);
+                                            confirmDelete();
                                         }}
                                     >
                                         Delete
@@ -724,43 +753,3 @@ export default function Schedule({ auth }) {
         </AuthenticatedLayout >
     );
 }
-
-// calendarInstance.on('beforeDeleteEvent', (event) => {
-//     calendarInstance.deleteEvent(event.id, event.calendarId);
-// });
-
-// calendarInstance.on('clickEvent', (event) => {
-//     calendarInstance.setOptions({
-//         useFormPopup: true,
-//     });
-
-//     // This function updates the event and closes the popup
-// const updateAndClosePopup = (updateInfo) => {
-//     const { event, changes } = updateInfo;
-
-//     calendarInstance.updateEvent(event.id, event.calendarId, {
-//         title: changes.title || event.title,
-//         state: changes.state || event.state,
-//         start: changes.start || event.start,
-//         end: changes.end || event.end,
-//         // Add other properties you want to update
-//     });
-// };
-
-//     // Attach the beforeUpdateEvent handler
-//     calendarInstance.on('beforeUpdateEvent', updateAndClosePopup);
-
-//     // Remove the beforeUpdateEvent handler when the popup is closed or the user clicks away
-//     const removeUpdateHandler = () => {
-//         calendarInstance.off('beforeUpdateEvent', updateAndClosePopup);
-//         calendarInstance.off('click', removeUpdateHandler);
-
-//         // Close the popup when the user clicks away or closes it
-//         calendarInstance.setOptions({
-//             useFormPopup: false,
-//         });
-//     };
-
-//     // Attach an event handler to close the popup when the user clicks away
-//     calendarInstance.on('click', removeUpdateHandler);
-// });
