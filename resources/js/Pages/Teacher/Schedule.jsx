@@ -11,7 +11,7 @@ import Add from '../../../../public/Assets/add.svg';
 
 import axios from 'axios';
 
-export default function Schedule({ auth }) {
+export default function Schedule({ auth, user }) {
     const calendarRef = useRef(null);
     const [currentDateRange, setCurrentDateRange] = useState('');
     const [currentView, setCurrentView] = useState('');
@@ -127,7 +127,7 @@ export default function Schedule({ auth }) {
         // // Create the initial event here
         // calendarInstance.createEvents([initialEvent]);
 
-        const userClassId = '7a'; // replace this with your actual logic to get user's classId
+        const userClassId = user.user_details.classId; // replace this with your actual logic to get user's classId
 
         // Make an API request to fetch events based on the user's classId
         axios.get(`/api/showEvent/${userClassId}`)
