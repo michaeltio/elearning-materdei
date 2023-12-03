@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,17 +45,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return Inertia::render('Student/Attendance');
         })->name('studentAttendance');
 
-        Route::get('/student/subject', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Student/Subject');
-        })->name('studentSubject');
+        Route::get('/student/subject/{subjectId}',
+        [SubjectController::class, 'show'])->name('studentSubject');
     });
     //teacher
     Route::middleware(['auth', 'verified', 'teacher'])->group(function () {
-        Route::get('/teacher', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Teacher/Home');
-        })->name('teacherHome');
+        Route::get('/teacher', [UserController::class, 'show'])->name('teacherHome');
     });
     //admin
     Route::middleware(['auth', 'verified', 'admin'])->group(function () {

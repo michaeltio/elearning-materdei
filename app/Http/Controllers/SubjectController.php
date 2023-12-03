@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class SubjectController extends Controller
 {
-    public function show(){
+    public function show($subjectId){
         $subjectData = (Subject::where('subjectId', $subjectId)->first());
         $subjectData->subjectDatas;
         $userClass = optional(Auth::user()->userDetails)->class;
@@ -19,5 +21,4 @@ class UserController extends Controller
             'subjectData' => $subjectData,
         ]);
     }
-
 }

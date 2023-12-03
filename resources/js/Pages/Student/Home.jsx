@@ -36,6 +36,7 @@ export default function StudentHome({ auth }) {
                         bgColor="bg-red-500"
                         content={card.subject_details.subjectName}
                         arrowColor="bg-red-500"
+                        dynamic={card.subject_details}
                     />
                 ))}
             </div>

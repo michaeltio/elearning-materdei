@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ClassSubjectTest::class);
         $this->call(UserDetailTest::class);
         $this->call(UserTest::class);
+        $this->call(SubjectDataTest::class);
     }
 }
