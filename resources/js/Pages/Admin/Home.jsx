@@ -18,13 +18,11 @@ export default function AdminHome({ auth }) {
             <div className="flex flex-wrap justify-center items-center gap-12 mb-8">
                 <AdminCard
                     title="Students"
-                    qty={72}
                     icon={StudentIcon}
                     path="adminStudentList"
                 />
                 <AdminCard
                     title="Teachers"
-                    qty={40}
                     icon={TeacherIcon}
                     path="adminTeacherList"
                 />

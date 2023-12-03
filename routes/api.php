@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 //model
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminStudentController;
+use App\Http\Controllers\AdminTeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,7 @@ Route::get('/showAttendance', [AttendanceController::class, 'show']);
 Route::post('/updateAttendance', [AttendanceController::class, 'update']);
 
 //admin student
-Route::get('showAllStudents', [AdminStudentController::class, 'index']);
+Route::get('/showAllStudents', [AdminStudentController::class, 'index']);
+
+//admin teacher
+Route::get('/showAllTeachers', [AdminTeacherController::class, 'index']);
