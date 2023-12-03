@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 //model
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AdminStudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+// attendance
 Route::get('/showAttendance', [AttendanceController::class, 'show']);
 Route::post('/updateAttendance', [AttendanceController::class, 'update']);
+
+//admin student
+Route::get('showAllStudents', [AdminStudentController::class, 'index']);
