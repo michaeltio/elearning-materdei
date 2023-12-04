@@ -20,4 +20,6 @@ class UserDetail extends Model
     {
         return $this->hasOne(Classe::class, 'classId', 'class');
     }
+
+   
 }

@@ -15,6 +15,9 @@ class Kernel extends ConsoleKernel
             ->at('06:30');
     }
 
+    /**
+     * Register the commands for the application.
+     */
     protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');

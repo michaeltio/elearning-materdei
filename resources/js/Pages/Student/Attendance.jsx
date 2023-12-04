@@ -1,17 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Head } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import axios from "axios";
 
 //icon
 import AttendanceIcon from "/public/Assets/attendance-icon.svg";
 import CheckIcon from "/public/Assets/check-icon.svg";
-import WeekendIcon from "/public/Assets/weekend-icon.svg";
-
 export default function Attendance({ auth }) {
     const [isAttend, setIsAttend] = useState(false);
-    const [date, setDate] = useState("");
-    const [isWeekend, setIsWeekend] = useState(false);
 
     //buat data date sekarang
     const currentDate = new Date();
@@ -62,53 +57,6 @@ export default function Attendance({ auth }) {
             console.error(error);
         }
     };
-
-    useEffect(() => {
-        const weekdayHandler = () => {
-            const weekday = formattedDate.split(", ")[0];
-            if (weekday === "Minggu" || weekday === "Sabtu") {
-                setIsWeekend(true);
-                // console.log(isWeekDay);
-            } else {
-                setIsWeekend(false);
-                console.log("test");
-            }
-        };
-        //fetch student attendance from database
-        const fetchSpecificAttendance = async () => {
-            const studentId = auth.user.id;
-            const date = currentDate.toISOString("id-ID").substring(0, 10);
-
-            try {
-                const response = await axios.get(
-                    "/api/showAttendance",
-                    {
-                        params: {
-                            student_id: studentId,
-                            date: date,
-                        },
-                    },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    }
-                );
-
-                if (response.status === 200) {
-                    setIsAttend(response.data.is_present);
-                } else {
-                    console.error("failed");
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchSpecificAttendance();
-        weekdayHandler();
-        setDate(formattedDate);
-    }, []);
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -130,56 +78,23 @@ export default function Attendance({ auth }) {
                     </h1>
                     <div
                         className={`w-full h-4 rounded-xl ${
-                            isAttend || isWeekend
-                                ? "bg-green-500"
-                                : "bg-red-500"
+                            isAttend ? "bg-green-500" : "bg-red-600"
                         }`}
                     ></div>
                 </div>
-
-                {isWeekend ? (
-                    <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
-                        <div className="rounded-full bg-green-500 w-full h-full flex flex-col justify-center items-center">
-                            <img
-                                src={WeekendIcon}
-                                alt=""
-                                className="flex w-32 brightness-0 invert"
-                            />
-                            <p className="text-center items-center text-white">
-                                Happy Weekend
-                            </p>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
-                        {isAttend ? (
-                            <div className="rounded-full bg-green-500 w-full h-full flex flex-col justify-center items-center">
-                                <img
-                                    src={CheckIcon}
-                                    alt=""
-                                    className="flex w-32 brightness-0 invert"
-                                />
-                                <p className="text-center items-center text-white">
-                                    Class Attended
-                                </p>
-                            </div>
-                        ) : (
-                            <button
-                                onClick={handleAttend}
-                                className="rounded-full bg-red-500 w-full h-full flex flex-col justify-center items-center"
-                            >
-                                <img
-                                    src={AttendanceIcon}
-                                    alt=""
-                                    className="flex w-32 brightness-0 invert"
-                                />
-                                <h1 className="text-center items-center text-white">
-                                    Click to Attend
-                                </h1>
-                            </button>
-                        )}
-                    </div>
-                )}
+                <button
+                    className="w-64 h-64 mb-6 rounded-full bg-primaryBlue justify-center hover:bg-secondaryBlue "
+                    onClick={handleAttend}
+                >
+                    <img
+                        className="w-32 mx-auto brightness-0 invert"
+                        src={isAttend ? CheckIcon : AttendanceIcon}
+                        alt=""
+                    />
+                    <h1 className="text-center items-center text-white">
+                        {isAttend ? "Class Attended" : "Click to Attend"}
+                    </h1>
+                </button>
             </div>
         </AuthenticatedLayout>
     );
