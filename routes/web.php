@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubjectController;
 
@@ -50,7 +51,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     //teacher
     Route::middleware(['auth', 'verified', 'teacher'])->group(function () {
-        Route::get('/teacher', [UserController::class, 'show'])->name('teacherHome');
+        Route::get('/teacher', [UserController::class, 'homeseed'])->name('teacherHome');
+
+        Route::get('/teacher/subject/{subjectId}',
+        [UserController::class, 'show'])->name('teacherSubject');
     });
     //admin
     Route::middleware(['auth', 'verified', 'admin'])->group(function () {

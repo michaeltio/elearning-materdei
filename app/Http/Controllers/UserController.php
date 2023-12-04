@@ -3,18 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function show(){
+    public function homeseed(){
+        $userId = optional(Auth::user()->userDetails)->userId;
+        $subjectsData = Subject::where('teacherId', $userId)->get();
+        foreach ($subjectsData as $subjectData) {
+            $subjectData->subjectDatas; 
+        }
+        return Inertia::render('Teacher/Home', [
+            'subjectsData' => $subjectsData,
+        ]);
+    }
+
+    public function show($subjectId){
         $subjectData = (Subject::where('subjectId', $subjectId)->first());
         $subjectData->subjectDatas;
-        $userClass = optional(Auth::user()->userDetails)->class;
-        if ($userClass !== $subjectData->classSubjects->classId) {
-            abort(403, 'Unauthorized'); // or handle the case when the user is not in the correct class
+        $userId = optional(Auth::user()->userDetails)->userId;
+        if ($userId !== $subjectData->teacherId) {
+            abort(403, 'Unauthorized');
         }
-        return Inertia::render('Student/Subject', [
+        return Inertia::render('Teacher/Subject', [
             'subjectId' => $subjectId,
             'subjectData' => $subjectData,
         ]);

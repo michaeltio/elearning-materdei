@@ -14,7 +14,7 @@ class SubjectController extends Controller
         $subjectData->subjectDatas;
         $userClass = optional(Auth::user()->userDetails)->class;
         if ($userClass !== $subjectData->classSubjects->classId) {
-            abort(403, 'Unauthorized'); // or handle the case when the user is not in the correct class
+            abort(403, 'Unauthorized');
         }
         return Inertia::render('Student/Subject', [
             'subjectId' => $subjectId,

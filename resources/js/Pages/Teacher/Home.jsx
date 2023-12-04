@@ -5,10 +5,7 @@ import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 //icon
 import SearchIcon from "/public/Assets/search-icon.svg";
 
-export default function StudentHome({ auth }) {
-    // console.log(auth.user.user_details.classes.class_subjects);
-    // console.log(subjects);
-
+export default function StudentHome({ auth, subjectsData }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Home" />
@@ -29,15 +26,16 @@ export default function StudentHome({ auth }) {
             </div>
 
             <div className="flex flex-wrap  justify-center mt-12">
-                {/* {subjects.map((card, index) => (
+                {subjectsData.map((card, index) => (
                     <SubjectCard
                         key={index}
+                        user={auth.user}
                         bgColor="bg-red-500"
-                        content={card.subject_details.subjectName}
+                        content={card.subjectName}
                         arrowColor="bg-red-500"
-                        dynamic={card.subject_details}
+                        dynamic={card}
                     />
-                ))} */}
+                ))}
             </div>
         </AuthenticatedLayout>
     );

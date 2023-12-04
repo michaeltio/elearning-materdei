@@ -33,6 +33,7 @@ export default function StudentHome({ auth }) {
                 {subjects.map((card, index) => (
                     <SubjectCard
                         key={index}
+                        user={auth.user}
                         bgColor="bg-red-500"
                         content={card.subject_details.subjectName}
                         arrowColor="bg-red-500"
