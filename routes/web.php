@@ -82,6 +82,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/SubjectList');
         })->name('adminSubjectList');
+        Route::get('/admin/student-list/{classTitle}', function ($classTitle) {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/HistoryAttendancePreview', ['classTitle' => $classTitle]);
+        })->name('adminAttendancePreview');
     });
 });
 

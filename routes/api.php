@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminTeacherController;
+use App\Http\Controllers\HistoryAttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,6 @@ Route::get('/showAllStudents', [AdminStudentController::class, 'index']);
 
 //admin teacher
 Route::get('/showAllTeachers', [AdminTeacherController::class, 'index']);
+
+//admin attendance
+Route::get('/showAttendanceByClass', [HistoryAttendanceController::class, 'index']);
