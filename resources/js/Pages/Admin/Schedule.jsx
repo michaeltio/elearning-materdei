@@ -218,11 +218,7 @@ export default function Schedule({ auth, user }) {
         }
     };
 
-    const showClassEvent = async () => {
-        const calendarInstance = calendarRef.current.getInstance();
-
-        calendarInstance.clear();
-
+    const handleClassClick = async (selectedClass) => {
         try {
             const response = await axios.get(`/api/showEvent/${selectedClass}`);
             console.log(response.data); // Log the response for debugging
@@ -231,21 +227,29 @@ export default function Schedule({ auth, user }) {
             setEvents(fetchedEvents);
 
             // Assuming calendarInstance is the instance of your Toast UI calendar
-            fetchedEvents.forEach(eventData => {
-                calendarInstance.createEvents([{
-                    id: eventData.id,
-                    calendarId: eventData.class,
-                    title: eventData.title,
-                    location: eventData.location,
-                    attendees: eventData.attendees,
-                    start: eventData.start_date,
-                    end: eventData.end_date,
-                }]);
+            const calendarInstance = calendarRef.current.getInstance();
+            calendarInstance.clear();
+
+            fetchedEvents.forEach((eventData) => {
+                calendarInstance.createEvents([
+                    {
+                        id: eventData.id,
+                        calendarId: eventData.class,
+                        title: eventData.title,
+                        location: eventData.location,
+                        attendees: eventData.attendees,
+                        start: eventData.start_date,
+                        end: eventData.end_date,
+                    },
+                ]);
             });
         } catch (error) {
             // Handle errors
             console.error('Error fetching events:', error);
         }
+
+        // Close the popup after handling the click
+        setIsPopUpClass(false);
     };
 
     useEffect(() => {
@@ -671,36 +675,36 @@ export default function Schedule({ auth, user }) {
                                         <div className="z-10">
                                             <div className="">
                                                 <ul className="py-2 text-sm text-gray-700 grid grid-cols-3">
-                                                    <li>
-                                                        <a href="#" className="block p-3" onClick={() => setIsPopUpClass(false)}>
-                                                            7
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" className="block p-3" onClick={() => setIsPopUpClass(false)}>
-                                                            8
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" className="block p-3" onClick={() => setIsPopUpClass(false)}>
-                                                            9
-                                                        </a>
-                                                    </li>
+                                                    {["7", "8", "9"].map((classNumber) => (
+                                                        <li key={classNumber}>
+                                                            <a
+                                                                href="#"
+                                                                className="block p-3"
+                                                                onClick={() => handleClassClick(classNumber)}
+                                                            >
+                                                                {classNumber}
+                                                            </a>
+                                                        </li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                             <ul className="py-2 text-sm items-center text-gray-700 grid grid-cols-3">
-                                                {Array.from({ length: 6 }).map((_, index) => (
-                                                    <li key={index}>
-                                                        <a
-                                                            href="#"
-                                                            className="block p-3 hover:bg-gray-100 rounded-full"
-                                                            onClick={() => setIsPopUpClass(false)}
-                                                        >
-                                                            {(parseInt(classHeader) + index).toString() + String.fromCharCode(65 + index)}
-                                                        </a>
+                                                {["7", "8", "9"].map((classNumber) => (
+                                                    <li key={classNumber}>
+                                                        {["A", "B", "C", "D", "E", "F"].map((classLetter) => (
+                                                            <a
+                                                                href="#"
+                                                                key={classNumber + classLetter}
+                                                                className="block p-3 hover:bg-gray-100 rounded-full"
+                                                                onClick={() => handleClassClick(classNumber + classLetter)}
+                                                            >
+                                                                {classNumber + classLetter}
+                                                            </a>
+                                                        ))}
                                                     </li>
                                                 ))}
                                             </ul>
+
                                         </div>
                                     </div>
                                 </div>
