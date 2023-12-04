@@ -15,5 +15,5 @@ class Attendance extends Model
         'attendance_date',
         'is_present',
         'is_late',
-    ]
+    ];
 }
