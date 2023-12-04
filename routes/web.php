@@ -46,15 +46,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return Inertia::render('Student/Attendance');
         })->name('studentAttendance');
 
-        Route::get('/student/subject/{subjectId}',
-        [SubjectController::class, 'show'])->name('studentSubject');
+        Route::get(
+            '/student/subject/{subjectId}',
+            [SubjectController::class, 'show']
+        )->name('studentSubject');
     });
     //teacher
     Route::middleware(['auth', 'verified', 'teacher'])->group(function () {
         Route::get('/teacher', [UserController::class, 'homeseed'])->name('teacherHome');
 
-        Route::get('/teacher/subject/{subjectId}',
-        [UserController::class, 'show'])->name('teacherSubject');
+        Route::get(
+            '/teacher/subject/{subjectId}',
+            [UserController::class, 'show']
+        )->name('teacherSubject');
     });
     //admin
     Route::middleware(['auth', 'verified', 'admin'])->group(function () {
@@ -66,6 +70,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/StudentList');
         })->name('adminStudentList');
+        Route::get('/admin/student-list/{nis}', function ($nis) {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/StudentListPreview', ['nis' => $nis]);
+        })->name('adminStudentListPreview');
         Route::get('/admin/teacher-list', function () {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/TeacherList');
@@ -82,7 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/SubjectList');
         })->name('adminSubjectList');
-        Route::get('/admin/student-list/{classTitle}', function ($classTitle) {
+        Route::get('/admin/history-attendance/{classTitle}', function ($classTitle) {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/HistoryAttendancePreview', ['classTitle' => $classTitle]);
         })->name('adminAttendancePreview');

@@ -8,7 +8,7 @@ export default function HistoryAttendance({ auth }) {
                 History Attendance
             </h1>
             <p className="text-center mb-4">Filtered by Class</p>
-            <div className="flex flex-wrap justify-around gap-8 w-10/12 mx-auto">
+            <div className="flex flex-wrap justify-around gap-8 w-10/12 mx-auto mb-4">
                 <AttendanceCard classTitle={"7A"} />
                 <AttendanceCard classTitle={"7B"} />
                 <AttendanceCard classTitle={"7C"} />

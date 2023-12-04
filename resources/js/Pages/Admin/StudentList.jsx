@@ -13,7 +13,7 @@ export default function StudentList({ auth }) {
 
     //variabel untuk search yang untuk coba coba
     const [search, setSearch] = useState("");
-    
+
     useEffect(() => {
         const fetchStudent = async () => {
             try {
@@ -49,9 +49,9 @@ export default function StudentList({ auth }) {
         {
             label: "Details",
             renderCell: (item) => (
-                <button onClick={() => handleAction(item.id)}>
+                <Link onClick={() => handleAction(item.id)}>
                     <img className="w-8 mx-auto" src={DetailIcon} />
-                </button>
+                </Link>
             ),
         },
     ];
@@ -95,15 +95,7 @@ export default function StudentList({ auth }) {
                 </div>
                 {/* untuk buat tabel */}
                 <div className="p-4">
-                    <CompactTable
-                        columns={COLUMNS}
-                        data={data}
-                        tableStyle={{
-                            border: "1px solid #ddd",
-                            borderRadius: "5px",
-                            padding: "100px",
-                        }}
-                    />
+                    <CompactTable columns={COLUMNS} data={data} />
                 </div>
             </div>
         </AuthenticatedLayout>
