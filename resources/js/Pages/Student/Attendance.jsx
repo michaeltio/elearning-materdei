@@ -21,18 +21,27 @@ export default function Attendance({ auth }) {
         month: "long",
         year: "numeric",
     });
+    const formattedTime = currentDate
+        .toLocaleDateString("id-ID", {
+            hour: "numeric",
+            minute: "numeric",
+        })
+        .substring(10, 16);
 
     //button untuk absen
     const handleAttend = async () => {
         const studentId = auth.user.id;
         const date = currentDate.toISOString("id-ID").substring(0, 10);
+        const isLate = new Date().getHours() >= 7 ? 1 : 0;
 
+        console.log(isLate);
         try {
             const response = await axios.post(
                 "/api/updateAttendance",
                 {
                     student_id: studentId,
                     date: date,
+                    isLate: isLate,
                 },
                 {
                     headers: {
@@ -109,6 +118,7 @@ export default function Attendance({ auth }) {
             <div className="my-8 flex flex-col">
                 <div className="text-center bg-primaryBlue rounded-xl w-64 text-white p-4">
                     <h1>{date}</h1>
+                    <h1>Time: {formattedTime}</h1>
                     <h1>{auth.user.user_details.full_name}</h1>
                     <h1>
                         Status :{" "}

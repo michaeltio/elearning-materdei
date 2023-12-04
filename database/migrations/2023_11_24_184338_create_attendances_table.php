@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->string('student_id');
+            $table->string('class');
             $table->date('attendance_date');
             $table->boolean('is_present');
+            $table->boolean('is_late');
             $table->timestamps();
         });
     }

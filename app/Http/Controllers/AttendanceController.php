@@ -29,6 +29,7 @@ class AttendanceController extends Controller
     {
         $studentId = $request->input('student_id');
         $date = $request->input('date');
+        $isLate = $request->input('isLate');
 
         $attendanceRecord = Attendance::where('student_id', $studentId)
             ->where('attendance_date', $date)
@@ -36,6 +37,7 @@ class AttendanceController extends Controller
             ->firstOrFail();
 
         $attendanceRecord->is_present = true;
+        $attendanceRecord->is_late = $isLate;
         $attendanceRecord->save();
 
         return response()->json($attendanceRecord);
