@@ -1,11 +1,18 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import SubjectCard from "@/Components/SubjectCard/SubjectCard";
-
+import { useState } from "react";
 //icon
 import SearchIcon from "/public/Assets/search-icon.svg";
 
 export default function StudentHome({ auth, subjectsData }) {
+    const [search, setSearch] = useState("");
+
+    //filter the data based on the search input
+    const filteredSubjects = subjectsData.filter((subject) =>
+        subject.subjectName.toLowerCase().includes(search.toLowerCase())
+    );
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Home" />
@@ -16,6 +23,8 @@ export default function StudentHome({ auth, subjectsData }) {
                 <input
                     type="text"
                     placeholder="Search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     className="mb-2 sm:mb-0 sm:mr-3 rounded-md"
                 />
                 <img
@@ -25,8 +34,8 @@ export default function StudentHome({ auth, subjectsData }) {
                 />
             </div>
 
-            <div className="flex flex-wrap  justify-center mt-12">
-                {subjectsData.map((card, index) => (
+            <div className="flex flex-wrap justify-center mt-12">
+                {filteredSubjects.map((card, index) => (
                     <SubjectCard
                         key={index}
                         user={auth.user}

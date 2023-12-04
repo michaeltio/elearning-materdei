@@ -10,11 +10,10 @@ import DetailIcon from "/public/Assets/edit-icon.svg";
 export default function StudentList({ auth }) {
     const [totalData, setTotalData] = useState(0);
     const [studentList, setStudentsList] = useState([]);
-
-    //variabel untuk search yang untuk coba coba
     const [search, setSearch] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
     
-    useEffect(() => {
+   useEffect(() => {
         const fetchStudent = async () => {
             try {
                 const response = await axios.get("/api/showAllStudents");
@@ -28,6 +27,7 @@ export default function StudentList({ auth }) {
                 setTotalData(filteredStudents.length);
                 // console.log(filteredStudents);
                 setStudentsList(filteredStudents);
+                setFilteredData(filteredStudents);
             } catch (error) {
                 console.error(error);
             }
@@ -35,8 +35,16 @@ export default function StudentList({ auth }) {
         fetchStudent();
     }, []);
 
-    //tables
-    const nodes = studentList;
+    const handleSearch = (event) => {
+        const input = event.target.value;
+        setSearch(input);
+        const filtered = studentList.filter((student) =>
+            student.user_details.full_name.toLowerCase().includes(input.toLowerCase())
+        );
+        setFilteredData(filtered);
+    };
+
+    const nodes = filteredData;
 
     const COLUMNS = [
         { label: "NIS", renderCell: (item) => item.id },
@@ -57,11 +65,6 @@ export default function StudentList({ auth }) {
     ];
     const data = { nodes };
 
-    //search
-    const handleSearch = (event) => {
-        setSearch(event.target.value);
-    };
-
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Students" />
@@ -71,12 +74,12 @@ export default function StudentList({ auth }) {
                 </h1>
                 <div className="flex flex-wrap justify-center gap-8">
                     <label htmlFor="search">
-                        Search by Task:&nbsp;
+                        Search by Name:&nbsp;
                         <input
                             id="search"
                             type="text"
-                            // value={search}
-                            // onChange={handleSearch}
+                            value={search}
+                            onChange={handleSearch}
                         />
                     </label>
                     <br />

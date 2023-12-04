@@ -10,9 +10,9 @@ import DetailIcon from "/public/Assets/edit-icon.svg";
 export default function TeacherList({ auth }) {
     const [totalData, setTotalData] = useState(0);
     const [teacherList, setTeacherList] = useState([]);
-
-    //variabel untuk search yang untuk coba coba
     const [search, setSearch] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
+
     useEffect(() => {
         const fetchStudent = async () => {
             try {
@@ -27,6 +27,7 @@ export default function TeacherList({ auth }) {
                 setTotalData(filteredTeacher.length);
                 // console.log(filteredStudents);
                 setTeacherList(filteredTeacher);
+                setFilteredData(filteredTeacher);
             } catch (error) {
                 console.error(error);
             }
@@ -34,8 +35,19 @@ export default function TeacherList({ auth }) {
         fetchStudent();
     }, []);
 
+    //search
+const handleSearch = (event) => {
+    const input = event.target.value;
+    setSearch(input);
+    const filtered = teacherList.filter((teacher) =>
+        teacher.user_details.full_name.toLowerCase().includes(input.toLowerCase())
+    );
+
+    setFilteredData(filtered);
+};
+
     //tables
-    const nodes = teacherList;
+    const nodes = filteredData;
 
     const COLUMNS = [
         { label: "NIS", renderCell: (item) => item.id },
@@ -56,11 +68,6 @@ export default function TeacherList({ auth }) {
     ];
     const data = { nodes };
 
-    //search
-    const handleSearch = (event) => {
-        setSearch(event.target.value);
-    };
-
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Students" />
@@ -70,12 +77,12 @@ export default function TeacherList({ auth }) {
                 </h1>
                 <div className="flex flex-wrap justify-center gap-8">
                     <label htmlFor="search">
-                        Search by Task:&nbsp;
+                        Search by Name:&nbsp;
                         <input
                             id="search"
                             type="text"
-                            // value={search}
-                            // onChange={handleSearch}
+                            value={search}
+                            onChange={handleSearch}
                         />
                     </label>
                     <br />
