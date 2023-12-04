@@ -13,6 +13,7 @@ export default function StudentList({ auth }) {
 
     //variabel untuk search yang untuk coba coba
     const [search, setSearch] = useState("");
+    
     useEffect(() => {
         const fetchStudent = async () => {
             try {
@@ -74,7 +75,7 @@ export default function StudentList({ auth }) {
                         <input
                             id="search"
                             type="text"
-                            value={search}
+                            // value={search}
                             // onChange={handleSearch}
                         />
                     </label>
