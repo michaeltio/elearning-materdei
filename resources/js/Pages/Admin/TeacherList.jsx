@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CompactTable } from "@table-library/react-table-library/compact";
+import { Link } from "@inertiajs/react";
 
 //icon
 import DetailIcon from "/public/Assets/edit-icon.svg";
@@ -36,15 +37,17 @@ export default function TeacherList({ auth }) {
     }, []);
 
     //search
-const handleSearch = (event) => {
-    const input = event.target.value;
-    setSearch(input);
-    const filtered = teacherList.filter((teacher) =>
-        teacher.user_details.full_name.toLowerCase().includes(input.toLowerCase())
-    );
+    const handleSearch = (event) => {
+        const input = event.target.value;
+        setSearch(input);
+        const filtered = teacherList.filter((teacher) =>
+            teacher.user_details.full_name
+                .toLowerCase()
+                .includes(input.toLowerCase())
+        );
 
-    setFilteredData(filtered);
-};
+        setFilteredData(filtered);
+    };
 
     //tables
     const nodes = filteredData;
@@ -84,9 +87,12 @@ const handleSearch = (event) => {
                             onChange={handleSearch}
                         />
                     </label>
-                    <button className="bg-red-500 px-4 py-2 rounded-xl">
-                        Add New Teachers
-                    </button>{" "}
+                    <Link
+                        className="bg-green-500 p-2 text-center rounded-xl text-white"
+                        // href={route(`adminTeacherListAdd`)}
+                    >
+                        New Teacher
+                    </Link>
                 </div>
                 {/* untuk buat tabel */}
                 <div className="p-4">

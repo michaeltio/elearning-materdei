@@ -87,59 +87,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/AddStudent',);
         })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
-        Route::get('/admin/student-list/new-student', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/AddStudent',);
-        })->name('adminStudentListAdd');
         //teacher
         Route::get('/admin/teacher-list', function () {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/TeacherList');
         })->name('adminTeacherList');
+        Route::get('/admin/teacher-list/{userid}', function ($userid) {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/TeacherListPreview', ['user_id' => $userid]);
+        })->name('adminTeacherListPreview');
         //schedule
         Route::get('/admin/schedule', function () {
             optional(Auth::user()->userDetails);
