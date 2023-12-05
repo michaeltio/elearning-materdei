@@ -10,7 +10,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class UserDetail extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'userId',
+        'full_name',
+        'address',
+        'phone_number',
+        'birthdate',
+        'role',
+        'class',
 
+    ];
     public function users()
     {
         return $this->belongsTo(User::class, 'id', 'userId');
@@ -20,6 +29,4 @@ class UserDetail extends Model
     {
         return $this->hasOne(Classe::class, 'classId', 'class');
     }
-
-   
 }

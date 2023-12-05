@@ -15,6 +15,7 @@ export default function StudentListPreview({ auth, nis }) {
             role: "",
         },
     });
+
     useEffect(() => {
         const fetchStudentDetails = async () => {
             try {
@@ -31,26 +32,67 @@ export default function StudentListPreview({ auth, nis }) {
                         },
                     }
                 );
+                // console.log(response.data);
                 setStudentDetails(response.data);
-                console.log(studentDetails);
+                // console.log(studentDetails);
             } catch (error) {
                 console.error(error);
             }
         };
         fetchStudentDetails();
     }, []);
+
+    const deleteStudent = async () => {
+        try {
+            const response = await axios.delete(
+                "/api/deleteStudent",
+                { params: { nis: nis } },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Schedule" />
-            <div>NIS: {nis}</div>
-            <div>Student E-Mail {studentDetails.email}</div>
-            <div>Name {studentDetails.user_details.full_name}</div>
-            <div>Class {studentDetails.user_details.class}</div>
-            <div>Role {studentDetails.user_details.role}</div>
-            <div>address {studentDetails.user_details.address}</div>
-            <div>phone number {studentDetails.user_details.phone_number}</div>
-            <button>Save</button>
-            <button>Remove Student</button>
+            <div className="bg-white p-4 shadow-md rounded-md w-1/2 mx-auto mt-8">
+                <div className="mb-2 text-2xl">
+                    {studentDetails.user_details.full_name}
+                </div>
+                <div className="mb-2">NIS: {nis}</div>
+                <div className="mb-2">
+                    Student E-Mail: {studentDetails.email}
+                </div>
+                <div className="mb-2">
+                    Class: {studentDetails.user_details.class}
+                </div>
+                <div className="mb-2">
+                    Role: {studentDetails.user_details.role}
+                </div>
+                <div className="mb-2">
+                    Address: {studentDetails.user_details.address}
+                </div>
+                <div className="mb-2">
+                    Phone Number: {studentDetails.user_details.phone_number}
+                </div>
+
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">
+                    Save
+                </button>
+                <button
+                    className="bg-red-500 text-white px-4 py-2 rounded-md"
+                    onClick={deleteStudent}
+                >
+                    Remove Student
+                </button>
+            </div>
         </AuthenticatedLayout>
     );
 }

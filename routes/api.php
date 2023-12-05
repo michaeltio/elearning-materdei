@@ -31,6 +31,8 @@ Route::post('/updateAttendance', [AttendanceController::class, 'update']);
 //admin student
 Route::get('/showAllStudents', [AdminStudentController::class, 'index']);
 Route::get('/showStudentDetails', [AdminStudentController::class, 'show']);
+Route::post('/addNewStudent', [AdminStudentController::class, 'store']);
+Route::delete('/deleteStudent', [AdminStudentController::class, 'destroy']);
 
 //admin teacher
 Route::get('/showAllTeachers', [AdminTeacherController::class, 'index']);

@@ -90,9 +90,13 @@ export default function StudentList({ auth }) {
                             <option value="option3">Option 3</option>
                         </select>
                     </div>
-                    <button className="bg-red-500 px-4 py-2 rounded-xl">
-                        Add New Students
-                    </button>{" "}
+                    
+                    <Link
+                        className="bg-green-500 p-2 text-center rounded-xl text-white"
+                        href={route(`adminStudentListAdd`)}
+                    >
+                        New Student
+                    </Link>
                 </div>
                 {/* untuk buat tabel */}
                 <div className="p-4">
