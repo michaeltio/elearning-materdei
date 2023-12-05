@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CompactTable } from "@table-library/react-table-library/compact";
+import { Link } from "@inertiajs/react";
 
 //icon
 import DetailIcon from "/public/Assets/edit-icon.svg";
@@ -49,7 +50,7 @@ export default function StudentList({ auth }) {
         {
             label: "Details",
             renderCell: (item) => (
-                <Link onClick={() => handleAction(item.id)}>
+                <Link href={route(`adminStudentListPreview`, item.id)}>
                     <img className="w-8 mx-auto" src={DetailIcon} />
                 </Link>
             ),

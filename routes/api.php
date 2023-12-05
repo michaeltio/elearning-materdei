@@ -30,6 +30,7 @@ Route::post('/updateAttendance', [AttendanceController::class, 'update']);
 
 //admin student
 Route::get('/showAllStudents', [AdminStudentController::class, 'index']);
+Route::get('/showStudentDetails', [AdminStudentController::class, 'show']);
 
 //admin teacher
 Route::get('/showAllTeachers', [AdminTeacherController::class, 'index']);
