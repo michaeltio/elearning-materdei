@@ -24,7 +24,7 @@ class UserDetailTest extends Seeder
 
         UserDetail::create([
             'userId' => '1000000001',
-            'full_name' => 'Michael Tio',
+            'full_name' => 'Student 1',
             'address' => 'Jl. Apalah No. 123',
             'phone_number' => '021774400',
             'role' => 'student',
@@ -34,7 +34,7 @@ class UserDetailTest extends Seeder
 
         UserDetail::create([
             'userId' => '1000000002',
-            'full_name' => 'Abigael Xyla',
+            'full_name' => 'Student 2',
             'address' => 'Jl. Gatau No. 456',
             'phone_number' => '02132432',
             'role' => 'student',
@@ -44,7 +44,7 @@ class UserDetailTest extends Seeder
 
         UserDetail::create([
             'userId' => '2000000001',
-            'full_name' => 'Ms. Santi',
+            'full_name' => 'Teacher 1',
             'role' => 'teacher',
             'address' => 'Jl. Guru No. 789',
             'phone_number' => '0215551234',
@@ -53,7 +53,7 @@ class UserDetailTest extends Seeder
 
         UserDetail::create([
             'userId' => '2000000002',
-            'full_name' => 'Mr. Santo',
+            'full_name' => 'Teacher 2',
             'role' => 'teacher',
             'address' => 'Jl. Pendidikan No. 567',
             'phone_number' => '0219876543',
