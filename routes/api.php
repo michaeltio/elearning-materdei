@@ -38,6 +38,10 @@ Route::post('/editStudent', [AdminStudentController::class, 'edit']);
 
 //admin teacher
 Route::get('/showAllTeachers', [AdminTeacherController::class, 'index']);
+Route::get('/showTeacherDetails', [AdminTeacherController::class, 'show']);
+Route::post('/addNewTeacher', [AdminTeacherController::class, 'store']);
+Route::delete('/deleteTeacher', [AdminTeacherController::class, 'destroy']);
+Route::post('/editTeacher', [AdminTeacherController::class, 'edit']);
 
 //admin attendance
 Route::get('/showAttendanceByClass', [HistoryAttendanceController::class, 'index']);
