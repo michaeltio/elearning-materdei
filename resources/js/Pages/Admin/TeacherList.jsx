@@ -56,7 +56,6 @@ const handleSearch = (event) => {
             renderCell: (item) => item.user_details.full_name,
         },
         { label: "E-Mail", renderCell: (item) => item.email },
-        { label: "Class", renderCell: (item) => item.user_details.class },
         {
             label: "Details",
             renderCell: (item) => (
@@ -85,16 +84,6 @@ const handleSearch = (event) => {
                             onChange={handleSearch}
                         />
                     </label>
-                    <br />
-                    <div>
-                        <label htmlFor="myDropdown">Select an option: </label>
-                        <select id="myDropdown">
-                            <option value="">Select...</option>
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
-                        </select>
-                    </div>
                     <button className="bg-red-500 px-4 py-2 rounded-xl">
                         Add New Teachers
                     </button>{" "}

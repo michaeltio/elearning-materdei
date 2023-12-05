@@ -12,6 +12,7 @@ export default function StudentList({ auth }) {
     const [studentList, setStudentsList] = useState([]);
     const [search, setSearch] = useState("");
     const [filteredData, setFilteredData] = useState([]);
+    const [selectedClass, setSelectedClass] = useState("");
     
    useEffect(() => {
         const fetchStudent = async () => {
@@ -35,14 +36,23 @@ export default function StudentList({ auth }) {
         fetchStudent();
     }, []);
 
+    useEffect(() => {
+        const filteredData = selectedClass
+            ? studentList.filter(
+                (student) => student.user_details.class === selectedClass
+            )
+            : studentList;
+        setFilteredData(filteredData);
+    }, [selectedClass, studentList]);
+
     const handleSearch = (event) => {
-        const input = event.target.value;
-        setSearch(input);
-        const filtered = studentList.filter((student) =>
-            student.user_details.full_name.toLowerCase().includes(input.toLowerCase())
-        );
-        setFilteredData(filtered);
-    };
+    const input = event.target.value;
+    setSearch(input);
+    const filtered = studentList.filter((student) =>
+        student.user_details.full_name.toLowerCase().includes(input.toLowerCase())
+    );
+    setFilteredData(filtered);
+};
 
     const nodes = filteredData;
 
@@ -84,12 +94,23 @@ export default function StudentList({ auth }) {
                     </label>
                     <br />
                     <div>
-                        <label htmlFor="myDropdown">Select an option: </label>
-                        <select id="myDropdown">
+                        <label htmlFor="myDropdown">Select a class: </label>
+                        <select
+                        id="myDropdown"
+                        onChange={(e) => {
+                            setSelectedClass(e.target.value);
+                        }}
+                        >
                             <option value="">Select...</option>
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
+                            <option value="7A">7A</option>
+                            <option value="7B">7B</option>
+                            <option value="7C">7C</option>
+                            <option value="8A">8A</option>
+                            <option value="8B">8B</option>
+                            <option value="8C">8C</option>
+                            <option value="9A">9A</option>
+                            <option value="9B">9B</option>
+                            <option value="9C">9C</option>
                         </select>
                     </div>
                     <button className="bg-red-500 px-4 py-2 rounded-xl">
