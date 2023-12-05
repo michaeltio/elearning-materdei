@@ -33,6 +33,7 @@ Route::get('/showAllStudents', [AdminStudentController::class, 'index']);
 Route::get('/showStudentDetails', [AdminStudentController::class, 'show']);
 Route::post('/addNewStudent', [AdminStudentController::class, 'store']);
 Route::delete('/deleteStudent', [AdminStudentController::class, 'destroy']);
+Route::post('/editStudent', [AdminStudentController::class, 'edit']);
 
 //admin teacher
 Route::get('/showAllTeachers', [AdminTeacherController::class, 'index']);

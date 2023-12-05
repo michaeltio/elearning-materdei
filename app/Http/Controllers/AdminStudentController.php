@@ -47,15 +47,12 @@ class AdminStudentController extends Controller
                 'role' => "student",
             ]);
 
-
-
             //baru bikin referencenya
             $user = new User;
             $user->setAttribute('id', $userDetail->userId);
             $user->setAttribute('email', $request->input('email'));
             $user->setAttribute('password', bcrypt($request->input('password')));
             $user->save();
-
 
             return response()->json(['message' => 'User created successfully', 'user' => $user, 'user_detail' => $userDetail]);
         });
@@ -85,6 +82,53 @@ class AdminStudentController extends Controller
             } else {
                 return response()->json(['msg' => 'User not found'], 404);
             }
+        });
+    }
+
+    public function edit(Request $request)
+    {
+        $request->validate([
+            'nis' => 'required|string',
+            'email' => 'required|email',
+            'full_name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
+            'birthdate' => 'required|date',
+            'class' => 'required|string|max:255',
+        ]);
+
+        return DB::transaction(function () use ($request) {
+            // Find the UserDetail by id
+            $userDetail = UserDetail::where('userId', $request->input('nis'));
+
+            // Check if the UserDetail exists
+            if (!$userDetail) {
+                return response()->json(['message' => 'UserDetail not found'], 404);
+            }
+
+            // Update the UserDetail
+            $userDetail->update([
+                'full_name' => $request->input('full_name'),
+                'address' => $request->input('address'),
+                'phone_number' => $request->input('phone_number'),
+                'birthdate' => $request->input('birthdate'),
+                'class' => $request->input('class'),
+            ]);
+
+            // Find the User by id
+            $user = User::find($request->input('nis'));
+
+            // Check if the User exists
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+
+            // Update the User
+            $user->update([
+                'email' => $request->input('email'),
+            ]);
+
+            return response()->json(['message' => 'User details updated successfully', 'user' => $user, 'user_detail' => $userDetail]);
         });
     }
 }
