@@ -11,9 +11,9 @@ import DetailIcon from "/public/Assets/edit-icon.svg";
 export default function StudentList({ auth }) {
     const [totalData, setTotalData] = useState(0);
     const [studentList, setStudentsList] = useState([]);
-
-    //variabel untuk search yang untuk coba coba
     const [search, setSearch] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
+    const [selectedClass, setSelectedClass] = useState("");
 
     useEffect(() => {
         const fetchStudent = async () => {
@@ -29,6 +29,7 @@ export default function StudentList({ auth }) {
                 setTotalData(filteredStudents.length);
                 // console.log(filteredStudents);
                 setStudentsList(filteredStudents);
+                setFilteredData(filteredStudents);
             } catch (error) {
                 console.error(error);
             }
@@ -36,8 +37,27 @@ export default function StudentList({ auth }) {
         fetchStudent();
     }, []);
 
-    //tables
-    const nodes = studentList;
+    useEffect(() => {
+        const filteredData = selectedClass
+            ? studentList.filter(
+                  (student) => student.user_details.class === selectedClass
+              )
+            : studentList;
+        setFilteredData(filteredData);
+    }, [selectedClass, studentList]);
+
+    const handleSearch = (event) => {
+        const input = event.target.value;
+        setSearch(input);
+        const filtered = studentList.filter((student) =>
+            student.user_details.full_name
+                .toLowerCase()
+                .includes(input.toLowerCase())
+        );
+        setFilteredData(filtered);
+    };
+
+    const nodes = filteredData;
 
     const COLUMNS = [
         { label: "NIS", renderCell: (item) => item.id },
@@ -58,11 +78,6 @@ export default function StudentList({ auth }) {
     ];
     const data = { nodes };
 
-    //search
-    const handleSearch = (event) => {
-        setSearch(event.target.value);
-    };
-
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Students" />
@@ -72,25 +87,36 @@ export default function StudentList({ auth }) {
                 </h1>
                 <div className="flex flex-wrap justify-center gap-8">
                     <label htmlFor="search">
-                        Search by Task:&nbsp;
+                        Search by Name:&nbsp;
                         <input
                             id="search"
                             type="text"
-                            // value={search}
-                            // onChange={handleSearch}
+                            value={search}
+                            onChange={handleSearch}
                         />
                     </label>
                     <br />
                     <div>
-                        <label htmlFor="myDropdown">Select an option: </label>
-                        <select id="myDropdown">
+                        <label htmlFor="myDropdown">Select a class: </label>
+                        <select
+                            id="myDropdown"
+                            onChange={(e) => {
+                                setSelectedClass(e.target.value);
+                            }}
+                        >
                             <option value="">Select...</option>
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
+                            <option value="7A">7A</option>
+                            <option value="7B">7B</option>
+                            <option value="7C">7C</option>
+                            <option value="8A">8A</option>
+                            <option value="8B">8B</option>
+                            <option value="8C">8C</option>
+                            <option value="9A">9A</option>
+                            <option value="9B">9B</option>
+                            <option value="9C">9C</option>
                         </select>
                     </div>
-                    
+
                     <Link
                         className="bg-green-500 p-2 text-center rounded-xl text-white"
                         href={route(`adminStudentListAdd`)}
