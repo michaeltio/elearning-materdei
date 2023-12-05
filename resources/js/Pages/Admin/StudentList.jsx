@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CompactTable } from "@table-library/react-table-library/compact";
+import { Link } from "@inertiajs/react";
 
 //icon
 import DetailIcon from "/public/Assets/edit-icon.svg";
@@ -10,10 +11,10 @@ import DetailIcon from "/public/Assets/edit-icon.svg";
 export default function StudentList({ auth }) {
     const [totalData, setTotalData] = useState(0);
     const [studentList, setStudentsList] = useState([]);
-
-    //variabel untuk search yang untuk coba coba
     const [search, setSearch] = useState("");
-    
+    const [filteredData, setFilteredData] = useState([]);
+    const [selectedClass, setSelectedClass] = useState("");
+
     useEffect(() => {
         const fetchStudent = async () => {
             try {
@@ -28,6 +29,7 @@ export default function StudentList({ auth }) {
                 setTotalData(filteredStudents.length);
                 // console.log(filteredStudents);
                 setStudentsList(filteredStudents);
+                setFilteredData(filteredStudents);
             } catch (error) {
                 console.error(error);
             }
@@ -35,8 +37,27 @@ export default function StudentList({ auth }) {
         fetchStudent();
     }, []);
 
-    //tables
-    const nodes = studentList;
+    useEffect(() => {
+        const filteredData = selectedClass
+            ? studentList.filter(
+                  (student) => student.user_details.class === selectedClass
+              )
+            : studentList;
+        setFilteredData(filteredData);
+    }, [selectedClass, studentList]);
+
+    const handleSearch = (event) => {
+        const input = event.target.value;
+        setSearch(input);
+        const filtered = studentList.filter((student) =>
+            student.user_details.full_name
+                .toLowerCase()
+                .includes(input.toLowerCase())
+        );
+        setFilteredData(filtered);
+    };
+
+    const nodes = filteredData;
 
     const COLUMNS = [
         { label: "NIS", renderCell: (item) => item.id },
@@ -49,18 +70,13 @@ export default function StudentList({ auth }) {
         {
             label: "Details",
             renderCell: (item) => (
-                <button onClick={() => handleAction(item.id)}>
+                <Link href={route(`adminStudentListPreview`, item.id)}>
                     <img className="w-8 mx-auto" src={DetailIcon} />
-                </button>
+                </Link>
             ),
         },
     ];
     const data = { nodes };
-
-    //search
-    const handleSearch = (event) => {
-        setSearch(event.target.value);
-    };
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -71,39 +87,55 @@ export default function StudentList({ auth }) {
                 </h1>
                 <div className="flex flex-wrap justify-center gap-8">
                     <label htmlFor="search">
-                        Search by Task:&nbsp;
+                        Search by Name:&nbsp;
                         <input
                             id="search"
                             type="text"
-                            // value={search}
-                            // onChange={handleSearch}
+                            value={search}
+                            onChange={handleSearch}
                         />
                     </label>
                     <br />
                     <div>
-                        <label htmlFor="myDropdown">Select an option: </label>
-                        <select id="myDropdown">
+                        <label htmlFor="myDropdown">Select a class: </label>
+                        <select
+                            id="myDropdown"
+                            onChange={(e) => {
+                                setSelectedClass(e.target.value);
+                            }}
+                        >
                             <option value="">Select...</option>
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
+                            <option value="7A">7A</option>
+                            <option value="7B">7B</option>
+                            <option value="7C">7C</option>
+                            <option value="7D">7D</option>
+                            <option value="7E">7E</option>
+                            <option value="7F">7F</option>
+                            <option value="8A">8A</option>
+                            <option value="8B">8B</option>
+                            <option value="8C">8C</option>
+                            <option value="8D">7D</option>
+                            <option value="8E">7E</option>
+                            <option value="8F">7F</option>
+                            <option value="9A">9A</option>
+                            <option value="9B">9B</option>
+                            <option value="9C">9C</option>
+                            <option value="9D">9D</option>
+                            <option value="9E">9E</option>
+                            <option value="9F">9F</option>
                         </select>
                     </div>
-                    <button className="bg-red-500 px-4 py-2 rounded-xl">
-                        Add New Students
-                    </button>{" "}
+
+                    <Link
+                        className="bg-green-500 p-2 text-center rounded-xl text-white"
+                        href={route(`adminStudentListAdd`)}
+                    >
+                        New Student
+                    </Link>
                 </div>
                 {/* untuk buat tabel */}
                 <div className="p-4">
-                    <CompactTable
-                        columns={COLUMNS}
-                        data={data}
-                        tableStyle={{
-                            border: "1px solid #ddd",
-                            borderRadius: "5px",
-                            padding: "100px",
-                        }}
-                    />
+                    <CompactTable columns={COLUMNS} data={data} />
                 </div>
             </div>
         </AuthenticatedLayout>

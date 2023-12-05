@@ -10,7 +10,7 @@ class HistoryAttendanceController extends Controller
 {
     public function index()
     {
-        // $users = Attendance::all()
-        // return response()->json($users);
+        $users = Attendance::all();
+        return response()->json($users);
     }
 }
