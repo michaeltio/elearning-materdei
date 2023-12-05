@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 export default function StudentListPreview({ auth, nis }) {
@@ -54,6 +55,7 @@ export default function StudentListPreview({ auth, nis }) {
                 }
             );
             console.log(response.data);
+            router.visit("/admin/student-list");
         } catch (error) {
             console.log(error);
         }

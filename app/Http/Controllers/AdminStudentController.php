@@ -65,19 +65,26 @@ class AdminStudentController extends Controller
     {
         $nis = $request->input('nis');
 
-        // Find the user detail by nis
-        $user = User::where('id', $nis)->first();
-        $userDetail = UserDetail::where('userId', $nis)->first();
+        return DB::transaction(function () use ($nis) {
+            // Find the user by id
+            $user = User::find($nis);
 
-        if ($userDetail) {
+            if ($user) {
+                // Find the user detail by userId
+                $userDetail = UserDetail::where('userId', $nis);
 
-            $user->delete();
-            $userDetail->delete();
+                if ($userDetail) {
+                    $user->delete();
+                    $userDetail->delete();
+                    // return response()->json("Berhasil bang");
 
-
-            return response()->json(['id' => $nis, 'msg' => 'Record deleted successfully']);
-        } else {
-            return response()->json(['msg' => 'Record not found'], 404);
-        }
+                    return response()->json(['id' => $nis, 'msg' => 'Record deleted successfully']);
+                } else {
+                    return response()->json(['msg' => 'User detail not found'], 404);
+                }
+            } else {
+                return response()->json(['msg' => 'User not found'], 404);
+            }
+        });
     }
 }
