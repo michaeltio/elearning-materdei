@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -121,10 +122,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return Inertia::render('Admin/HistoryAttendancePreview', ['classTitle' => $classTitle]);
         })->name('adminAttendancePreview');
         //subject
-        Route::get('/admin/subject-list', function () {
-            optional(Auth::user()->userDetails);
-            return Inertia::render('Admin/SubjectList');
+        Route::get('/admin/subject-list', function(){
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/SubjectList');
         })->name('adminSubjectList');
+        Route::get('/admin/subject-list/{class}',
+        [AdminController::class, 'subjectsSeeder']
+        )->name('adminSubjectPreview');
+        Route::get('/admin/subject-lists/{subjectId}',
+        [AdminController::class, 'subjectSeeder']
+        )->name('adminSubject');
     });
 });
 
