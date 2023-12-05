@@ -47,14 +47,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return Inertia::render('Student/Attendance');
         })->name('studentAttendance');
 
-        Route::get(
-            '/student/subject/{subjectId}',
-            [SubjectController::class, 'show']
-        )->name('studentSubject');
-    });
-    //teacher
-    Route::middleware(['auth', 'verified', 'teacher'])->group(function () {
-        Route::get('/teacher', [UserController::class, 'seedTeacherHome'])->name('teacherHome');
+    Route::get('/student/subject', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Student/Subject');
+    })->name('studentSubject');
+    
+    Route::get('/student/schedule', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Student/Schedule');
+    })->name('studentSchedule');
 
         Route::get(
             '/teacher/subject/{subjectId}',
@@ -128,15 +129,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //subject
         Route::get('/admin/subject-list', function(){
         optional(Auth::user()->userDetails);
-        return Inertia::render('Admin/SubjectList');
-        })->name('adminSubjectList');
-        Route::get('/admin/subject-list/{class}',
-        [AdminController::class, 'subjectsSeeder']
-        )->name('adminSubjectPreview');
-        Route::get('/admin/subject-lists/{subjectId}',
-        [AdminController::class, 'subjectSeeder']
-        )->name('adminSubject');
-    });
+        return Inertia::render('Admin/Home');
+    })->name('adminHome');
+
+    Route::get('/admin/schedule', function () {
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/Schedule');
+    })->name('adminSchedule');
 });
 
 Route::middleware('auth')->group(function () {
