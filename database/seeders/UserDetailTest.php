@@ -17,38 +17,47 @@ class UserDetailTest extends Seeder
     {
         UserDetail::create([
             'userId' => '0000000001',
-            'full_name' => 'Admin',
+            'full_name' => 'Admin User',
             'role' => 'admin',
+            'birthdate' => now()->subYears(30)->subDays(15),
         ]);
 
         UserDetail::create([
             'userId' => '1000000001',
             'full_name' => 'Michael Tio',
-            'address' => 'Jl.apalah',
+            'address' => 'Jl. Apalah No. 123',
             'phone_number' => '021774400',
             'role' => 'student',
-            'class' => '7A'
+            'class' => '7A',
+            'birthdate' => now()->subYears(14)->subDays(30),
         ]);
 
         UserDetail::create([
             'userId' => '1000000002',
             'full_name' => 'Abigael Xyla',
-            'address' => 'Jl.gatau',
+            'address' => 'Jl. Gatau No. 456',
             'phone_number' => '02132432',
             'role' => 'student',
-            'class' => '9C'
+            'class' => '9C',
+            'birthdate' => now()->subYears(16)->subDays(20),
         ]);
 
         UserDetail::create([
             'userId' => '2000000001',
             'full_name' => 'Ms. Santi',
             'role' => 'teacher',
+            'address' => 'Jl. Guru No. 789',
+            'phone_number' => '0215551234',
+            'birthdate' => now()->subYears(35)->subDays(10),
         ]);
 
         UserDetail::create([
             'userId' => '2000000002',
             'full_name' => 'Mr. Santo',
             'role' => 'teacher',
+            'address' => 'Jl. Pendidikan No. 567',
+            'phone_number' => '0219876543',
+            'birthdate' => now()->subYears(40)->subDays(5),
         ]);
     }
 }
