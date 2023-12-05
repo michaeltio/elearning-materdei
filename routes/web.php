@@ -102,6 +102,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/TeacherList');
         })->name('adminTeacherList');
+        Route::get('/admin/teacher-list/new-teacher', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/AddTeacher');
+        })->name('adminTeacherListAdd');
         Route::get('/admin/teacher-list/{userid}', function ($userid) {
             optional(Auth::user()->userDetails);
             return Inertia::render('Admin/TeacherListPreview', ['user_id' => $userid]);

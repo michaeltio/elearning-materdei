@@ -62,9 +62,9 @@ export default function TeacherList({ auth }) {
         {
             label: "Details",
             renderCell: (item) => (
-                <button onClick={() => handleAction(item.id)}>
+                <Link href={route(`adminTeacherListPreview`, item.id)}>
                     <img className="w-8 mx-auto" src={DetailIcon} />
-                </button>
+                </Link>
             ),
         },
     ];
@@ -89,7 +89,7 @@ export default function TeacherList({ auth }) {
                     </label>
                     <Link
                         className="bg-green-500 p-2 text-center rounded-xl text-white"
-                        // href={route(`adminTeacherListAdd`)}
+                        href={route(`adminTeacherListAdd`)}
                     >
                         New Teacher
                     </Link>
