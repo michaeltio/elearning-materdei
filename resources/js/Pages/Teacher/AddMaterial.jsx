@@ -2,29 +2,39 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useState } from "react";
 import { Head } from "@inertiajs/react";
 import { router } from "@inertiajs/react";
+import axios from "axios";
 
 export default function AddMaterial({ auth, subjectData }) {
     const [formData, setFormData] = useState({
         title: "",
         desc: "",
-        filePath: "",
+        file: "",
         subjectId: subjectData.subjectId,
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
+
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: name === "file" ? files[0] : value,
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // You can perform further actions here, like sending the data to an API
 
-        // For now, let's log the form data to the console
         console.log(formData);
+
+        try {
+            const response = await axios.post("/api/addSubjectData", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+        } catch (error) {
+            console.error(error);
+        }
 
         router.visit("/teacher/subject/" + subjectData.subjectId);
     };
@@ -61,13 +71,14 @@ export default function AddMaterial({ auth, subjectData }) {
                         >
                             Description:
                         </label>
-                        <input
-                            type="textarea"
+                        <textarea
                             name="desc"
                             id="desc"
                             value={formData.desc}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-md"
+                            style={{ resize: "none", height: "auto" }}
+                            rows={4}
                         />
                     </div>
                     <div className="mb-4">

@@ -8,6 +8,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminTeacherController;
 use App\Http\Controllers\HistoryAttendanceController;
+use App\Http\Controllers\TeacherSubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,8 @@ Route::get('/showAllTeachers', [AdminTeacherController::class, 'index']);
 
 //admin attendance
 Route::get('/showAttendanceByClass', [HistoryAttendanceController::class, 'index']);
+
+//teacher subject
+Route::post('/addSubjectData', [TeacherSubjectController::class, 'store']);
+Route::post('/editSubjectData', [TeacherSubjectController::class, 'edit']);
+Route::delete('/deleteSubjectData/{id}', [TeacherSubjectController::class, 'delete']);

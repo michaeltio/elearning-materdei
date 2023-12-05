@@ -33,15 +33,13 @@ export default function Subject({ auth, subjectData }) {
                 </div>
                 {(auth.user.user_details.role === "teacher" ||
                     auth.user.user_details.role === "admin") && (
-                    <PrimaryButton>
-                        <Link
-                            href={route("teacherSubjectAdd", {
-                                subjectId: subjectData.subjectId,
-                            })}
-                        >
-                            Add Material
-                        </Link>
-                    </PrimaryButton>
+                    <Link
+                        href={route("teacherSubjectAdd", {
+                            subjectId: subjectData.subjectId,
+                        })}
+                    >
+                        <PrimaryButton>Add Material</PrimaryButton>
+                    </Link>
                 )}
             </div>
         </AuthenticatedLayout>

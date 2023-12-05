@@ -2,14 +2,14 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useState } from "react";
 import { Head } from "@inertiajs/react";
 import { router } from "@inertiajs/react";
+import axios from "axios";
 
 export default function AddMaterial({ auth, subjectDetails }) {
-    console.log(subjectDetails);
-
     const [formData, setFormData] = useState({
+        id: subjectDetails.id,
         title: subjectDetails.title,
         desc: subjectDetails.desc,
-        filePath: subjectDetails.filePath,
+        file: subjectDetails.file,
         subjectId: subjectDetails.subjectId,
     });
 
@@ -21,15 +21,35 @@ export default function AddMaterial({ auth, subjectDetails }) {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // You can perform further actions here, like sending the data to an API
 
-        // For now, let's log the form data to the console
-        console.log(formData);
+        try {
+            const response = await axios.post(
+                "/api/editSubjectData",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+        } catch (error) {
+            console.error(error);
+        }
 
         router.visit("/teacher/subject/" + subjectDetails.subjectId);
     };
+
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`/api/deleteSubjectData/${formData.id}`);
+        } catch (error) {
+            console.error(error);
+        }
+        router.visit("/teacher/subject/" + subjectDetails.subjectId);
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Add Material" />
@@ -63,13 +83,14 @@ export default function AddMaterial({ auth, subjectDetails }) {
                         >
                             Description:
                         </label>
-                        <input
-                            type="textarea"
+                        <textarea
                             name="desc"
                             id="desc"
                             value={formData.desc}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-md"
+                            style={{ resize: "none", height: "auto" }}
+                            rows={4}
                         />
                     </div>
                     <div className="mb-4">
@@ -83,7 +104,7 @@ export default function AddMaterial({ auth, subjectDetails }) {
                             type="file"
                             name="file"
                             id="file"
-                            value={formData.filePath}
+                            value={formData.file}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-md"
                         />
@@ -95,7 +116,11 @@ export default function AddMaterial({ auth, subjectDetails }) {
                         >
                             Submit
                         </button>
-                        <button className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green">
+                        <button
+                            type="button"
+                            onClick={handleDelete}
+                            className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green"
+                        >
                             Delete
                         </button>
                     </div>

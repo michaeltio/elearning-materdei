@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('subjectId')->references('subjectId')->on('subjects')->onDelete('cascade');
             $table->string('title');
             $table->string('desc');
-            $table->string('filePath')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }
