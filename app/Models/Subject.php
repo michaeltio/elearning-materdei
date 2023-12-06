@@ -13,4 +13,8 @@ class Subject extends Model
     public function classSubjects(){
         return $this->belongsTo(ClassSubject::class, 'subjectId', 'subjectId');
     }
+
+    public function SubjectDatas(){
+        return $this->hasMany(SubjectData::class, 'subjectId', 'subjectId');
+    }
 }

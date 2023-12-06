@@ -1,10 +1,14 @@
 import { Link } from "@inertiajs/react";
 import Abstract from "/public/Assets/abstract.png";
 import Arrow from "/public/Assets/right-arrow.svg";
-export default function SubjectCard({ index, bgColor, content, arrowColor }) {
-    const handleButtonClick = () => {
-        <Link href={route("studentSubject")} />;
-    };
+export default function SubjectCard({
+    index,
+    user,
+    bgColor,
+    content,
+    arrowColor,
+    dynamic,
+}) {
     return (
         <div
             key={index}
@@ -22,14 +26,36 @@ export default function SubjectCard({ index, bgColor, content, arrowColor }) {
                     <p className="text-gray-600">{content}</p>
                 </div>
             </div>
-
-            <Link
-                className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
-                href={route("studentSubject")}
-            >
-                {" "}
-                <img className="w-4" src={Arrow} alt="" />
-            </Link>
+            {user.user_details.role === "admin" && (
+                <Link
+                    className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
+                    href={route("adminSubject", {
+                        subjectId: dynamic.subjectId,
+                    })}
+                >
+                    <img className="w-4" src={Arrow} alt="" />
+                </Link>
+            )}
+            {user.user_details.role === "teacher" && (
+                <Link
+                    className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
+                    href={route("teacherSubject", {
+                        subjectId: dynamic.subjectId,
+                    })}
+                >
+                    <img className="w-4" src={Arrow} alt="" />
+                </Link>
+            )}
+            {user.user_details.role === "student" && (
+                <Link
+                    className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
+                    href={route("studentSubject", {
+                        subjectId: dynamic.subjectId,
+                    })}
+                >
+                    <img className="w-4" src={Arrow} alt="" />
+                </Link>
+            )}
         </div>
     );
 }

@@ -31,8 +31,8 @@ export default function Authenticated({ user, children, className }) {
                             <>
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("studentHome")}
-                                        active={route().current("studentHome")}
+                                        href={route("adminHome")}
+                                        active={route().current("adminHome")}
                                     >
                                         Home
                                     </NavLink>
@@ -40,19 +40,8 @@ export default function Authenticated({ user, children, className }) {
 
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("studentAttendance")}
-                                        active={route().current(
-                                            "studentAttendance"
-                                        )}
-                                    >
-                                        Attendance
-                                    </NavLink>
-                                </div>
-
-                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
-                                    <NavLink
-                                        href={route("adminSchedule")}
-                                        active={route().current("adminSchedule")}
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
                                     >
                                         Schedule
                                     </NavLink>
@@ -64,8 +53,8 @@ export default function Authenticated({ user, children, className }) {
                             <>
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("studentHome")}
-                                        active={route().current("studentHome")}
+                                        href={route("teacherHome")}
+                                        active={route().current("teacherHome")}
                                     >
                                         Home
                                     </NavLink>
@@ -106,8 +95,8 @@ export default function Authenticated({ user, children, className }) {
 
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("studentSchedule")}
-                                        active={route().current("studentSchedule")}
+                                        href={route("dashboard")}
+                                        active={route().current("dashboard")}
                                     >
                                         Schedule
                                     </NavLink>
@@ -212,21 +201,10 @@ export default function Authenticated({ user, children, className }) {
                             <>
                                 <div className="pt-2 pb-3 space-y-1">
                                     <ResponsiveNavLink
-                                        href={route("studentHome")}
-                                        active={route().current("studentHome")}
+                                        href={route("adminHome")}
+                                        active={route().current("adminHome")}
                                     >
                                         Home
-                                    </ResponsiveNavLink>
-                                </div>
-
-                                <div className="pt-2 pb-3 space-y-1">
-                                    <ResponsiveNavLink
-                                        href={route("studentAttendance")}
-                                        active={route().current(
-                                            "studentAttendance"
-                                        )}
-                                    >
-                                        Attendance
                                     </ResponsiveNavLink>
                                 </div>
 
@@ -245,8 +223,8 @@ export default function Authenticated({ user, children, className }) {
                             <>
                                 <div className="pt-2 pb-3 space-y-1">
                                     <ResponsiveNavLink
-                                        href={route("studentHome")}
-                                        active={route().current("studentHome")}
+                                        href={route("teacherHome")}
+                                        active={route().current("teacherHome")}
                                     >
                                         Home
                                     </ResponsiveNavLink>

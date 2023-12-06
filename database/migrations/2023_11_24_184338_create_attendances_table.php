@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subjects', function (Blueprint $table) {
-            $table->string('subjectId')->primary();
-            $table->string('subjectName');
-            $table->string('teacherId');
+        Schema::create('attendances', function (Blueprint $table) {
+            $table->id();
+            $table->string('student_id');
+            $table->string('class');
+            $table->date('attendance_date');
+            $table->boolean('is_present');
+            $table->boolean('is_late');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('attendances');
     }
 };

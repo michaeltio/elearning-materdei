@@ -20,8 +20,10 @@ class DailyAttendance extends Command
         foreach ($users as $user) {
             Attendance::create([
                 'student_id' => $user->userId,
+                'class' => $user->class,
                 'attendance_date' => now()->toDateString(),
                 'is_present' => false,
+                'is_late' => false,
             ]);
         }
 

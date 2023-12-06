@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class SubjectData extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'student_id',
-        'attendance_date',
-        'is_present',
-    ];
+
+    public function Subjects(){
+        return $this->belongsTo(Subject::class, 'subjectId', 'subjectId');
+    }
 }
