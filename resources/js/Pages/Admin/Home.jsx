@@ -31,6 +31,16 @@ export default function AdminHome({ auth }) {
                     icon={AttendanceIcon}
                     path="adminHistoryAttendance"
                 />
+                <AdminCard
+                    title="Shedule"
+                    icon={ScheduleIcon}
+                    path="adminSchedule"
+                />
+                <AdminCard
+                    title="Subjects"
+                    icon={MapelIcon}
+                    path="adminSubjectList"
+                />
             </div>
         </AuthenticatedLayout>
     );
