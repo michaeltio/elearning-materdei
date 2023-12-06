@@ -51,6 +51,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             '/student/subject/{subjectId}',
             [SubjectController::class, 'show']
         )->name('studentSubject');
+
+        Route::get('/student/schedule', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Student/Schedule');
+        })->name('studentSchedule');
     });
     //teacher
     Route::middleware(['auth', 'verified', 'teacher'])->group(function () {
@@ -70,6 +75,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             '/teacher/subject/{subjectId}/edit/{id}',
             [UserController::class, 'seedTeacherSubjectEdit']
         )->name('teacherSubjectEdit');
+
+        Route::get('/teacher/schedule', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Teacher/Schedule');
+        })->name('teacherSchedule');
     });
     //admin
     Route::middleware(['auth', 'verified', 'admin'])->group(function () {
