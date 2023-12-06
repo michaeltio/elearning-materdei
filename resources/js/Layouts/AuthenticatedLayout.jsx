@@ -114,7 +114,6 @@ export default function Authenticated({ user, children, className }) {
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md hover:bg-white hover:text-primaryBlue focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {user.user_details.full_name}
-                                                {console.log(user)}
 
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"

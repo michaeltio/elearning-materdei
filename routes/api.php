@@ -9,6 +9,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminTeacherController;
 use App\Http\Controllers\HistoryAttendanceController;
+use App\Http\Controllers\TeacherSubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,9 +40,22 @@ Route::post('/updateAttendance', [AttendanceController::class, 'update']);
 
 //admin student
 Route::get('/showAllStudents', [AdminStudentController::class, 'index']);
+Route::get('/showStudentDetails', [AdminStudentController::class, 'show']);
+Route::post('/addNewStudent', [AdminStudentController::class, 'store']);
+Route::delete('/deleteStudent', [AdminStudentController::class, 'destroy']);
+Route::post('/editStudent', [AdminStudentController::class, 'edit']);
 
 //admin teacher
 Route::get('/showAllTeachers', [AdminTeacherController::class, 'index']);
+Route::get('/showTeacherDetails', [AdminTeacherController::class, 'show']);
+Route::post('/addNewTeacher', [AdminTeacherController::class, 'store']);
+Route::delete('/deleteTeacher', [AdminTeacherController::class, 'destroy']);
+Route::post('/editTeacher', [AdminTeacherController::class, 'edit']);
 
 //admin attendance
 Route::get('/showAttendanceByClass', [HistoryAttendanceController::class, 'index']);
+
+//teacher subject
+Route::post('/addSubjectData', [TeacherSubjectController::class, 'store']);
+Route::post('/editSubjectData', [TeacherSubjectController::class, 'edit']);
+Route::delete('/deleteSubjectData/{id}', [TeacherSubjectController::class, 'delete']);
