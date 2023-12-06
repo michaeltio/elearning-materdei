@@ -1,6 +1,8 @@
 import Abstract from "/public/Assets/abstract.png";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import MeetingCard from "@/Components/MeetingCard/MeetingCard";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { Link } from "@inertiajs/react";
 
 export default function Subject({ auth, subjectData }) {
     return (
@@ -29,6 +31,16 @@ export default function Subject({ auth, subjectData }) {
                         />
                     ))}
                 </div>
+                {(auth.user.user_details.role === "teacher" ||
+                    auth.user.user_details.role === "admin") && (
+                    <Link
+                        href={route("teacherSubjectAdd", {
+                            subjectId: subjectData.subjectId,
+                        })}
+                    >
+                        <PrimaryButton>Add Material</PrimaryButton>
+                    </Link>
+                )}
             </div>
         </AuthenticatedLayout>
     );

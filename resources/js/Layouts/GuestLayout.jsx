@@ -22,7 +22,7 @@ export default function Guest({ className = "", children }) {
                 </div>
                 <div>
                     <h1>Contact</h1>
-                    <p>SMPK Mater Dei 123-456-890</p>
+                    <p>(Phone) 021-7407148</p>
                 </div>
                 <div>
                     <h1>Alamat</h1>

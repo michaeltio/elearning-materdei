@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import AdminCard from "@/Components/AdminCard/AdminCard";
+import { Head } from "@inertiajs/react";
 
 //icon
 import StudentIcon from "/public/Assets/student-icon.svg";
@@ -10,36 +11,35 @@ import MapelIcon from "/public/Assets/book-icon.svg";
 export default function AdminHome({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
-            <h1 className="text-center text-2xl mt-32 mb-28 bg-blue-500 w-fit mx-auto rounded-xl px-4 py-2">
+            <Head title="Admin" />
+            <h1 className="text-center text-4xl mt-20 mb-8 text-white w-fit mx-auto rounded-md px-6 py-4 shadow-lg bg-gradient-to-r from-primaryBlue to-secondaryBlue">
                 Admin Page
             </h1>
-            <div className="flex justify-center items-center gap-12">
+            <div className="flex flex-wrap justify-center items-center gap-12 mb-8">
                 <AdminCard
-                    title="Siswa"
-                    qty={72}
+                    title="Students"
                     icon={StudentIcon}
-                    path="/admin/siswa"
+                    path="adminStudentList"
                 />
                 <AdminCard
-                    title="Guru"
-                    qty={40}
+                    title="Teachers"
                     icon={TeacherIcon}
-                    path="/admin/siswa"
+                    path="adminTeacherList"
                 />
                 <AdminCard
-                    title="Attendance"
+                    title="History Attendance"
                     icon={AttendanceIcon}
-                    path="/admin/siswa"
+                    path="adminHistoryAttendance"
                 />
                 <AdminCard
                     title="Shedule"
                     icon={ScheduleIcon}
-                    path="/admin/siswa"
+                    path="adminSchedule"
                 />
                 <AdminCard
-                    title="Mata Pelajaran"
+                    title="Subjects"
                     icon={MapelIcon}
-                    path="/admin/siswa"
+                    path="adminSubjectList"
                 />
             </div>
         </AuthenticatedLayout>

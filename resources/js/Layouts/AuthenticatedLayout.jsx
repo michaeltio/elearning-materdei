@@ -31,21 +31,10 @@ export default function Authenticated({ user, children, className }) {
                             <>
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("studentHome")}
-                                        active={route().current("studentHome")}
+                                        href={route("adminHome")}
+                                        active={route().current("adminHome")}
                                     >
                                         Home
-                                    </NavLink>
-                                </div>
-
-                                <div className="hidden sm:-my-px sm:ml-10 sm:flex">
-                                    <NavLink
-                                        href={route("studentAttendance")}
-                                        active={route().current(
-                                            "studentAttendance"
-                                        )}
-                                    >
-                                        Attendance
                                     </NavLink>
                                 </div>
 
@@ -64,8 +53,8 @@ export default function Authenticated({ user, children, className }) {
                             <>
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("studentHome")}
-                                        active={route().current("studentHome")}
+                                        href={route("teacherHome")}
+                                        active={route().current("teacherHome")}
                                     >
                                         Home
                                     </NavLink>
@@ -125,7 +114,6 @@ export default function Authenticated({ user, children, className }) {
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md hover:bg-white hover:text-primaryBlue focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {user.user_details.full_name}
-                                                {console.log(user)}
 
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"
@@ -212,21 +200,10 @@ export default function Authenticated({ user, children, className }) {
                             <>
                                 <div className="pt-2 pb-3 space-y-1">
                                     <ResponsiveNavLink
-                                        href={route("studentHome")}
-                                        active={route().current("studentHome")}
+                                        href={route("adminHome")}
+                                        active={route().current("adminHome")}
                                     >
                                         Home
-                                    </ResponsiveNavLink>
-                                </div>
-
-                                <div className="pt-2 pb-3 space-y-1">
-                                    <ResponsiveNavLink
-                                        href={route("studentAttendance")}
-                                        active={route().current(
-                                            "studentAttendance"
-                                        )}
-                                    >
-                                        Attendance
                                     </ResponsiveNavLink>
                                 </div>
 
@@ -245,8 +222,8 @@ export default function Authenticated({ user, children, className }) {
                             <>
                                 <div className="pt-2 pb-3 space-y-1">
                                     <ResponsiveNavLink
-                                        href={route("studentHome")}
-                                        active={route().current("studentHome")}
+                                        href={route("teacherHome")}
+                                        active={route().current("teacherHome")}
                                     >
                                         Home
                                     </ResponsiveNavLink>

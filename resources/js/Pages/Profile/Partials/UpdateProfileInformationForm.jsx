@@ -49,6 +49,14 @@ export default function UpdateProfileInformation({
                         {user.user_details.phone_number}
                     </p>
                 </div>
+                <div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                        Birthdate
+                    </h3>
+                    <p className="mt-1 block w-full">
+                        {user.user_details.birthdate}
+                    </p>
+                </div>
 
                 <div>
                     <h3 className="text-lg font-medium text-gray-900">Class</h3>

@@ -1,24 +1,40 @@
-export default function MeetingCard({ title }) {
+import EditIcon from "/public/Assets/edit-icon.svg";
+import { Link } from "@inertiajs/react";
+
+export default function MeetingCard({ user, content }) {
     return (
         <div className="bg-slate-400 p-4 mb-6 rounded-xl">
-            <h1 className="font-bold text-xl mb-2 ">Jumat, 24 November 2023</h1>
+            <h1 className="font-bold text-xl mb-2 ">{content.title}</h1>
             <div className="flex flex-row items-center border-b w-full border-black" />
             <div className="flex flex-col">
                 <div className="flex flex-row items-center mt-2">
-                    <input
-                        type="checkbox"
-                        className="mr-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600"
-                    />
-                    <h2 className="text-sm">Bab 2 - Perpangkatan</h2>
+                    <h2 className="text-sm">{content.desc}</h2>
                 </div>
-                <div className="flex flex-row items-center mt-2">
-                    <input
-                        type="checkbox"
-                        className="mr-3 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600"
-                    />
-                    <h2 className="text-sm">Latihan Buku Paket Hal. 30 </h2>
-                </div>
+                {content.file && (
+                    <div>
+                        <p>File Name: {content.file.name}</p>
+                        <p>File Size: {content.file.size} KB</p>
+                    </div>
+                )}
+
+                {!content.file && (
+                    <div>
+                        <p>No file available.</p>
+                    </div>
+                )}
             </div>
+            {user.user_details.role === "teacher" && (
+                <div className="flex flex-row mt-2">
+                    <Link
+                        href={route("teacherSubjectEdit", {
+                            id: content.id,
+                            subjectId: content.subjectId,
+                        })}
+                    >
+                        <img className="w-5 h-5" src={EditIcon} />
+                    </Link>
+                </div>
+            )}
         </div>
     );
 }

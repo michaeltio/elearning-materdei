@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +20,7 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
+Route::middleware('redirectToLogin')->get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -32,40 +35,108 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/student', function () {
-        optional(optional(optional(Auth::user()->userDetails)->classes)->classSubjects)->load('subjectDetails');
-        return Inertia::render('Student/Home');
-    })->name('studentHome');
+    //student
+    Route::middleware(['auth', 'verified', 'student'])->group(function () {
+        Route::get('/student', function () {
+            optional(optional(optional(Auth::user()->userDetails)->classes)->classSubjects)->load('subjectDetails');
+            return Inertia::render('Student/Home');
+        })->name('studentHome');
 
-    Route::get('/student/attendance', function () {
-        optional(Auth::user()->userDetails);
-        return Inertia::render('Student/Attendance');
-    })->name('studentAttendance');
+        Route::get('/student/attendance', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Student/Attendance');
+        })->name('studentAttendance');
 
-    Route::get('/student/subject', function () {
-        optional(Auth::user()->userDetails);
-        return Inertia::render('Student/Subject');
-    })->name('studentSubject');
-    
-    Route::get('/student/schedule', function () {
-        optional(Auth::user()->userDetails);
-        return Inertia::render('Student/Schedule');
-    })->name('studentSchedule');
+        Route::get(
+            '/student/subject/{subjectId}',
+            [SubjectController::class, 'show']
+        )->name('studentSubject');
+    });
+    //teacher
+    Route::middleware(['auth', 'verified', 'teacher'])->group(function () {
+        Route::get('/teacher', [UserController::class, 'seedTeacherHome'])->name('teacherHome');
 
-    Route::get('/teacher', function () {
-        optional(Auth::user()->userDetails);
-        return Inertia::render('Teacher/Home');
-    })->name('teacherHome');
+        Route::get(
+            '/teacher/subject/{subjectId}',
+            [UserController::class, 'seedTeacherSubject']
+        )->name('teacherSubject');
 
-    Route::get('/admin', function () {
-        optional(Auth::user()->userDetails);
-        return Inertia::render('Admin/Home');
-    })->name('adminHome');
+        Route::get(
+            '/teacher/subject/{subjectId}/addmaterial',
+            [UserController::class, 'seedTeacherSubjectAdd']
+        )->name('teacherSubjectAdd');
 
-    Route::get('/admin/schedule', function () {
+        Route::get(
+            '/teacher/subject/{subjectId}/edit/{id}',
+            [UserController::class, 'seedTeacherSubjectEdit']
+        )->name('teacherSubjectEdit');
+    });
+    //admin
+    Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+        //home
+        Route::get('/admin', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/Home');
+        })->name('adminHome');
+        //student
+        Route::get('/admin/student-list', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/StudentList');
+        })->name('adminStudentList');
+
+        Route::get('/admin/student-list/new-student', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/AddStudent',);
+        })->name('adminStudentListAdd');
+
+        Route::get('/admin/student-list/{nis}', function ($nis) {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/StudentListPreview', ['nis' => $nis]);
+        })->name('adminStudentListPreview');
+
+        Route::get('/admin/student-list/new-student', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/AddStudent',);
+        })->name('adminStudentListAdd');
+        //teacher
+        Route::get('/admin/teacher-list', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/TeacherList');
+        })->name('adminTeacherList');
+        Route::get('/admin/teacher-list/new-teacher', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/AddTeacher');
+        })->name('adminTeacherListAdd');
+        Route::get('/admin/teacher-list/{userid}', function ($userid) {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/TeacherListPreview', ['user_id' => $userid]);
+        })->name('adminTeacherListPreview');
+        //schedule
+        Route::get('/admin/schedule', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/Schedule');
+        })->name('adminSchedule');
+        //attendance
+        Route::get('/admin/history-attendance', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/HistoryAttendance');
+        })->name('adminHistoryAttendance');
+        Route::get('/admin/history-attendance/{classTitle}', function ($classTitle) {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/HistoryAttendancePreview', ['classTitle' => $classTitle]);
+        })->name('adminAttendancePreview');
+        //subject
+        Route::get('/admin/subject-list', function(){
         optional(Auth::user()->userDetails);
-        return Inertia::render('Admin/Schedule');
-    })->name('adminSchedule');
+        return Inertia::render('Admin/SubjectList');
+        })->name('adminSubjectList');
+        Route::get('/admin/subject-list/{class}',
+        [AdminController::class, 'subjectsSeeder']
+        )->name('adminSubjectPreview');
+        Route::get('/admin/subject-lists/{subjectId}',
+        [AdminController::class, 'subjectSeeder']
+        )->name('adminSubject');
+    });
 });
 
 Route::middleware('auth')->group(function () {

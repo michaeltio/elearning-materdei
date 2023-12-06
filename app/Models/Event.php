@@ -17,4 +17,12 @@ class Event extends Model
         'start_date',
         'end_date'
     ];
+
+    /*
+    'student_id',
+        'class',
+        'attendance_date',
+        'is_present',
+        'is_late',
+    */
 }

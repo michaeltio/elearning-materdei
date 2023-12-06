@@ -1,14 +1,23 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import SubjectCard from "@/Components/SubjectCard/SubjectCard";
-
+import { useState } from "react";
 //icon
 import SearchIcon from "/public/Assets/search-icon.svg";
 
 export default function StudentHome({ auth }) {
-    // console.log(auth.user.user_details.classes.class_subjects);
+    const [search, setSearch] = useState("");
     const subjects = auth.user.user_details.classes.class_subjects;
-    // console.log(subjects);
+
+    const filteredSubjects = subjects.filter((subject) =>
+        subject.subject_details.subjectName
+            .toLowerCase()
+            .includes(search.toLowerCase())
+    );
+
+    const handleChange = (e) => {
+        setSearch(e.target.value);
+    };
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -21,6 +30,8 @@ export default function StudentHome({ auth }) {
                     type="text"
                     placeholder="Search"
                     className="mb-2 sm:mb-0 sm:mr-3 rounded-md"
+                    value={search}
+                    onChange={handleChange}
                 />
                 <img
                     src={SearchIcon}
@@ -29,13 +40,15 @@ export default function StudentHome({ auth }) {
                 />
             </div>
 
-            <div className="flex flex-wrap  justify-center mt-12">
-                {subjects.map((card, index) => (
+            <div className="flex flex-wrap justify-center mt-12">
+                {filteredSubjects.map((card, index) => (
                     <SubjectCard
                         key={index}
+                        user={auth.user}
                         bgColor="bg-red-500"
                         content={card.subject_details.subjectName}
                         arrowColor="bg-red-500"
+                        dynamic={card.subject_details}
                     />
                 ))}
             </div>
