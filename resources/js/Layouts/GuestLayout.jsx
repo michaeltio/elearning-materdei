@@ -17,7 +17,7 @@ export default function Guest({ className = "", children }) {
                 src={HomeBackground}
             />
             <main className={className}>{children}</main>
-            <div className="fixed bottom-0 bg-primaryBlue w-full text-white flex flex-col md:flex-row justify-between text-center p-2 items-center">
+            <div className="bottom-0 bg-primaryBlue w-full text-white flex flex-col md:flex-row justify-between text-center p-2 items-center">
                 <div className="flex items-center">
                     <img src={LogoMaterDei} alt="" className="w-16" />
                     <h1>E-Learning SMPK Mater Dei</h1>
