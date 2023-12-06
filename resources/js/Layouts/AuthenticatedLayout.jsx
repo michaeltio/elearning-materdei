@@ -40,8 +40,8 @@ export default function Authenticated({ user, children, className }) {
 
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("dashboard")}
-                                        active={route().current("dashboard")}
+                                        href={route("adminSchedule")}
+                                        active={route().current("adminSchedule")}
                                     >
                                         Schedule
                                     </NavLink>
@@ -62,8 +62,8 @@ export default function Authenticated({ user, children, className }) {
 
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("dashboard")}
-                                        active={route().current("dashboard")}
+                                        href={route("teacherSchedule")}
+                                        active={route().current("teacherSchedule")}
                                     >
                                         Schedule
                                     </NavLink>
@@ -95,8 +95,8 @@ export default function Authenticated({ user, children, className }) {
 
                                 <div className="hidden sm:-my-px sm:ml-10 sm:flex">
                                     <NavLink
-                                        href={route("dashboard")}
-                                        active={route().current("dashboard")}
+                                        href={route("studentSchedule")}
+                                        active={route().current("studentSchedule")}
                                     >
                                         Schedule
                                     </NavLink>

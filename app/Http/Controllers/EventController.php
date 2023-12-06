@@ -28,6 +28,12 @@ class EventController extends Controller
         return response()->json($events);
     }
 
+    // public function getEventsTeacher(Request $request, $role)
+    // {
+    //     $events = Event::where('role', $role)->get();
+    //     return response()->json($events);
+    // }
+
     /**
      * Store a newly created event in storage.
      *

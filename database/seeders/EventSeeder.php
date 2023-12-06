@@ -62,6 +62,30 @@ class EventSeeder extends Seeder
                 'start_date' => '2023-12-01T12:00:00',
                 'end_date' => '2023-12-01T14:00:00',
             ],
+            [
+                'class' => 'teacher',
+                'title' => 'Jadwal Guru (1)',
+                'location' => 'Kelas 7a',
+                'attendees' => '7a',
+                'start_date' => '2023-12-06T08:00:00',
+                'end_date' => '2023-12-06T10:00:00',
+            ],
+            [
+                'class' => 'teacher',
+                'title' => 'Jadwal Guru (2)',
+                'location' => 'Kelas 8b',
+                'attendees' => '8b',
+                'start_date' => '2023-12-06T10:00:00',
+                'end_date' => '2023-12-06T12:00:00',
+            ],
+            [
+                'class' => 'teacher',
+                'title' => 'Jadwal Guru (3)',
+                'location' => 'Kelas 8f',
+                'attendees' => '8f',
+                'start_date' => '2023-12-06T13:00:00',
+                'end_date' => '2023-12-06T15:00:00',
+            ],
         ];
 
         foreach ($events as $eventData) {

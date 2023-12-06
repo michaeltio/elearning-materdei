@@ -4,17 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// use Carbon\Carbon;
 
-class Event extends Model
+class Attendance extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'class',
-        'title',
-        'location',
-        'attendees',
-        'start_date',
-        'end_date'
+        'student_id',
+        'attendance_date',
+        'is_present',
     ];
 }

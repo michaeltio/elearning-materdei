@@ -46,15 +46,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return Inertia::render('Student/Attendance');
         })->name('studentAttendance');
 
-        Route::get('/student/subject/{subjectId}',
-        [SubjectController::class, 'show'])->name('studentSubject');
+        Route::get(
+            '/student/subject/{subjectId}',
+            [SubjectController::class, 'show']
+        )->name('studentSubject');
+
+        Route::get('/student/schedule', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Student/Schedule');
+        })->name('studentSchedule');
     });
     //teacher
     Route::middleware(['auth', 'verified', 'teacher'])->group(function () {
         Route::get('/teacher', [UserController::class, 'homeseed'])->name('teacherHome');
 
-        Route::get('/teacher/subject/{subjectId}',
-        [UserController::class, 'show'])->name('teacherSubject');
+        Route::get(
+            '/teacher/subject/{subjectId}',
+            [UserController::class, 'show']
+        )->name('teacherSubject');
+
+        Route::get('/teacher/schedule', function () {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Teacher/Schedule');
+        })->name('teacherSchedule');
     });
     //admin
     Route::middleware(['auth', 'verified', 'admin'])->group(function () {
