@@ -33,11 +33,7 @@ Route::get('/showEvent/{class}', [EventController::class, 'getEvents']);
 Route::post('/updateEvent/{id}/{class}', [EventController::class, 'update']);
 Route::delete('/deleteEvent/{id}', [EventController::class, 'destroy']);
 
-// Route::delete('/api/scheduleEvent/{id}/{calendarId}', [EventController::class, 'destroy']);
-// get
-// delete
-// patch
-// post, buat nambah data
+//attendance
 Route::get('/showAttendance', [AttendanceController::class, 'show']);
 Route::post('/updateAttendance', [AttendanceController::class, 'update']);
 
