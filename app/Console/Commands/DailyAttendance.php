@@ -3,10 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
-use App\Models\Attendance;
 use App\Models\UserDetail;
+use App\Models\Attendance;
 use Illuminate\Console\Command;
-
 
 class DailyAttendance extends Command
 {
