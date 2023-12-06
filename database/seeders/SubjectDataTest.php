@@ -44,8 +44,6 @@ class SubjectDataTest extends Seeder
             'desc' => 'Gain insights into statistical methods and data analysis techniques, essential in drawing meaningful conclusions from data.',
         ]);
 
-        // Repeat the above pattern for Mat01 with different titles and descriptions
-
         // Subject: IPA02 (Natural Sciences)
         SubjectData::create([
             'subjectId' => 'IPA02',
@@ -76,8 +74,6 @@ class SubjectDataTest extends Seeder
             'title' => 'Astronomy: Celestial Phenomena',
             'desc' => 'Survey the cosmos, examining celestial phenomena such as stars, galaxies, and cosmic events.',
         ]);
-
-        // Repeat the above pattern for IPA02 with different titles and descriptions
 
         // Subject: IPA06 (Chemistry)
         SubjectData::create([
@@ -110,8 +106,6 @@ class SubjectDataTest extends Seeder
             'desc' => 'Investigate the impact of chemical processes on the environment, addressing environmental challenges through chemistry.',
         ]);
 
-        // Repeat the above pattern for IPA06 with different titles and descriptions
-
         // Subject: Mat03 (Advanced Mathematics)
         SubjectData::create([
             'subjectId' => 'Mat03',
@@ -142,11 +136,5 @@ class SubjectDataTest extends Seeder
             'title' => 'Advanced Probability Theory',
             'desc' => 'Deepen your understanding of probability theory, exploring advanced concepts and their applications in various fields.',
         ]);
-
-        // Repeat the above pattern for Mat03 with different titles and descriptions
-
-        // Add more subjects as needed
-
-        // Note: Manually adjust titles and descriptions for each entry based on educational content
     }
 }
