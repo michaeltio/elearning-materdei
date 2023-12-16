@@ -42,9 +42,7 @@ export default function StudentHome({ auth, subjectsData }) {
                             key={index}
                             user={auth.user}
                             bgColor="bg-red-500"
-                            content={
-                                card.subjectName + " (" + card.subjectId + ")"
-                            }
+                            content={card}
                             arrowColor="bg-red-500"
                             dynamic={card}
                         />

@@ -22,7 +22,7 @@ export default function SubjectList({ auth, subjectsData }) {
                             key={index}
                             user={auth.user}
                             bgColor="bg-red-500"
-                            content={card.subjectName}
+                            content={card}
                             arrowColor="bg-red-500"
                             dynamic={card}
                         />
