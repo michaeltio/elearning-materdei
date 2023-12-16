@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subject_data', function (Blueprint $table) {
-            $table->id();
-            $table->string('subjectId');
-            $table->foreign('subjectId')->references('subjectId')->on('subjects')->onDelete('cascade');
+        Schema::create('events', function (Blueprint $table) {
+            $table->id(); // id event/subject itu
+            $table->string('class'); // jadwal kelas mana
             $table->string('title');
-            $table->string('desc');
-            $table->string('file')->nullable();
+            $table->string('location')->nullable();
+            $table->string('attendees')->nullable();
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subject_data');
+        Schema::dropIfExists('events');
     }
 };

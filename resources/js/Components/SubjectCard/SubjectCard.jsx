@@ -9,6 +9,7 @@ export default function SubjectCard({
     arrowColor,
     dynamic,
 }) {
+    console.log(content);
     return (
         <div
             key={index}
@@ -23,7 +24,10 @@ export default function SubjectCard({
                     />
                 </div>
                 <div className="p-2 text-center">
-                    <p className="text-gray-600">{content}</p>
+                    <p className="text-gray-600">
+                        {content.subjectName}
+                        <br />({content.subjectId})
+                    </p>
                 </div>
             </div>
             {user.user_details.role === "admin" && (

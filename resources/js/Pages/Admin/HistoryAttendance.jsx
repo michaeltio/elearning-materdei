@@ -14,19 +14,16 @@ export default function HistoryAttendance({ auth }) {
                 <AttendanceCard classTitle={"7C"} />
                 <AttendanceCard classTitle={"7D"} />
                 <AttendanceCard classTitle={"7E"} />
-                <AttendanceCard classTitle={"7F"} />
                 <AttendanceCard classTitle={"8A"} />
                 <AttendanceCard classTitle={"8B"} />
                 <AttendanceCard classTitle={"8C"} />
                 <AttendanceCard classTitle={"8D"} />
                 <AttendanceCard classTitle={"8E"} />
-                <AttendanceCard classTitle={"8F"} />
                 <AttendanceCard classTitle={"9A"} />
                 <AttendanceCard classTitle={"9B"} />
                 <AttendanceCard classTitle={"9C"} />
                 <AttendanceCard classTitle={"9D"} />
                 <AttendanceCard classTitle={"9E"} />
-                <AttendanceCard classTitle={"9F"} />
             </div>
         </AuthenticatedLayout>
     );

@@ -28,7 +28,7 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <GuestLayout className="flex flex-col w-screen h-screen items-center justify-center">
+        <GuestLayout className="flex flex-grow flex-col my-auto items-center justify-center">
             <Head title="Log in" />
 
             {status && (
@@ -36,13 +36,10 @@ export default function Login({ status, canResetPassword }) {
                     {status}
                 </div>
             )}
+
             {/* logo materdei */}
-            <div className="">
-                <img src={LogoMaterDei} alt="" className="w-32 mx-auto" />
-                <h1 className="text-white text-center text-2xl">
-                    SMPK Mater Dei Pamulang
-                </h1>
-            </div>
+            <img src={LogoMaterDei} alt="" className="w-32" />
+            <h1 className="text-white text-2xl">SMPK Mater Dei Pamulang</h1>
 
             <form
                 onSubmit={submit}
@@ -111,15 +108,6 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route("password.request")}
-                            className="underline text-sm text-white hover:text-slate-400 rounded-md focus:outline-none"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
                     <PrimaryButton className="ml-4" disabled={processing}>
                         Log in
                     </PrimaryButton>

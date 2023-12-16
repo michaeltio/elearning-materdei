@@ -1,6 +1,8 @@
 import Abstract from "/public/Assets/abstract.png";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import MeetingCard from "@/Components/MeetingCard/MeetingCard";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { Link } from "@inertiajs/react";
 
 export default function Subject({ auth, subjectData }) {
     return (
@@ -20,9 +22,24 @@ export default function Subject({ auth, subjectData }) {
                     />
                 </div>
 
+                {(auth.user.user_details.role === "teacher" ||
+                    auth.user.user_details.role === "admin") && (
+                    <Link
+                        href={route("teacherSubjectAdd", {
+                            subjectId: subjectData.subjectId,
+                        })}
+                    >
+                        <PrimaryButton>Add Material</PrimaryButton>
+                    </Link>
+                )}
+
                 <div className="flex flex-col w-full text-white">
-                    {subjectData.subject_datas.map((item, index) => (
-                        <MeetingCard key={index} title={item.title} />
+                    {subjectData.subject_datas.map((item) => (
+                        <MeetingCard
+                            key={item.id}
+                            content={item}
+                            user={auth.user}
+                        />
                     ))}
                 </div>
             </div>

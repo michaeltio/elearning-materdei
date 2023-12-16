@@ -7,11 +7,14 @@ import axios from "axios";
 import AttendanceIcon from "/public/Assets/attendance-icon.svg";
 import CheckIcon from "/public/Assets/check-icon.svg";
 import WeekendIcon from "/public/Assets/weekend-icon.svg";
+import cantAttendIcon from "/public/Assets/cantattend-icon.svg";
 
 export default function Attendance({ auth }) {
     const [isAttend, setIsAttend] = useState(false);
     const [date, setDate] = useState("");
     const [isWeekend, setIsWeekend] = useState(false);
+    const [preAttendance, setPreAttendanace] = useState(0);
+    const [postAttendance, setPostAttendanace] = useState(0);
 
     //buat data date sekarang
     const currentDate = new Date();
@@ -22,9 +25,10 @@ export default function Attendance({ auth }) {
         year: "numeric",
     });
     const formattedTime = currentDate
-        .toLocaleDateString("id-ID", {
+        .toLocaleDateString("en-US", {
             hour: "numeric",
             minute: "numeric",
+            hourCycle: "h12",
         })
         .substring(10, 16);
 
@@ -64,6 +68,13 @@ export default function Attendance({ auth }) {
     };
 
     useEffect(() => {
+        setPreAttendanace(
+            new Date().getHours() <= 6 && new Date().getMinutes() <= 30 ? 1 : 0
+        );
+        setPostAttendanace(new Date().getHours() >= 8 ? 1 : 0);
+
+        console.log("pre " + preAttendance);
+        console.log("post " + postAttendance);
         const weekdayHandler = () => {
             const weekday = formattedDate.split(", ")[0];
             if (weekday === "Minggu" || weekday === "Sabtu") {
@@ -71,7 +82,7 @@ export default function Attendance({ auth }) {
                 // console.log(isWeekDay);
             } else {
                 setIsWeekend(false);
-                console.log("test");
+                // console.log("test");
             }
         };
         //fetch student attendance from database
@@ -152,7 +163,18 @@ export default function Attendance({ auth }) {
                     </div>
                 ) : (
                     <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
-                        {isAttend ? (
+                        {preAttendance || postAttendance ? (
+                            <div className="rounded-full bg-red-500 w-full h-full flex flex-col justify-center items-center">
+                                <img
+                                    src={cantAttendIcon}
+                                    alt=""
+                                    className="flex w-32 brightness-0 invert"
+                                />
+                                <p className="text-center items-center text-white">
+                                    Can't Attend at This Time
+                                </p>
+                            </div>
+                        ) : isAttend ? (
                             <div className="rounded-full bg-green-500 w-full h-full flex flex-col justify-center items-center">
                                 <img
                                     src={CheckIcon}
