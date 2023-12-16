@@ -9,6 +9,7 @@ export default function SubjectCard({
     arrowColor,
     dynamic,
 }) {
+    console.log(content);
     return (
         <div
             key={index}

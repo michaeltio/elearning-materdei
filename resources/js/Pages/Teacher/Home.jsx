@@ -36,14 +36,19 @@ export default function StudentHome({ auth, subjectsData }) {
 
             <div className="flex flex-wrap justify-center mt-12">
                 {filteredSubjects.map((card, index) => (
-                    <SubjectCard
-                        key={index}
-                        user={auth.user}
-                        bgColor="bg-red-500"
-                        content={card.subjectName}
-                        arrowColor="bg-red-500"
-                        dynamic={card}
-                    />
+                    <>
+                        {console.log(card)}
+                        <SubjectCard
+                            key={index}
+                            user={auth.user}
+                            bgColor="bg-red-500"
+                            content={
+                                card.subjectName + " (" + card.subjectId + ")"
+                            }
+                            arrowColor="bg-red-500"
+                            dynamic={card}
+                        />
+                    </>
                 ))}
             </div>
         </AuthenticatedLayout>
