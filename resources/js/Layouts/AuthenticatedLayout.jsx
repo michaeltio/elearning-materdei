@@ -14,7 +14,7 @@ export default function Authenticated({ user, children, className }) {
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
             {/* Navbar for mobile */}
-            <nav className="flex md:hidden flex-row h-24 w-screen bg-primaryBlue text-white py-2 px-8 justify-between">
+            <nav className="flex md:hidden flex-row h-24 w-full bg-primaryBlue text-white py-2 px-8 justify-between">
                 <div className="flex items-center">
                     <img src={LogoMaterDei} alt="" className="w-16" />
                 </div>
@@ -169,7 +169,7 @@ export default function Authenticated({ user, children, className }) {
             </nav>
 
             {/* Navbar for desktop */}
-            <nav className="hidden md:flex flex-row h-24 w-screen bg-primaryBlue text-white py-2 px-8 justify-between">
+            <nav className="hidden md:flex flex-row h-24 w-full bg-primaryBlue text-white py-2 px-8 justify-between">
                 <div className="flex items-center">
                     <img src={LogoMaterDei} alt="" className="w-16" />
                     <h1>E-Learning SMPK Mater Dei</h1>
