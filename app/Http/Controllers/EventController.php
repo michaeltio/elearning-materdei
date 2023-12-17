@@ -22,9 +22,15 @@ class EventController extends Controller
         return response()->json($events);
     }
 
-    public function getEvents(Request $request, $class)
+    public function getEventsStudent(Request $request, $class)
     {
         $events = Event::where('class', $class)->get();
+        return response()->json($events);
+    }
+
+    public function getEventsTeacher(Request $request, $userId)
+    {
+        $events = Event::where('teacherId', $userId)->get();
         return response()->json($events);
     }
 

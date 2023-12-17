@@ -11,6 +11,7 @@ class Event extends Model
     use HasFactory;
     protected $fillable = [
         'classId',
+        'teacherId',
         'title',
         'location',
         'attendees',

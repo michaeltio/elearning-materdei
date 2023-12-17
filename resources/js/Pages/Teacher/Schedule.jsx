@@ -84,61 +84,31 @@ export default function Schedule({ auth, user }) {
 
         calendarInstance.changeView('week');
 
-        // // replace this with your actual logic to get user's classId
-        // const userClassId = auth.user.user_details.class;
+        // replace this with your actual logic to get user's classId
+        const userClassId = auth.user.user_details.userId;
 
-        // // Make an API request to fetch events based on the user's classId
-        // axios.get(`/api/showEvent/${userClassId}`)
-        //     .then(response => {
-        //         const fetchedEvents = response.data;
-        //         setEvents(fetchedEvents);
+        // Make an API request to fetch events based on the user's classId
+        axios.get(`/api/showEventTeacher/${userClassId}`)
+            .then(response => {
+                const fetchedEvents = response.data;
+                setEvents(fetchedEvents);
 
-        //         // Assuming calendarInstance is the instance of your Toast UI calendar
-        //         fetchedEvents.forEach(eventData => {
-        //             calendarInstance.createEvents([{
-        //                 id: eventData.id,
-        //                 calendarId: eventData.class,
-        //                 title: eventData.title,
-        //                 location: eventData.location,
-        //                 attendees: eventData.attendees,
-        //                 start: eventData.start_date,
-        //                 end: eventData.end_date,
-        //             }]);
-        //         });
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching events:', error);
-        //     });
-
-        calendarInstance.createEvents([
-            {
-                id: '1',
-                calendarId: 'teacher',
-                title: 'Jadwal Guru (1)',
-                location: 'Kelas 7A',
-                attendees: '7A',
-                start: '2023-12-06T08:00:00',
-                end: '2023-12-06T10:00:00',
-            },
-            {
-                id: '2',
-                calendarId: 'teacher',
-                title: 'Jadwal Guru (2)',
-                location: 'Kelas 8B',
-                attendees: '8B',
-                start: '2023-12-06T10:00:00',
-                end: '2023-12-06T12:00:00',
-            },
-            {
-                id: '3',
-                calendarId: 'teacher',
-                title: 'Jadwal Guru (2)',
-                location: 'Kelas 8F',
-                attendees: '8F',
-                start: '2023-12-06T13:00:00',
-                end: '2023-12-06T15:00:00',
-            },
-        ]);
+                // Assuming calendarInstance is the instance of your Toast UI calendar
+                fetchedEvents.forEach(eventData => {
+                    calendarInstance.createEvents([{
+                        id: eventData.id,
+                        calendarId: eventData.class,
+                        title: eventData.title,
+                        location: eventData.location,
+                        attendees: eventData.attendees,
+                        start: eventData.start_date,
+                        end: eventData.end_date,
+                    }]);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching events:', error);
+            });
 
         updateDateRange();
         updateCurrentView();

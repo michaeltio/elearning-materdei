@@ -19,7 +19,7 @@ class UserTest extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        for($i = 1; $i <= 2; $i++){
+        for($i = 1; $i <= 5; $i++){
             User::create([
                 'id' => "100000000$i",
                 'email' => "$i@student.sch.id",
@@ -27,7 +27,7 @@ class UserTest extends Seeder
             ]);
         }
 
-        for($i = 1; $i <= 2; $i++){
+        for($i = 1; $i <= 5; $i++){
             User::create([
                 'id' => "200000000$i",
                 'email' => "$i@teacher.sch.id",

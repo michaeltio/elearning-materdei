@@ -43,8 +43,38 @@ class UserDetailTest extends Seeder
         ]);
 
         UserDetail::create([
+            'userId' => '1000000003',
+            'full_name' => 'Student 3',
+            'address' => 'Jl. IDK No. 888',
+            'phone_number' => '00182984',
+            'role' => 'student',
+            'class' => '8F',
+            'birthdate' => now()->subYears(12)->subDays(4),
+        ]);
+
+        UserDetail::create([
+            'userId' => '1000000004',
+            'full_name' => 'Student 4',
+            'address' => 'Jl. LOL No. 900',
+            'phone_number' => '9834567',
+            'role' => 'student',
+            'class' => '7B',
+            'birthdate' => now()->subYears(8)->subDays(7),
+        ]);
+
+        UserDetail::create([
+            'userId' => '1000000005',
+            'full_name' => 'Student 5',
+            'address' => 'Jl. WELL No. 012',
+            'phone_number' => '97347014',
+            'role' => 'student',
+            'class' => '9A',
+            'birthdate' => now()->subYears(20)->subDays(25),
+        ]);
+        
+        UserDetail::create([
             'userId' => '2000000001',
-            'full_name' => 'Teacher 1',
+            'full_name' => 'Teacher 9A',
             'role' => 'teacher',
             'address' => 'Jl. Guru No. 789',
             'phone_number' => '0215551234',
@@ -53,11 +83,38 @@ class UserDetailTest extends Seeder
 
         UserDetail::create([
             'userId' => '2000000002',
-            'full_name' => 'Teacher 2',
+            'full_name' => 'Teacher 7B',
             'role' => 'teacher',
             'address' => 'Jl. Pendidikan No. 567',
             'phone_number' => '0219876543',
             'birthdate' => now()->subYears(40)->subDays(5),
+        ]);
+
+        UserDetail::create([
+            'userId' => '2000000003',
+            'full_name' => 'Teacher 8F',
+            'role' => 'teacher',
+            'address' => 'Jl. POLL No. 123',
+            'phone_number' => '067948192',
+            'birthdate' => now()->subYears(48)->subDays(12),
+        ]);
+
+        UserDetail::create([
+            'userId' => '2000000004',
+            'full_name' => 'Teacher 9C',
+            'role' => 'teacher',
+            'address' => 'Jl. ALICE No. 145',
+            'phone_number' => '9149413442',
+            'birthdate' => now()->subYears(35)->subDays(20),
+        ]);
+
+        UserDetail::create([
+            'userId' => '2000000005',
+            'full_name' => 'Teacher 7A',
+            'role' => 'teacher',
+            'address' => 'Jl. WEW No. 922',
+            'phone_number' => '6724563456',
+            'birthdate' => now()->subYears(42)->subDays(17),
         ]);
     }
 }
