@@ -19,15 +19,17 @@ export default function StudentList({ auth }) {
         const fetchStudent = async () => {
             try {
                 const response = await axios.get("/api/showAllStudents");
-                // console.log(response.data);
+                console.log(response.data);
                 const users = response.data;
 
                 // Filter students with the role 'student'
                 const filteredStudents = users.filter(
                     (users) => users.user_details?.role === "student"
                 );
+
                 setTotalData(filteredStudents.length);
-                // console.log(filteredStudents);
+                console.log(filteredStudents);
+                
                 setStudentsList(filteredStudents);
                 setFilteredData(filteredStudents);
             } catch (error) {
