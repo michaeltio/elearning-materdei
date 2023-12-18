@@ -71,19 +71,19 @@ class UserDetailTest extends Seeder
             'class' => '9A',
             'birthdate' => now()->subYears(20)->subDays(25),
         ]);
-        
+
         UserDetail::create([
             'userId' => '2000000001',
-            'full_name' => 'Teacher 9A',
+            'full_name' => 'Teacher 7A',
             'role' => 'teacher',
             'address' => 'Jl. Guru No. 789',
             'phone_number' => '0215551234',
             'birthdate' => now()->subYears(35)->subDays(10),
-        ]);
+        ]);        
 
         UserDetail::create([
             'userId' => '2000000002',
-            'full_name' => 'Teacher 7B',
+            'full_name' => 'Teacher 9C',
             'role' => 'teacher',
             'address' => 'Jl. Pendidikan No. 567',
             'phone_number' => '0219876543',
@@ -101,7 +101,7 @@ class UserDetailTest extends Seeder
 
         UserDetail::create([
             'userId' => '2000000004',
-            'full_name' => 'Teacher 9C',
+            'full_name' => 'Teacher 7B',
             'role' => 'teacher',
             'address' => 'Jl. ALICE No. 145',
             'phone_number' => '9149413442',
@@ -110,7 +110,7 @@ class UserDetailTest extends Seeder
 
         UserDetail::create([
             'userId' => '2000000005',
-            'full_name' => 'Teacher 7A',
+            'full_name' => 'Teacher 9A',
             'role' => 'teacher',
             'address' => 'Jl. WEW No. 922',
             'phone_number' => '6724563456',
