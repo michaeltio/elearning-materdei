@@ -1,20 +1,36 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "@inertiajs/react";
 
-export default function AddSubject({ auth }) {
+export default function AddSubject({ auth, classId }) {
     const [formData, setFormData] = useState({
-        nis: "",
-        email: "",
-        password: "",
-        full_name: "",
-        address: "",
-        phone_number: "",
-        birthdate: "",
-        class: "",
+        subjectId: "",
+        subjectName: "",
+        teacherId: "",
+        classId: classId,
     });
+
+    const [teacherList, setTeacherList] = useState([]);
+
+    useEffect(() => {
+        const fetchTeacher = async () => {
+            try {
+                const response = await axios.get("/api/showAllTeachers");
+                const users = response.data;
+                const filteredTeacher = users.filter(
+                    (users) => users.user_details?.role === "teacher"
+                );
+                setTeacherList(filteredTeacher);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchTeacher();
+    }, []);
+
+    console.log(teacherList);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,9 +42,8 @@ export default function AddSubject({ auth }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // You can perform further actions here, like sending the data to an API
         try {
-            const response = await axios.post("/api/addNewStudent", formData, {
+            const response = await axios.post("/api/addNewSubject", formData, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -44,27 +59,30 @@ export default function AddSubject({ auth }) {
             console.log(error);
         }
     };
+
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Add Student" />
-            <div>
-                <h1 className="text-2xl text-center mt-4">Add New Student</h1>
+            <Head title="Add Subject" />
+            <div className="mb-6">
+                <h1 className="text-2xl text-center mt-4">
+                    Add Subject to {formData.classId}
+                </h1>
                 <form
                     onSubmit={handleSubmit}
                     className="max-w-md mx-auto p-6 bg-white border rounded-md shadow-md mt-4"
                 >
                     <div className="mb-4">
                         <label
-                            htmlFor="nis"
+                            htmlFor="subjectId"
                             className="block text-gray-700 text-sm font-bold mb-2"
                         >
-                            NIS:
+                            Subject Id:
                         </label>
                         <input
                             type="text"
-                            name="nis"
-                            id="nis"
-                            value={formData.nis}
+                            name="subjectId"
+                            id="subjectId"
+                            value={formData.subjectId}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-md"
                         />
@@ -75,98 +93,13 @@ export default function AddSubject({ auth }) {
                             htmlFor="email"
                             className="block text-gray-700 text-sm font-bold mb-2"
                         >
-                            Email:
-                        </label>
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded-md"
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label
-                            htmlFor="password"
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                        >
-                            Password:
-                        </label>
-                        <input
-                            type="password"
-                            name="password"
-                            id="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded-md"
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label
-                            htmlFor="full_name"
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                        >
-                            Full Name:
+                            Nama Subjek:
                         </label>
                         <input
                             type="text"
-                            name="full_name"
-                            id="full_name"
-                            value={formData.full_name}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded-md"
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label
-                            htmlFor="address"
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                        >
-                            Address:
-                        </label>
-                        <input
-                            type="text"
-                            name="address"
-                            id="address"
-                            value={formData.address}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded-md"
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label
-                            htmlFor="phone_number"
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                        >
-                            Phone Number:
-                        </label>
-                        <input
-                            type="text"
-                            name="phone_number"
-                            id="phone_number"
-                            value={formData.phone_number}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded-md"
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label
-                            htmlFor="birthdate"
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                        >
-                            Birthdate:
-                        </label>
-                        <input
-                            type="date"
-                            name="birthdate"
-                            id="birthdate"
-                            value={formData.birthdate}
+                            name="subjectName"
+                            id="subjectName"
+                            value={formData.subjectName}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-md"
                         />
@@ -177,12 +110,35 @@ export default function AddSubject({ auth }) {
                             htmlFor="class"
                             className="block text-gray-700 text-sm font-bold mb-2"
                         >
+                            Teacher:
+                        </label>
+                        <select
+                            name="teacherId"
+                            id="teacherId"
+                            value={formData.teacherId}
+                            onChange={handleChange}
+                            className="w-full p-2 border rounded-md"
+                        >
+                            <option value="">Select Teacher</option>
+                            {teacherList.map((teacher, index) => (
+                                <option key={index} value={teacher.id}>
+                                    {teacher.user_details.full_name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="mb-4">
+                        <label
+                            htmlFor="class"
+                            className="block text-gray-700 text-sm font-bold mb-2"
+                        >
                             Class:
                         </label>
                         <select
-                            name="class"
-                            id="class"
-                            value={formData.class}
+                            name="classId"
+                            id="classId"
+                            value={formData.classId}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-md"
                         >
@@ -205,12 +161,12 @@ export default function AddSubject({ auth }) {
                         </select>
                     </div>
                     <div className="flex justify-between">
-                        <Link
+                        {/* <Link
                             className="bg-primaryBlue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green"
                             href={route(`adminStudentList`)}
                         >
                             Back
-                        </Link>
+                        </Link> */}
                         <button
                             type="submit"
                             className="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green"
