@@ -130,18 +130,35 @@ export default function Schedule({ auth, user }) {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
+        const formatDate = (date, time, timezone) => {
+            const dateTimeString = `${date}T${time}:00`;
+
+            // Assuming 'timezone' is a valid IANA time zone identifier, you can get the offset
+            const offsetMinutes = new Date(dateTimeString).getTimezoneOffset();
+            const offsetHours = Math.abs(offsetMinutes) / 60;
+            const offsetSign = offsetMinutes < 0 ? '+' : '-';
+
+            // Construct the ISO string with the offset
+            const isoString = `${dateTimeString}${offsetSign}${String(offsetHours).padStart(2, '0')}:00`;
+
+            console.log('Formatted date:', isoString);
+            return isoString;
+        };
+
         const newEventForm = {
-            classId: e.target.event_classes.value,
+            teacherId: e.target.event_teacher.value,
+            class: e.target.event_classes.value,
             title: e.target.event_name.value,
             location: e.target.event_location.value,
             attendees: e.target.event_classes.value,
-            start_date: new Date(`${e.target.event_start_date.value}T${e.target.event_start_time.value}`).toISOString(),
-            end_date: new Date(`${e.target.event_end_date.value}T${e.target.event_end_time.value}`).toISOString(),
+            start_date: formatDate(e.target.event_start_date.value, e.target.event_start_time.value, 'your_timezone'),
+            end_date: formatDate(e.target.event_end_date.value, e.target.event_end_time.value, 'your_timezone'),
         };
+
 
         if (e.target.event_name.value.trim() !== '') {
             try {
-                const response = await axios.post('/api/scheduleEvent', newEventForm);
+                const response = await axios.post('/api/newAdminEvent', newEventForm);
 
                 // Handle the response as needed
                 console.log(response.data);
@@ -170,7 +187,8 @@ export default function Schedule({ auth, user }) {
         };
 
         const updatedEventForm = {
-            classId: e.target.event_classes.value,
+            teacherId: e.target.event_teacher.value,
+            class: e.target.event_classes.value,
             title: e.target.event_name.value,
             location: e.target.event_location.value,
             attendees: e.target.event_classes.value,
@@ -204,8 +222,6 @@ export default function Schedule({ auth, user }) {
             const response = await axios.delete(`/api/deleteEvent/${selectedEvent.id}`);
             console.log(response.data); // Log the response for debugging
 
-            // Optionally, you can update your state or perform any other necessary actions after deletion
-
             // Close the delete popup
             setIsEventPopUpDelete(false);
             setIsEventPopUpDesc(false);
@@ -220,7 +236,7 @@ export default function Schedule({ auth, user }) {
 
     const handleClassClick = async (selectedClass) => {
         try {
-            const response = await axios.get(`/api/showEvent/${selectedClass}`);
+            const response = await axios.get(`/api/showEventStudent/${selectedClass}`);
             console.log(response.data); // Log the response for debugging
 
             const fetchedEvents = response.data;
@@ -425,6 +441,19 @@ export default function Schedule({ auth, user }) {
                                                     />
                                                 </div>
 
+                                                <div>
+                                                    <label htmlFor="event_teacher" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        Teacher Id
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        name="event_teacher"
+                                                        id="event_teacher"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                                                        placeholder="Teacher Id"
+                                                    />
+                                                </div>
+
                                                 <div className="grid grid-cols-2 gap-x-4">
                                                     <div>
                                                         <label htmlFor="event_start" className="block mb-2 text-sm font-medium text-gray-900">
@@ -592,6 +621,21 @@ export default function Schedule({ auth, user }) {
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
                                                         placeholder={selectedEvent.attendees}
                                                         defaultValue={selectedEvent.attendees}
+                                                        required=""
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="event_teacher" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        Teacher Id
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        name="event_teacher"
+                                                        id="event_teacher"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
+                                                        placeholder={selectedEvent.teacherId}
+                                                        defaultValue={selectedEvent.teacherId}
                                                         required=""
                                                     />
                                                 </div>

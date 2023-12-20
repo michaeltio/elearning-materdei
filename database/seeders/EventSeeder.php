@@ -12,6 +12,9 @@ class EventSeeder extends Seeder
      * Run the database seeds.
      */
     const MONDAY = Carbon::MONDAY;
+    const TUESDAY = Carbon::TUESDAY;
+    const WEDNESDAY = Carbon::WEDNESDAY;
+    const THURSDAY = Carbon::THURSDAY;
     const FRIDAY = Carbon::FRIDAY;
 
     public function run(): void
@@ -65,6 +68,24 @@ class EventSeeder extends Seeder
                 'end_time' => '13:00:00',
             ],
         ];
+
+        $currentDate = $startDate->copy();
+
+        while ($currentDate->lessThanOrEqualTo($endDate)) {
+            // Check if the current day is Monday to Friday
+            if ($currentDate->dayOfWeek >= self::MONDAY && $currentDate->dayOfWeek <= self::FRIDAY) {
+                foreach ($eventsDataBreak as $eventData) {
+                    // Create events for each class
+                    $this->createWeeklyEvents($currentDate, $eventData, $teacherId);
+
+                    // Increment teacher ID for the next event
+                    $teacherId = $this->getNextTeacherId($teacherId);
+                }
+            }
+
+            // Move to the next day
+            $currentDate->addDay();
+        }
 
         $eventsDataMonday = [
             // start
@@ -706,19 +727,22 @@ class EventSeeder extends Seeder
             ],
         ];
 
-        $this->processEventsForDateRange($startDate, $endDate, $eventsDataMonday, $teacherId);
-        // $this->processEventsForDateRange($startDate, $endDate, $eventsDataTuesday, $teacherId);
-        // $this->processEventsForDateRange($startDate, $endDate, $eventsDataWednesday, $teacherId);
-        // $this->processEventsForDateRange($startDate, $endDate, $eventsDataThursday, $teacherId);
-        // $this->processEventsForDateRange($startDate, $endDate, $eventsDataFriday, $teacherId);
-        $this->processEventsForDateRange($startDate, $endDate, $eventsDataBreak, $teacherId);
-    }
-
-    private function processEventsForDateRange($startDate, $endDate, $eventsData, $teacherId)
-    {
         $currentDate = $startDate->copy();
 
         while ($currentDate->lessThanOrEqualTo($endDate)) {
+            // Check if the current day is Monday to Friday
+            if ($currentDate->dayOfWeek == self::MONDAY) {
+                $eventsData = $eventsDataMonday;
+            } else if ($currentDate->dayOfWeek == self::TUESDAY) {
+                $eventsData = $eventsDataTuesday;
+            } else if ($currentDate->dayOfWeek == self::WEDNESDAY) {
+                $eventsData = $eventsDataWednesday;
+            } else if ($currentDate->dayOfWeek == self::THURSDAY) {
+                $eventsData = $eventsDataThursday;
+            } else if ($currentDate->dayOfWeek == self::FRIDAY) {
+                $eventsData = $eventsDataFriday;
+            }
+
             // Check if the current day is Monday to Friday
             if ($currentDate->dayOfWeek >= self::MONDAY && $currentDate->dayOfWeek <= self::FRIDAY) {
                 foreach ($eventsData as $eventData) {
@@ -734,7 +758,6 @@ class EventSeeder extends Seeder
             $currentDate->addDay();
         }
     }
-
 
     private function getNextTeacherId($currentTeacherId)
     {
@@ -762,6 +785,8 @@ class EventSeeder extends Seeder
             'start_date' => $startDate->copy()->setTimeFromTimeString($eventData['start_time'])->toDateTimeString(),
             'end_date' => $startDate->copy()->setTimeFromTimeString($eventData['end_time'])->toDateTimeString(),
         ];
+
+        // var_dump($event);
 
         Event::create($event);
     }
