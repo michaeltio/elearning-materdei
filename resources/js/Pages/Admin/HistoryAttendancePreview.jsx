@@ -4,6 +4,21 @@ import { useEffect, useState } from "react";
 import { CompactTable } from "@table-library/react-table-library/compact";
 export default function HistoryAttendancePreview({ auth, classTitle }) {
     const [studentsAttendance, setStudentsAttendance] = useState([]);
+    const handleChange = (itemID, attendanceDate, type) => {
+        return async () => {
+            console.log(itemID, attendanceDate, type);
+            try {
+                const response = await axios.post("/api/editAttendance", {
+                    student_id: itemID,
+                    date: attendanceDate,
+                    type: type,
+                });
+                console.log(response.data);
+            } catch (e) {
+                console.error(e);
+            }
+        };
+    };
     useEffect(() => {
         const fetchStudent = async () => {
             try {
@@ -18,6 +33,7 @@ export default function HistoryAttendancePreview({ auth, classTitle }) {
                 // console.log(filteredClass);
                 // console.log(classTitle);
                 setStudentsAttendance(filteredClass);
+                console.log(studentsAttendance);
             } catch (error) {
                 console.error(error);
             }
@@ -33,9 +49,38 @@ export default function HistoryAttendancePreview({ auth, classTitle }) {
             renderCell: (item) => item.student_name,
         },
         { label: "Class", renderCell: (item) => item.class },
-        { label: "Present", renderCell: (item) => item.is_present },
-        { label: "Late", renderCell: (item) => item.is_late },
-
+        {
+            label: "Present",
+            renderCell: (item) => (
+                <form action="">
+                    <input
+                        type="checkbox"
+                        onChange={handleChange(
+                            item.student_id,
+                            item.attendance_date,
+                            "is_present"
+                        )}
+                        defaultChecked={item.is_present}
+                    />
+                </form>
+            ),
+        },
+        {
+            label: "Late",
+            renderCell: (item) => (
+                <form action="">
+                    <input
+                        type="checkbox"
+                        onChange={handleChange(
+                            item.student_id,
+                            item.attendance_date,
+                            "is_late"
+                        )}
+                        defaultChecked={item.is_late}
+                    />
+                </form>
+            ),
+        },
         {
             label: "Attendance Date",
             renderCell: (item) => item.updated_at.substring(0, 10),

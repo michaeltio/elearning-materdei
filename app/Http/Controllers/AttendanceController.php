@@ -37,8 +37,6 @@ class AttendanceController extends Controller
             ->orderBy('created_at', 'desc')
             ->firstOrFail();
 
-
-
         $attendanceRecord->is_present = true;
         $attendanceRecord->is_late = $isLate;
         $attendanceRecord->save();
