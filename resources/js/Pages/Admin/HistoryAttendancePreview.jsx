@@ -30,15 +30,12 @@ export default function HistoryAttendancePreview({ auth, classTitle }) {
         { label: "NIS", renderCell: (item) => item.student_id },
         {
             label: "Name",
-            renderCell: (item) => "Ganteng",
+            renderCell: (item) => item.student_name,
         },
         { label: "Class", renderCell: (item) => item.class },
         { label: "Present", renderCell: (item) => item.is_present },
         { label: "Late", renderCell: (item) => item.is_late },
-        {
-            label: "Attendance Time",
-            renderCell: (item) => item.updated_at.substring(11, 16),
-        },
+
         {
             label: "Attendance Date",
             renderCell: (item) => item.updated_at.substring(0, 10),
