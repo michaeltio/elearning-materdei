@@ -164,14 +164,26 @@ export default function Attendance({ auth }) {
                 ) : (
                     <div className="mt-8 flex flex-col justify-center items-center w-64 h-64">
                         {preAttendance || postAttendance ? (
-                            <div className="rounded-full bg-red-500 w-full h-full flex flex-col justify-center items-center">
+                            <div
+                                className={`rounded-full ${
+                                    isAttend ? "bg-green-500" : "bg-red-500"
+                                }  w-full h-full flex flex-col justify-center items-center`}
+                            >
                                 <img
-                                    src={cantAttendIcon}
+                                    src={isAttend ? CheckIcon : cantAttendIcon}
                                     alt=""
                                     className="flex w-32 brightness-0 invert"
                                 />
                                 <p className="text-center items-center text-white">
-                                    Can't Attend at This Time
+                                    {isAttend ? (
+                                        "Class Attended"
+                                    ) : (
+                                        <>
+                                            {" "}
+                                            You can only attempt At <br />
+                                            06.30 - 08.00
+                                        </>
+                                    )}
                                 </p>
                             </div>
                         ) : isAttend ? (
