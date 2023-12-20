@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // schedule
+// Route::get('/showTeacherAdmin/{teacherId}', [EventController::class, 'showTeacherAdmin']);
 Route::post('/newAdminEvent', [EventController::class, 'store']);
 Route::get('/showEventStudent/{class}', [EventController::class, 'getEventsStudent']);
 Route::get('/showEventTeacher/{userId}', [EventController::class, 'getEventsTeacher']);

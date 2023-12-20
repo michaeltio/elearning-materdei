@@ -35,12 +35,6 @@ class EventController extends Controller
         return response()->json($events);
     }
 
-    /**
-     * Store a newly created event in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([

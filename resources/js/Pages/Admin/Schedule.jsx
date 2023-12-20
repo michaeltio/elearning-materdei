@@ -77,7 +77,6 @@ export default function Schedule({ auth, user }) {
     const handleButton = () => {
         setShowInfo(true);
 
-        // You can set default values for eventStart and eventEnd if needed
         setEventStart(new Date());
         setEventEnd(new Date());
     };
@@ -174,6 +173,11 @@ export default function Schedule({ auth, user }) {
         }
     };
 
+    const showTeacher = async () => {
+        const response = await axios.get(`/api/showEventStudent/${selectedClass}`);
+
+    }
+
     const handleUpdateFormSubmit = async (e, eventId, classId) => {
         e.preventDefault();
 
@@ -237,18 +241,18 @@ export default function Schedule({ auth, user }) {
     const handleClassClick = async (selectedClass) => {
         try {
             const response = await axios.get(`/api/showEventStudent/${selectedClass}`);
-            console.log(response.data); // Log the response for debugging
+            console.log(response.data); 
 
             const fetchedEvents = response.data;
             setEvents(fetchedEvents);
 
-            // Assuming calendarInstance is the instance of your Toast UI calendar
             const calendarInstance = calendarRef.current.getInstance();
             calendarInstance.clear();
 
             fetchedEvents.forEach((eventData) => {
                 calendarInstance.createEvents([
                     {
+                        body: eventData.teacherId,
                         id: eventData.id,
                         calendarId: eventData.class,
                         title: eventData.title,
@@ -634,8 +638,8 @@ export default function Schedule({ auth, user }) {
                                                         name="event_teacher"
                                                         id="event_teacher"
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder={selectedEvent.teacherId}
-                                                        defaultValue={selectedEvent.teacherId}
+                                                        placeholder={selectedEvent.body}
+                                                        defaultValue={selectedEvent.body}
                                                         required=""
                                                     />
                                                 </div>
