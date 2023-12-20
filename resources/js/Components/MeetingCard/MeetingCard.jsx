@@ -3,7 +3,7 @@ import { Link } from "@inertiajs/react";
 
 export default function MeetingCard({ user, content }) {
     return (
-        <div className="bg-slate-400 p-4 mb-6 rounded-xl">
+        <div className="bg-slate-400 p-4 mt-6 rounded-xl">
             <h1 className="font-bold text-xl mb-2 ">{content.title}</h1>
             <div className="flex flex-row items-center border-b w-full border-black" />
             <div className="flex flex-col">
@@ -12,8 +12,12 @@ export default function MeetingCard({ user, content }) {
                 </div>
                 {content.file && (
                     <div>
-                        <p>File Name: {content.file.name}</p>
-                        <p>File Size: {content.file.size} KB</p>
+                        <a
+                            download={content.file}
+                            href={"public/uploaded/" + content.file}
+                        >
+                            File Name: {content.file}
+                        </a>
                     </div>
                 )}
 
@@ -23,7 +27,8 @@ export default function MeetingCard({ user, content }) {
                     </div>
                 )}
             </div>
-            {user.user_details.role === "teacher" && (
+            {(user.user_details.role === "teacher" ||
+                user.user_details.role === "admin") && (
                 <div className="flex flex-row mt-2">
                     <Link
                         href={route("teacherSubjectEdit", {

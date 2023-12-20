@@ -112,19 +112,16 @@ export default function StudentList({ auth }) {
                             <option value="7C">7C</option>
                             <option value="7D">7D</option>
                             <option value="7E">7E</option>
-                            <option value="7F">7F</option>
                             <option value="8A">8A</option>
                             <option value="8B">8B</option>
                             <option value="8C">8C</option>
                             <option value="8D">7D</option>
                             <option value="8E">7E</option>
-                            <option value="8F">7F</option>
                             <option value="9A">9A</option>
                             <option value="9B">9B</option>
                             <option value="9C">9C</option>
                             <option value="9D">9D</option>
                             <option value="9E">9E</option>
-                            <option value="9F">9F</option>
                         </select>
                     </div>
 

@@ -3,30 +3,35 @@ import { Head } from "@inertiajs/react";
 import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 import { useState } from "react";
 import SearchIcon from "/public/Assets/search-icon.svg";
+import { Link } from "@inertiajs/react";
+import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function SubjectList({ auth, subjectsData }) {
-    console.log(subjectsData);
-
+export default function SubjectList({ auth, subjectsData, classId }) {
+    console.log(classId);
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Subjects" />
-            <p className="flex justify-center items-center mt-12 text-black text-2xl ">
+            <div className="flex flex-col justify-center items-center mt-12 text-black text-2xl ">
                 <span className="border-b border-black">Subject Overview</span>
-            </p>
-
+                {auth.user.user_details.role === "admin" && (
+                    <Link
+                        className="mt-12"
+                        href={route("adminAddSubject", { class: classId })}
+                    >
+                        <PrimaryButton>Add Subject</PrimaryButton>
+                    </Link>
+                )}
+            </div>
             <div className="flex flex-wrap justify-center mt-12">
                 {subjectsData.map((card, index) => (
-                    <>
-                        {console.log(card)}
-                        <SubjectCard
-                            key={index}
-                            user={auth.user}
-                            bgColor="bg-red-500"
-                            content={card.subjectName}
-                            arrowColor="bg-red-500"
-                            dynamic={card}
-                        />
-                    </>
+                    <SubjectCard
+                        key={index}
+                        user={auth.user}
+                        bgColor="bg-red-500"
+                        content={card}
+                        arrowColor="bg-red-500"
+                        dynamic={card}
+                    />
                 ))}
             </div>
         </AuthenticatedLayout>

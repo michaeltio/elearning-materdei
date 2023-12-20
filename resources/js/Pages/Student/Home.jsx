@@ -46,7 +46,7 @@ export default function StudentHome({ auth }) {
                         key={index}
                         user={auth.user}
                         bgColor="bg-red-500"
-                        content={card.subject_details.subjectName}
+                        content={card.subject_details}
                         arrowColor="bg-red-500"
                         dynamic={card.subject_details}
                     />

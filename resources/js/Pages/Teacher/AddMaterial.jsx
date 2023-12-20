@@ -8,7 +8,7 @@ export default function AddMaterial({ auth, subjectData }) {
     const [formData, setFormData] = useState({
         title: "",
         desc: "",
-        file: "",
+        file: null,
         subjectId: subjectData.subjectId,
     });
 
@@ -32,6 +32,7 @@ export default function AddMaterial({ auth, subjectData }) {
                     "Content-Type": "multipart/form-data",
                 },
             });
+            console.log(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -46,6 +47,7 @@ export default function AddMaterial({ auth, subjectData }) {
                 <form
                     onSubmit={handleSubmit}
                     className="max-w-md mx-auto p-6 bg-white border rounded-md shadow-md mt-4"
+                    encType="multipart/form-data"
                 >
                     <div className="mb-4">
                         <label
@@ -92,7 +94,6 @@ export default function AddMaterial({ auth, subjectData }) {
                             type="file"
                             name="file"
                             id="file"
-                            value={formData.filePath}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-md"
                         />

@@ -53,6 +53,7 @@ Route::post('/editTeacher', [AdminTeacherController::class, 'edit']);
 
 //admin attendance
 Route::get('/showAttendanceByClass', [HistoryAttendanceController::class, 'index']);
+Route::post('/editAttendance', [HistoryAttendanceController::class, 'editAttendance']);
 
 //teacher subject
 Route::post('/addSubjectData', [TeacherSubjectController::class, 'store']);

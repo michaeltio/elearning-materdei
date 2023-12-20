@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "@inertiajs/react";
 
-export default function AddStudent({ auth }) {
+export default function AddSubject({ auth }) {
     const [formData, setFormData] = useState({
         nis: "",
         email: "",

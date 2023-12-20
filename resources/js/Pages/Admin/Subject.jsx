@@ -5,6 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { Link } from "@inertiajs/react";
 
 export default function Subject({ auth, subjectData }) {
+    console.log(subjectData);
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className="p-6">
@@ -22,15 +23,6 @@ export default function Subject({ auth, subjectData }) {
                     />
                 </div>
 
-                <div className="flex flex-col w-full text-white">
-                    {subjectData.subject_datas.map((item) => (
-                        <MeetingCard
-                            key={item.id}
-                            content={item}
-                            user={auth.user}
-                        />
-                    ))}
-                </div>
                 {(auth.user.user_details.role === "teacher" ||
                     auth.user.user_details.role === "admin") && (
                     <Link
@@ -41,6 +33,16 @@ export default function Subject({ auth, subjectData }) {
                         <PrimaryButton>Add Material</PrimaryButton>
                     </Link>
                 )}
+
+                <div className="flex flex-col w-full text-white">
+                    {subjectData.subject_datas.map((item) => (
+                        <MeetingCard
+                            key={item.id}
+                            content={item}
+                            user={auth.user}
+                        />
+                    ))}
+                </div>
             </div>
         </AuthenticatedLayout>
     );

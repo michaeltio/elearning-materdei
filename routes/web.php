@@ -146,6 +146,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/subject-lists/{subjectId}',
         [AdminController::class, 'subjectSeeder']
         )->name('adminSubject');
+        Route::get('/admin/subject-list/{class}/AddSubject', function($class){
+        optional(Auth::user()->userDetails);
+        return Inertia::render('Admin/AddSubject', ['class' => $class]);
+        })->name('adminAddSubject');
     });
 });
 

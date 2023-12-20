@@ -16,6 +16,7 @@ class AdminController extends Controller
     
         return Inertia::render('Admin/SubjectListPreview', [
             'subjectsData' => $subjectsData,
+            'classId' => $class,
         ]);
     }
 

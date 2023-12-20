@@ -9,7 +9,7 @@ export default function AddMaterial({ auth, subjectDetails }) {
         id: subjectDetails.id,
         title: subjectDetails.title,
         desc: subjectDetails.desc,
-        file: subjectDetails.file,
+        file: null,
         subjectId: subjectDetails.subjectId,
     });
 

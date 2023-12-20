@@ -53,7 +53,7 @@ export default function TeacherList({ auth }) {
     const nodes = filteredData;
 
     const COLUMNS = [
-        { label: "NIS", renderCell: (item) => item.id },
+        { label: "Teacher ID", renderCell: (item) => item.id },
         {
             label: "Name",
             renderCell: (item) => item.user_details.full_name,
@@ -75,7 +75,7 @@ export default function TeacherList({ auth }) {
             <Head title="Students" />
             <div className="mt-8">
                 <h1 className="text-2xl text-center mb-4">
-                    Students: {totalData}
+                    Teacher: {totalData}
                 </h1>
                 <div className="flex flex-wrap justify-center gap-8">
                     <label htmlFor="search">
