@@ -12,8 +12,12 @@ export default function MeetingCard({ user, content }) {
                 </div>
                 {content.file && (
                     <div>
-                        <p>File Name: {content.file.name}</p>
-                        <p>File Size: {content.file.size} KB</p>
+                        <a
+                            download={content.file}
+                            href={"public/uploaded/" + content.file}
+                        >
+                            File Name: {content.file}
+                        </a>
                     </div>
                 )}
 

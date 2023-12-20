@@ -5,6 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { Link } from "@inertiajs/react";
 
 export default function Subject({ auth, subjectData }) {
+    console.log(subjectData);
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className="p-6">
