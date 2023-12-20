@@ -27,7 +27,8 @@ export default function MeetingCard({ user, content }) {
                     </div>
                 )}
             </div>
-            {user.user_details.role === "teacher" && (
+            {(user.user_details.role === "teacher" ||
+                user.user_details.role === "admin") && (
                 <div className="flex flex-row mt-2">
                     <Link
                         href={route("teacherSubjectEdit", {
