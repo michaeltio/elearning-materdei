@@ -8,7 +8,6 @@ export default function SubjectCard({
     content,
     arrowColor,
     dynamic,
-    classId,
 }) {
     console.log(content);
     return (
@@ -45,7 +44,6 @@ export default function SubjectCard({
                         className={`absolute bottom-2 left-2 mb-2 ml-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
                         href={route("adminEditSubject", {
                             //edit
-                            classId: classId,
                             subjectId: dynamic.subjectId,
                         })}
                     >

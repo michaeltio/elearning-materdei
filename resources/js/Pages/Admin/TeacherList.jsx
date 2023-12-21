@@ -45,7 +45,7 @@ export default function TeacherList({ auth }) {
                 .toLowerCase()
                 .includes(input.toLowerCase())
         );
-        setTotalData(filtered.length);
+
         setFilteredData(filtered);
     };
 

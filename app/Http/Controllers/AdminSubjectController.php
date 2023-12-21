@@ -8,54 +8,44 @@ use Illuminate\Http\Request;
 
 class AdminSubjectController extends Controller
 {
+    public function show(Request $request)
+    {
+        $subject_id = $request->input('subjectId');
+        $subject = Subject::where('subjectId', $subject_id)->first();
+        return response()->json($subject);
+    }
 
+    public function store(Request $request)
+    {
+        $subject = new Subject;
+        $subject->subjectId = $request->input('subjectId');
+        $subject->subjectName = $request->input('subjectName');
+        $subject->teacherId = $request->input('teacherId');
+        $subject->save();
 
-        public function show(Request $request)
-        {
-                $subject_id = $request->input('subjectId');
-                $subject = Subject::where('subjectId', $subject_id)->first();
+        $classSubject = new ClassSubject;
+        $classSubject->classId = $request->input('classId');
+        $classSubject->subjectId = $request->input('subjectId');
+        $classSubject->save();
+    }
 
-                return response()->json($subject);
-        }
+    public function edit(Request $request)
+    {
+        $subject_id = $request->input('subjectId');
+        $subject = Subject::where('subjectId', $subject_id)->first();
+        $subject->subjectName = $request->input('subjectName');
+        $subject->teacherId = $request->input('teacherId');
+        $subject->save();
 
-        public function store(Request $request)
-        {
-                $subject = new Subject;
-                $subject->subjectId = $request->input('subjectId');
-                $subject->subjectName = $request->input('subjectName');
-                $subject->teacherId = $request->input('teacherId');
-                $subject->save();
+        $classSubject = ClassSubject::where('subjectId', $subject_id)->first();
+        $classSubject->classId = $request->input('classId');
+        $classSubject->save();
+        return response()->json(['msg' => "Succesfull"]);
+    }
 
-                $classSubject = new ClassSubject;
-                $classSubject->classId = $request->input('classId');
-                $classSubject->subjectId = $request->input('subjectId');
-                $classSubject->save();
-        }
-
-        public function edit(Request $request)
-        {
-
-                $subject_id = $request->input('subjectId');
-                $subject_name = $request->input('subjectName');
-                $teacherId = $request->input('teacherId');
-                $subject = Subject::where('subjectId', $subject_id)->first();
-                $subject->subjectName = $request->input('subjectName');
-                $subject->teacherId = $request->input('teacherId');
-                $subject->save();
-
-
-                // $classSubject = ClassSubject::find('classId', $request->input('subjectId'));
-                // $classSubject = ClassSubject::where('subjectId', $subject_id)->first();
-                // $classSubject->classId = $request->input('classId');
-
-                // $classSubject->save();
-
-                return response()->json(['subject' => $subject_id, 'name' => $subject_name, 'teacher' => $teacherId]);
-        }
-
-        public function delete($subjectId)
-        {
-                // ClassSubject::destroy('subjectId', $subjectId);
-                // Subject::destroy($subjectId);
-        }
+    public function delete($subjectId)
+    {
+        // ClassSubject::destroy('subjectId', $subjectId);
+        // Subject::destroy($subjectId);
+    }
 }
