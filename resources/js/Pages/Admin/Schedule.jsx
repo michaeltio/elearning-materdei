@@ -236,7 +236,7 @@ export default function Schedule({ auth, user }) {
     const handleClassClick = async (selectedClass) => {
         try {
             const response = await axios.get(`/api/showEventStudent/${selectedClass}`);
-            console.log(response.data); 
+            console.log(response.data);
 
             const fetchedEvents = response.data;
             setEvents(fetchedEvents);
@@ -270,7 +270,7 @@ export default function Schedule({ auth, user }) {
     const handleTeacherClick = async (teacherId) => {
         try {
             const response = await axios.get(`/api/showEventTeacher/${teacherId}`);
-            console.log(response.data); 
+            console.log(response.data);
 
             const fetchedEvents = response.data;
             setEvents(fetchedEvents);
@@ -750,24 +750,16 @@ export default function Schedule({ auth, user }) {
                                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
                                     <div className="w-full pb-4 md:pr-8 md:max-w-md sm:max-w-sm">
                                         <div className="z-10">
-                                            <div className="">
-                                                <ul className="py-2 text-sm text-gray-700 grid grid-cols-3">
-                                                    {["7", "8", "9"].map((classNumber) => (
-                                                        <li key={classNumber}>
-                                                            <a
-                                                                href="#"
-                                                                className="block p-3"
-                                                                onClick={() => handleClassClick(classNumber)}
-                                                            >
-                                                                {classNumber}
-                                                            </a>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                            <ul className="py-2 text-sm items-center text-gray-700 grid grid-cols-3">
+                                            <div className="flex py-2 text-sm text-gray-700">
                                                 {["7", "8", "9"].map((classNumber) => (
-                                                    <li key={classNumber}>
+                                                    <div key={classNumber} className="flex flex-col mr-4">
+                                                        <a
+                                                            href="#"
+                                                            className="block p-3"
+                                                            onClick={() => handleClassClick(classNumber)}
+                                                        >
+                                                            {classNumber}
+                                                        </a>
                                                         {["A", "B", "C", "D", "E", "F"].map((classLetter) => (
                                                             <a
                                                                 href="#"
@@ -778,10 +770,29 @@ export default function Schedule({ auth, user }) {
                                                                 {classNumber + classLetter}
                                                             </a>
                                                         ))}
-                                                    </li>
+                                                    </div>
                                                 ))}
-                                            </ul>
-
+                                                <div className="flex flex-col">
+                                                    <div className="flex flex-col mr-4">
+                                                        <a
+                                                            href="#"
+                                                            className="block p-3"
+                                                        >
+                                                            Teacher
+                                                        </a>
+                                                        {["1", "2", "3", "4", "5"].map((teacherNumber) => (
+                                                            <a
+                                                                href="#"
+                                                                key={"Teacher" + teacherNumber}
+                                                                className="block p-3 hover:bg-gray-100 rounded-full"
+                                                                onClick={() => handleTeacherClick(200000000 + teacherNumber)}
+                                                            >
+                                                                Teacher 200000000{teacherNumber}
+                                                            </a>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
