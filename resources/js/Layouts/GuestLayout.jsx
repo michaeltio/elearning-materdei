@@ -30,10 +30,10 @@ export default function Guest({ className, children }) {
             />
 
             {/* Content */}
-            <main className={className}>{children}</main>
+            <main className={`mb-4 ` + className}>{children}</main>
 
             {/* Footer for mobile */}
-            <footer className="bottom-0 mt-auto block lg:hidden text-white">
+            <footer className="bottom-0 mt-auto block lg:hidden text-white mt-2">
                 <div className="flex flex-col bg-primaryBlue justify-between p-8">
                     <div className="flex justify-center gap-8">
                         <div className="flex flex-col items-between justify-between w-2/5 text-center">
@@ -82,7 +82,7 @@ export default function Guest({ className, children }) {
             </footer>
 
             {/* Footer for desktop */}
-            <footer className="bottom-0 mt-auto lg:block hidden text-white">
+            <footer className="bottom-0 mt-auto lg:block hidden text-white mt-2">
                 <div className="flex bg-primaryBlue justify-between p-8">
                     <div className="flex items-center">
                         <img
