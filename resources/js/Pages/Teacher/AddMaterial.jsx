@@ -24,8 +24,6 @@ export default function AddMaterial({ auth, subjectData }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(formData);
-
         try {
             const response = await axios.post("/api/addSubjectData", formData, {
                 headers: {

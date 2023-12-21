@@ -14,10 +14,11 @@ export default function AddMaterial({ auth, subjectDetails }) {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
+
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: name === "file" ? files[0] : value,
         }));
     };
 
@@ -58,6 +59,7 @@ export default function AddMaterial({ auth, subjectDetails }) {
                 <form
                     onSubmit={handleSubmit}
                     className="max-w-md mx-auto p-6 bg-white border rounded-md shadow-md mt-4"
+                    encType="multipart/form-data"
                 >
                     <div className="mb-4">
                         <label
@@ -104,7 +106,6 @@ export default function AddMaterial({ auth, subjectDetails }) {
                             type="file"
                             name="file"
                             id="file"
-                            value={formData.file}
                             onChange={handleChange}
                             className="w-full p-2 border rounded-md"
                         />
