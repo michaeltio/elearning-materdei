@@ -23,17 +23,6 @@ export default function Subject({ auth, subjectData }) {
                     />
                 </div>
 
-                {(auth.user.user_details.role === "teacher" ||
-                    auth.user.user_details.role === "admin") && (
-                    <Link
-                        href={route("teacherSubjectAdd", {
-                            subjectId: subjectData.subjectId,
-                        })}
-                    >
-                        <PrimaryButton>Add Material</PrimaryButton>
-                    </Link>
-                )}
-
                 <div className="flex flex-col w-full text-white">
                     {subjectData.subject_datas.map((item) => (
                         <MeetingCard

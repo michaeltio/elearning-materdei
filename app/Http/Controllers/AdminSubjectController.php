@@ -55,7 +55,7 @@ class AdminSubjectController extends Controller
 
         public function delete($subjectId)
         {
-                // ClassSubject::destroy('subjectId', $subjectId);
-                // Subject::destroy($subjectId);
+                ClassSubject::destroy('subjectId', $subjectId);
+                Subject::destroy($subjectId);
         }
 }

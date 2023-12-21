@@ -1,6 +1,7 @@
 import { Link } from "@inertiajs/react";
 import Abstract from "/public/Assets/abstract.png";
 import Arrow from "/public/Assets/right-arrow.svg";
+import EditIcon from "/public/Assets/edit-icon.svg";
 export default function SubjectCard({
     index,
     user,
@@ -49,7 +50,7 @@ export default function SubjectCard({
                             subjectId: dynamic.subjectId,
                         })}
                     >
-                        <img className="w-4" src={Arrow} alt="" />
+                        <img className="w-4" src={EditIcon} alt="" />
                     </Link>
                 </>
             )}

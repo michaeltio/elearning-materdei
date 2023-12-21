@@ -13,9 +13,11 @@ class TeacherSubjectController extends Controller
         $subjectDetail->subjectId = $request->input('subjectId');
         $subjectDetail->title = $request->input('title');
         $subjectDetail->desc = $request->input('desc');
-        $originalFilename = $request->file('file')->getClientOriginalName();
-        $request->file('file')->storeAs('public/uploadedfile', $originalFilename);
-        $subjectDetail->file = $originalFilename;
+        if($request->hasFile('file')){
+            $originalFilename = $request->file('file')->getClientOriginalName();
+            $request->file('file')->storeAs('public/uploadedfile', $originalFilename);
+            $subjectDetail->file = $originalFilename;
+        }
         $subjectDetail->save();
     }
 
