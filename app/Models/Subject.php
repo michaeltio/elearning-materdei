@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Subject extends Model
 {
     use HasFactory;
-
-    public function classSubjects(){
+    protected $primaryKey = 'subjectId';
+    
+    public function classSubjects()
+    {
         return $this->belongsTo(ClassSubject::class, 'subjectId', 'subjectId');
     }
 
-    public function SubjectDatas(){
+    public function SubjectDatas()
+    {
         return $this->hasMany(SubjectData::class, 'subjectId', 'subjectId');
     }
 }

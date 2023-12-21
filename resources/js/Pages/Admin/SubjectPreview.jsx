@@ -4,15 +4,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "@inertiajs/react";
 
-export default function SubjectPreview({ auth, subject_id }) {
+export default function SubjectPreview({ auth, subject_id, class_id }) {
     const [subject, setSubject] = useState({
         subjectId: "",
         subjectName: "",
         teacherId: "",
-        classId: "",
     });
-    const [teacherList, setTeacherList] = useState([]);
 
+    const [teacherList, setTeacherList] = useState([]);
+    console.log("subject tanpa form " + typeof subject_id);
+    console.log("subject id " + subject.subjectId);
     useEffect(() => {
         const fetchTeacher = async () => {
             try {
@@ -28,6 +29,7 @@ export default function SubjectPreview({ auth, subject_id }) {
         };
         fetchTeacher();
     }, []);
+
     useEffect(() => {
         const fetchTeacher = async () => {
             try {
@@ -45,10 +47,7 @@ export default function SubjectPreview({ auth, subject_id }) {
         fetchTeacher();
     }, [subject_id]);
 
-    // Use this useEffect to update the form values every time 'subject' state changes
     useEffect(() => {
-        // Update the form values here
-        // For example, you might want to log the values
         console.log("Updated form values:", subject);
     }, [subject]);
 
@@ -63,9 +62,17 @@ export default function SubjectPreview({ auth, subject_id }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("/api/editSubject", subject, {
-                headers: { "Content-Type": "application/json" },
-            });
+            const response = await axios.post(
+                "/api/editSubject",
+                {
+                    subjectId: subject_id,
+                    subjectName: subject.subjectName,
+                    teacherId: subject.teacherId,
+                },
+                {
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
             console.log(response.data);
         } catch (error) {
             console.log(error);
@@ -81,7 +88,7 @@ export default function SubjectPreview({ auth, subject_id }) {
             >
                 <h1 className="mb-2 text-2xl">{subject.subjectName}</h1>
                 <div className="mb-4">{subject_id}</div>
-
+                <div>{class_id}</div>
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-600">
                         Subject Name
@@ -121,7 +128,7 @@ export default function SubjectPreview({ auth, subject_id }) {
                         ))}
                     </select>
                 </div>
-               <h1></h1>
+                <h1></h1>
 
                 <div className="flex justify-center flex-wrap gap-2">
                     <Link className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">

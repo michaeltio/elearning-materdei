@@ -165,11 +165,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return Inertia::render('Admin/AddSubject', ['classId' => $classId]);
         })->name('adminAddSubject');
 
-        Route::get('/admin/edit-subject/{subjectId}', function ($subject_id) {
+        Route::get('/admin/subject-list/{classId}/edit/{subjectId}', function ($class_id, $subject_id) {
             optional(Auth::user()->userDetails);
-            $data = Subject::where('subjectId', $subject_id)->get();
+            // $data = Subject::where('subjectId', $subject_id)->get();
             // belom kelar
-            return Inertia::render('Admin/SubjectPreview', ['subject_id' => $subject_id]);
+            return Inertia::render('Admin/SubjectPreview', ['class_id' => $class_id, 'subject_id' => $subject_id]);
         })->name('adminEditSubject');
     });
 });
