@@ -46,6 +46,7 @@ export default function StudentList({ auth }) {
               )
             : studentList;
         setFilteredData(filteredData);
+        setTotalData(filteredData.length);
     }, [selectedClass, studentList]);
 
     const handleSearch = (event) => {
@@ -56,6 +57,7 @@ export default function StudentList({ auth }) {
                 .toLowerCase()
                 .includes(input.toLowerCase())
         );
+        setTotalData(filtered.length);
         setFilteredData(filtered);
     };
 
