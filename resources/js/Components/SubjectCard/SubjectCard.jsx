@@ -8,8 +8,9 @@ export default function SubjectCard({
     content,
     arrowColor,
     dynamic,
+    classId,
 }) {
-    console.log(content);
+    console.log(classId);
     return (
         <div
             key={index}
@@ -42,7 +43,12 @@ export default function SubjectCard({
                     </Link>
                     <Link
                         className={`absolute bottom-2 left-2 mb-2 ml-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
+<<<<<<< Updated upstream
                         href={route("adminSubject", {
+=======
+                        href={route("adminEditSubject", {
+                            classId: classId,
+>>>>>>> Stashed changes
                             subjectId: dynamic.subjectId,
                         })}
                     >

@@ -161,6 +161,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         optional(Auth::user()->userDetails);
         return Inertia::render('Admin/AddSubject', ['classId' => $classId]);
         })->name('adminAddSubject');
+<<<<<<< Updated upstream
+=======
+
+        Route::get('/admin/subject-list/{classId}/edit/{subjectId}', function ($class_id, $subject_id) {
+            optional(Auth::user()->userDetails);
+            return Inertia::render('Admin/SubjectPreview', ['class_id' => $class_id, 'subject_id' => $subject_id]);
+        })->name('adminEditSubject');
+>>>>>>> Stashed changes
     });
 });
 
