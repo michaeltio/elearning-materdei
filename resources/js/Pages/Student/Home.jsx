@@ -8,12 +8,8 @@ import SearchIcon from "/public/Assets/search-icon.svg";
 export default function StudentHome({ auth }) {
     const [search, setSearch] = useState("");
     const subjects = auth.user.user_details.classes.class_subjects;
+    console.log(subjects);
 
-    const filteredSubjects = subjects.filter((subject) =>
-        subject.subject_details.subjectName
-            .toLowerCase()
-            .includes(search.toLowerCase())
-    );
 
     const handleChange = (e) => {
         setSearch(e.target.value);
@@ -41,9 +37,9 @@ export default function StudentHome({ auth }) {
             </div>
 
             <div className="flex flex-wrap justify-center mt-12">
-                {filteredSubjects.map((card, index) => (
+                {subjects.map((card) => (
                     <SubjectCard
-                        key={index}
+                        key={card.id}
                         user={auth.user}
                         bgColor="bg-red-500"
                         content={card.subject_details}

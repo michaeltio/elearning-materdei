@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class UserDetail extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'userId';
+    public $incrementing = false;
     protected $fillable = [
         'userId',
         'full_name',

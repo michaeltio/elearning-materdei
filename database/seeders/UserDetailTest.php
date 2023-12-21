@@ -13,6 +13,7 @@ class UserDetailTest extends Seeder
     /**
      * Run the database seeds.
      */
+    
     public function run(): void
     {
         UserDetail::create([

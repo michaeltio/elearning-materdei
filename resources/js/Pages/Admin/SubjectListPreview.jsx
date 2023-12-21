@@ -7,6 +7,7 @@ import { Link } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function SubjectList({ auth, subjectsData, classId }) {
+    console.log(subjectsData);
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Subjects" />
