@@ -787,6 +787,7 @@ class EventSeeder extends Seeder
         ];
 
         // var_dump($event);
+        // test
 
         Event::create($event);
     }
