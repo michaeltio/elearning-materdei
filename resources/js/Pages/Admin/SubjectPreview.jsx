@@ -9,10 +9,11 @@ export default function SubjectPreview({ auth, subject_id, class_id }) {
         subjectId: "",
         subjectName: "",
         teacherId: "",
-        classId: "",
     });
-    const [teacherList, setTeacherList] = useState([]);
 
+    const [teacherList, setTeacherList] = useState([]);
+    console.log("subject tanpa form " + typeof subject_id);
+    console.log("subject id " + subject.subjectId);
     useEffect(() => {
         const fetchTeacher = async () => {
             try {
@@ -28,6 +29,7 @@ export default function SubjectPreview({ auth, subject_id, class_id }) {
         };
         fetchTeacher();
     }, []);
+
     useEffect(() => {
         const fetchTeacher = async () => {
             try {
@@ -45,10 +47,7 @@ export default function SubjectPreview({ auth, subject_id, class_id }) {
         fetchTeacher();
     }, [subject_id]);
 
-    // Use this useEffect to update the form values every time 'subject' state changes
     useEffect(() => {
-        // Update the form values here
-        // For example, you might want to log the values
         console.log("Updated form values:", subject);
     }, [subject]);
 
@@ -63,9 +62,17 @@ export default function SubjectPreview({ auth, subject_id, class_id }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("/api/editSubject", subject, {
-                headers: { "Content-Type": "application/json" },
-            });
+            const response = await axios.post(
+                "/api/editSubject",
+                {
+                    subjectId: subject_id,
+                    subjectName: subject.subjectName,
+                    teacherId: subject.teacherId,
+                },
+                {
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
             console.log(response.data);
         } catch (error) {
             console.log(error);
