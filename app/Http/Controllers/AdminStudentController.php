@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserDetail;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +15,12 @@ class AdminStudentController extends Controller
         $users = User::with('userDetails')->get();
         return response()->json($users);
     }
+
+    // public function index()
+    // {
+    //     $users = User::with('userDetails')->get();
+    //     return Inertia::render('Admin/StudentList',['filteredData' => $users]);
+    // }
 
     public function show(Request $request)
     {

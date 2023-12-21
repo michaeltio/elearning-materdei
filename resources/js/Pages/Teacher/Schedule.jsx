@@ -13,6 +13,8 @@ export default function Schedule({ auth, user }) {
     const calendarRef = useRef(null);
     const [currentDateRange, setCurrentDateRange] = useState('');
     const [currentView, setCurrentView] = useState('');
+    const [isEventPopUpDesc, setIsEventPopUpDesc] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     const [events, setEvents] = useState([]);
 
@@ -84,61 +86,38 @@ export default function Schedule({ auth, user }) {
 
         calendarInstance.changeView('week');
 
-        // // replace this with your actual logic to get user's classId
-        // const userClassId = auth.user.user_details.class;
+        // replace this with your actual logic to get user's classId
+        const userClassId = auth.user.user_details.userId;
 
-        // // Make an API request to fetch events based on the user's classId
-        // axios.get(`/api/showEvent/${userClassId}`)
-        //     .then(response => {
-        //         const fetchedEvents = response.data;
-        //         setEvents(fetchedEvents);
+        // Make an API request to fetch events based on the user's classId
+        axios.get(`/api/showEventTeacher/${userClassId}`)
+            .then(response => {
+                const fetchedEvents = response.data;
+                setEvents(fetchedEvents);
 
-        //         // Assuming calendarInstance is the instance of your Toast UI calendar
-        //         fetchedEvents.forEach(eventData => {
-        //             calendarInstance.createEvents([{
-        //                 id: eventData.id,
-        //                 calendarId: eventData.class,
-        //                 title: eventData.title,
-        //                 location: eventData.location,
-        //                 attendees: eventData.attendees,
-        //                 start: eventData.start_date,
-        //                 end: eventData.end_date,
-        //             }]);
-        //         });
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching events:', error);
-        //     });
+                // Assuming calendarInstance is the instance of your Toast UI calendar
+                fetchedEvents.forEach(eventData => {
+                    calendarInstance.createEvents([{
+                        id: eventData.id,
+                        calendarId: eventData.class,
+                        title: eventData.title,
+                        location: eventData.location,
+                        attendees: eventData.attendees,
+                        start: eventData.start_date,
+                        end: eventData.end_date,
+                    }]);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching events:', error);
+            });
 
-        calendarInstance.createEvents([
-            {
-                id: '1',
-                calendarId: 'teacher',
-                title: 'Jadwal Guru (1)',
-                location: 'Kelas 7A',
-                attendees: '7A',
-                start: '2023-12-06T08:00:00',
-                end: '2023-12-06T10:00:00',
-            },
-            {
-                id: '2',
-                calendarId: 'teacher',
-                title: 'Jadwal Guru (2)',
-                location: 'Kelas 8B',
-                attendees: '8B',
-                start: '2023-12-06T10:00:00',
-                end: '2023-12-06T12:00:00',
-            },
-            {
-                id: '3',
-                calendarId: 'teacher',
-                title: 'Jadwal Guru (2)',
-                location: 'Kelas 8F',
-                attendees: '8F',
-                start: '2023-12-06T13:00:00',
-                end: '2023-12-06T15:00:00',
-            },
-        ]);
+        calendarInstance.on('clickEvent', (event) => {
+            const eventDesc = calendarInstance.getEvent(event.event.id, event.event.calendarId);
+            console.log('Selected Event:', eventDesc);
+            setSelectedEvent(eventDesc);
+            setIsEventPopUpDesc(!isEventPopUpDesc);
+        });
 
         updateDateRange();
         updateCurrentView();
@@ -233,6 +212,35 @@ export default function Schedule({ auth, user }) {
                         </div>
                     </div>
                 </div>
+                {isEventPopUpDesc && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50">
+                        <div className="fixed inset-0 bg-black opacity-60"></div>{" "}
+                        <div className="relative">
+                            <div className="relative bg-white rounded-lg shadow px-7">
+                                <button
+                                    type="button"
+                                    className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-red-500 hover:text-gray-50 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
+                                    onClick={() => setIsEventPopUpDesc(false)}
+                                >
+                                    <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                </button>
+                                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
+                                    {selectedEvent && (
+                                        <div>
+                                            <p className='text-3xl font-bold pb-3'>{selectedEvent.title}</p>
+                                            <p>Location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {selectedEvent.location}</p>
+                                            <p>Attendees&nbsp;&nbsp;&nbsp;: {selectedEvent.attendees}</p>
+                                            <p>Start Date&nbsp;&nbsp;&nbsp;: {new Date(selectedEvent.start.d).toLocaleString()}</p>
+                                            <p>End Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {new Date(selectedEvent.end.d).toLocaleString()}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <Calendar ref={calendarRef} />
             </div>
         </AuthenticatedLayout >

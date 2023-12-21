@@ -88,7 +88,7 @@ export default function Schedule({ auth, user }) {
         const userClassId = auth.user.user_details.class;
 
         // Make an API request to fetch events based on the user's classId
-        axios.get(`/api/showEvent/${userClassId}`)
+        axios.get(`/api/showEventStudent/${userClassId}`)
             .then(response => {
                 const fetchedEvents = response.data;
                 setEvents(fetchedEvents);

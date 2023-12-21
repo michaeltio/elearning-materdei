@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Models\Event;
 use Carbon\Carbon;
 
@@ -22,21 +23,22 @@ class EventController extends Controller
         return response()->json($events);
     }
 
-    public function getEvents(Request $request, $class)
+    public function getEventsStudent(Request $request, $class)
     {
         $events = Event::where('class', $class)->get();
         return response()->json($events);
     }
 
-    /**
-     * Store a newly created event in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+    public function getEventsTeacher(Request $request, $userId)
+    {
+        $events = Event::where('teacherId', $userId)->get();
+        return response()->json($events);
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'teacherId' => 'required|string',
             'class' => 'required|string',
             'title' => 'required|string',
             'location' => 'nullable|string',
@@ -53,6 +55,7 @@ class EventController extends Controller
             $eventData = [
                 'class' => trim($class), // Trim to remove extra spaces
                 'title' => $validatedData['title'],
+                'teacherId' => $validatedData['teacherId'],
                 'location' => $validatedData['location'],
                 'attendees' => $validatedData['attendees'],
                 'start_date' => Carbon::parse($validatedData['start_date']),
@@ -68,12 +71,16 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
+            'teacherId' => 'required|string',
             'class' => 'required|string',
             'title' => 'required|string',
             'location' => 'nullable|string',
             'attendees' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
+        ], [
+            'teacherId.required' => 'The teacherId field is required.',
+            'class.required' => 'The class field is required.',
         ]);
 
         // Explode the comma-separated classId string into an array
@@ -88,6 +95,7 @@ class EventController extends Controller
 
         // Update the existing event
         $event->update([
+            'teacherId' => $validatedData['teacherId'],
             'title' => $validatedData['title'],
             'location' => $validatedData['location'],
             'attendees' => $validatedData['attendees'],
@@ -103,6 +111,7 @@ class EventController extends Controller
             if ($class != $event->class) {
                 Event::create([
                     'class' => $class,
+                    'teacherId' => $validatedData['teacherId'],
                     'title' => $validatedData['title'],
                     'location' => $validatedData['location'],
                     'attendees' => $validatedData['attendees'],

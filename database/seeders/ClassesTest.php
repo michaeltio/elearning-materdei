@@ -13,19 +13,19 @@ class ClassesTest extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             Classe::create([
                 'classId' => '7' . chr(64 + $i),
             ]);
         }
         
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             Classe::create([
                 'classId' => '8' . chr(64 + $i),
             ]);
         }
         
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             Classe::create([
                 'classId' => '9' . chr(64 + $i),
             ]);
