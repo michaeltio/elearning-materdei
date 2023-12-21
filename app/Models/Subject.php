@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Subject extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'subjectId';
     
     public function classSubjects()
     {
