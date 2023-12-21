@@ -284,7 +284,7 @@ export default function Authenticated({ user, children, className }) {
             <main className={"flex-grow " + className}>{children}</main>
 
             {/* Footer for mobile */}
-            <footer className="mt-auto block md:hidden text-white">
+            <footer className="mt-auto block md:hidden text-white mt-2">
                 <div className="flex flex-col bg-primaryBlue justify-between p-8">
                     <div className="flex justify-center gap-8">
                         <div className="flex flex-col items-between justify-between w-2/5 text-center">
@@ -332,7 +332,7 @@ export default function Authenticated({ user, children, className }) {
                 </div>
             </footer>
             {/* footer for desktop */}
-            <footer className="mt-auto md:block hidden text-white">
+            <footer className="mt-auto md:block hidden text-white mt-2">
                 <div className="flex bg-primaryBlue justify-between p-8">
                     <div className="flex items-center">
                         <img
