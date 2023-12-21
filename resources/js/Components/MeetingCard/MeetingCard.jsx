@@ -14,7 +14,7 @@ export default function MeetingCard({ user, content }) {
                     <div>
                         <a
                             download={content.file}
-                            href={"public/uploaded/" + content.file}
+                            href={"/storage/uploadedfile/" + content.file}
                         >
                             File Name: {content.file}
                         </a>
