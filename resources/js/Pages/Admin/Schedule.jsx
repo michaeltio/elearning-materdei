@@ -173,11 +173,6 @@ export default function Schedule({ auth, user }) {
         }
     };
 
-    const showTeacher = async () => {
-        const response = await axios.get(`/api/showEventStudent/${selectedClass}`);
-
-    }
-
     const handleUpdateFormSubmit = async (e, eventId, classId) => {
         e.preventDefault();
 
@@ -241,6 +236,40 @@ export default function Schedule({ auth, user }) {
     const handleClassClick = async (selectedClass) => {
         try {
             const response = await axios.get(`/api/showEventStudent/${selectedClass}`);
+            console.log(response.data); 
+
+            const fetchedEvents = response.data;
+            setEvents(fetchedEvents);
+
+            const calendarInstance = calendarRef.current.getInstance();
+            calendarInstance.clear();
+
+            fetchedEvents.forEach((eventData) => {
+                calendarInstance.createEvents([
+                    {
+                        body: eventData.teacherId,
+                        id: eventData.id,
+                        calendarId: eventData.class,
+                        title: eventData.title,
+                        location: eventData.location,
+                        attendees: eventData.attendees,
+                        start: eventData.start_date,
+                        end: eventData.end_date,
+                    },
+                ]);
+            });
+        } catch (error) {
+            // Handle errors
+            console.error('Error fetching events:', error);
+        }
+
+        // Close the popup after handling the click
+        setIsPopUpClass(false);
+    };
+
+    const handleTeacherClick = async (teacherId) => {
+        try {
+            const response = await axios.get(`/api/showEventTeacher/${teacherId}`);
             console.log(response.data); 
 
             const fetchedEvents = response.data;
