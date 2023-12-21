@@ -2,6 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { router } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
 
 export default function AddSubject({ auth, classId }) {
@@ -51,13 +52,13 @@ export default function AddSubject({ auth, classId }) {
 
             if (response.status === 200) {
                 console.log(response.data);
-                window.location.reload();
             } else {
                 console.log(`Response Error ${response.status}`);
             }
         } catch (error) {
             console.log(error);
         }
+        router.visit("/admin/subject-list");
     };
 
     return (

@@ -12,19 +12,18 @@ export default function SubjectList({ auth }) {
                 <AttendanceCard classTitle={"7C"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"7D"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"7E"} path="adminSubjectPreview" />
-                <AttendanceCard classTitle={"7F"} path="adminSubjectPreview" />
+
                 <AttendanceCard classTitle={"8A"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"8B"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"8C"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"8D"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"8E"} path="adminSubjectPreview" />
-                <AttendanceCard classTitle={"8F"} path="adminSubjectPreview" />
+
                 <AttendanceCard classTitle={"9A"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"9B"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"9C"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"9D"} path="adminSubjectPreview" />
                 <AttendanceCard classTitle={"9E"} path="adminSubjectPreview" />
-                <AttendanceCard classTitle={"9F"} path="adminSubjectPreview" />
             </div>
         </AuthenticatedLayout>
     );

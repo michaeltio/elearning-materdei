@@ -64,3 +64,4 @@ Route::delete('/deleteSubjectData/{id}', [TeacherSubjectController::class, 'dele
 //admin subject
 Route::post('/addNewSubject', [AdminSubjectController::class, 'store']);
 Route::post('/editSubject', [AdminSubjectController::class, 'edit']);
+Route::get('/showSubjectPreview', [AdminSubjectController::class, 'show']);
