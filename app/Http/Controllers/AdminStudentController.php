@@ -32,7 +32,7 @@ class AdminStudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nis' => 'required|string',
+            'nis' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6',
             'full_name' => 'required|string|max:255',
@@ -53,13 +53,13 @@ class AdminStudentController extends Controller
                 'class' => $request->input('class'),
                 'role' => "student",
             ]);
-
             //baru bikin referencenya
             $user = new User;
             $user->setAttribute('id', $userDetail->userId);
             $user->setAttribute('email', $request->input('email'));
             $user->setAttribute('password', bcrypt($request->input('password')));
             $user->save();
+            // return response()->json(['msg' => $request->input('nis')]);
 
             return response()->json(['message' => 'User created successfully', 'user' => $user, 'user_detail' => $userDetail]);
         });

@@ -31,14 +31,25 @@ export default function SubjectCard({
                 </div>
             </div>
             {user.user_details.role === "admin" && (
-                <Link
-                    className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
-                    href={route("adminSubject", {
-                        subjectId: dynamic.subjectId,
-                    })}
-                >
-                    <img className="w-4" src={Arrow} alt="" />
-                </Link>
+                <>
+                    <Link
+                        className={`absolute bottom-2 right-2 mb-2 mr-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
+                        href={route("adminSubject", {
+                            subjectId: dynamic.subjectId,
+                        })}
+                    >
+                        <img className="w-4" src={Arrow} alt="" />
+                    </Link>
+                    <Link
+                        className={`absolute bottom-2 left-2 mb-2 ml-2 p-1 ${arrowColor} rounded-md border border-stone-200`}
+                        href={route("adminEditSubject", {
+                            //edit
+                            subjectId: dynamic.subjectId,
+                        })}
+                    >
+                        <img className="w-4" src={Arrow} alt="" />
+                    </Link>
+                </>
             )}
             {user.user_details.role === "teacher" && (
                 <Link

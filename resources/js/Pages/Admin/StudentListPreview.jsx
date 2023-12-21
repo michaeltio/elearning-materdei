@@ -73,7 +73,7 @@ export default function StudentListPreview({ auth, nis }) {
                     },
                 }
             );
-            console.log(response.data);
+            // console.log(response.data);
             router.visit("/admin/student-list");
         } catch (error) {
             console.log(error);
@@ -110,7 +110,7 @@ export default function StudentListPreview({ auth, nis }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Schedule" />
             <form
-                className="bg-white p-4 shadow-md rounded-md w-1/2 mx-auto mt-8"
+                className="bg-white p-4 shadow-md rounded-md  w-full md:w-1/2 mx-auto mt-8"
                 onSubmit={handleSubmit}
             >
                 <h1 className="mb-2 text-2xl">{formData.full_name}</h1>

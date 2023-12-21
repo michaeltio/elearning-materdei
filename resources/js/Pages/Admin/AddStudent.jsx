@@ -27,6 +27,7 @@ export default function AddStudent({ auth }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // You can perform further actions here, like sending the data to an API
+        console.log(formData.nis);
         try {
             const response = await axios.post("/api/addNewStudent", formData, {
                 headers: {
@@ -36,7 +37,7 @@ export default function AddStudent({ auth }) {
 
             if (response.status === 200) {
                 console.log(response.data);
-                window.location.reload();
+                // window.location.reload();
             } else {
                 console.log(`Response Error ${response.status}`);
             }

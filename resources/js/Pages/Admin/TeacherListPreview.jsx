@@ -12,7 +12,6 @@ export default function TeacherListPreview({ auth, user_id }) {
         user_details: {
             address: "",
             birthdate: "",
-
             full_name: "",
             phone_number: "",
             role: "",
@@ -24,7 +23,6 @@ export default function TeacherListPreview({ auth, user_id }) {
         full_name: "",
         email: "",
         user_id: "",
-
         role: "",
         address: "",
         phone_number: "",
@@ -73,11 +71,11 @@ export default function TeacherListPreview({ auth, user_id }) {
                     },
                 }
             );
-            console.log(response.data);
-            router.visit("/dashboard");
+            // console.log(response.data);
         } catch (error) {
             console.log(error);
         }
+        router.visit("/admin/teacher-list");
     };
 
     const handleChange = (e) => {
@@ -88,10 +86,30 @@ export default function TeacherListPreview({ auth, user_id }) {
         }));
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("/api/editTeacher", formData, {
+                headers: { "Content-Type": "application/json" },
+            });
+            if (response.status === 200) {
+                console.log(response.data);
+            } else {
+                console.log(`Error Status Response ${response.status}`);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        console.log(formData);
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Schedule" />
-            <form className="bg-white p-4 shadow-md rounded-md w-1/2 mx-auto mt-8">
+            <form
+                className="bg-white p-4 shadow-md rounded-md  w-full md:w-1/2 mx-auto mt-8"
+                onSubmit={handleSubmit}
+            >
                 <h1 className="mb-2 text-2xl">{formData.full_name}</h1>
                 <div className="mb-4">{formData.user_id}</div>
 
@@ -160,7 +178,7 @@ export default function TeacherListPreview({ auth, user_id }) {
                     />
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center flex-wrap gap-2">
                     <Link
                         className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
                         href={route(`adminTeacherList`)}

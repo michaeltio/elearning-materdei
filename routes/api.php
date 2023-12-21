@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
 
 //model
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminStudentController;
+use App\Http\Controllers\AdminSubjectController;
 use App\Http\Controllers\AdminTeacherController;
-use App\Http\Controllers\HistoryAttendanceController;
 use App\Http\Controllers\TeacherSubjectController;
+use App\Http\Controllers\HistoryAttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,3 +60,8 @@ Route::post('/editAttendance', [HistoryAttendanceController::class, 'editAttenda
 Route::post('/addSubjectData', [TeacherSubjectController::class, 'store']);
 Route::post('/editSubjectData', [TeacherSubjectController::class, 'edit']);
 Route::delete('/deleteSubjectData/{id}', [TeacherSubjectController::class, 'delete']);
+
+//admin subject
+Route::post('/addNewSubject', [AdminSubjectController::class, 'store']);
+Route::post('/editSubject', [AdminSubjectController::class, 'edit']);
+Route::get('/showSubjectPreview', [AdminSubjectController::class, 'show']);
