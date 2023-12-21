@@ -30,6 +30,7 @@ export default function SubjectList({ auth, subjectsData, classId }) {
                         content={card}
                         arrowColor="bg-red-500"
                         dynamic={card}
+                        classId={classId}
                     />
                 ))}
             </div>

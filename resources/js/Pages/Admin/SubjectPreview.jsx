@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "@inertiajs/react";
 
-export default function SubjectPreview({ auth, subject_id }) {
+export default function SubjectPreview({ auth, subject_id, class_id }) {
     const [subject, setSubject] = useState({
         subjectId: "",
         subjectName: "",
@@ -81,7 +81,7 @@ export default function SubjectPreview({ auth, subject_id }) {
             >
                 <h1 className="mb-2 text-2xl">{subject.subjectName}</h1>
                 <div className="mb-4">{subject_id}</div>
-
+                <div>{class_id}</div>
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-600">
                         Subject Name
@@ -121,7 +121,7 @@ export default function SubjectPreview({ auth, subject_id }) {
                         ))}
                     </select>
                 </div>
-               <h1></h1>
+                <h1></h1>
 
                 <div className="flex justify-center flex-wrap gap-2">
                     <Link className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">
