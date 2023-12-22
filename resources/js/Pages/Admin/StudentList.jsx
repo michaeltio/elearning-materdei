@@ -29,7 +29,7 @@ export default function StudentList({ auth }) {
 
                 setTotalData(filteredStudents.length);
                 console.log(filteredStudents);
-                
+
                 setStudentsList(filteredStudents);
                 setFilteredData(filteredStudents);
             } catch (error) {
@@ -117,8 +117,8 @@ export default function StudentList({ auth }) {
                             <option value="8A">8A</option>
                             <option value="8B">8B</option>
                             <option value="8C">8C</option>
-                            <option value="8D">7D</option>
-                            <option value="8E">7E</option>
+                            <option value="8D">8D</option>
+                            <option value="8E">8E</option>
                             <option value="9A">9A</option>
                             <option value="9B">9B</option>
                             <option value="9C">9C</option>
