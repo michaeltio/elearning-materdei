@@ -32,7 +32,7 @@ export default function AdminHome({ auth }) {
                     path="adminHistoryAttendance"
                 />
                 <AdminCard
-                    title="Shedule"
+                    title="Schedule"
                     icon={ScheduleIcon}
                     path="adminSchedule"
                 />

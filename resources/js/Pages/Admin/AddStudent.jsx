@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "@inertiajs/react";
+import { router, Link } from "@inertiajs/react";
 
 export default function AddStudent({ auth }) {
     const [formData, setFormData] = useState({

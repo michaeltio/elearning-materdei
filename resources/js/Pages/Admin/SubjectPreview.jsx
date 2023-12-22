@@ -80,6 +80,22 @@ export default function SubjectPreview({ auth, subject_id, class_id }) {
         router.visit("/admin/subject-list/" + class_id);
     };
 
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.delete(
+                "/api/deleteSubject/" + subject_id,
+                {
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+        router.visit("/admin/subject-list/" + class_id);
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Edit Subject" />
@@ -144,7 +160,10 @@ export default function SubjectPreview({ auth, subject_id, class_id }) {
                     >
                         Save
                     </button>
-                    <button className="bg-red-500 text-white px-4 py-2 rounded-md">
+                    <button
+                        onClick={handleDelete}
+                        className="bg-red-500 text-white px-4 py-2 rounded-md"
+                    >
                         Remove Subject
                     </button>
                 </div>
