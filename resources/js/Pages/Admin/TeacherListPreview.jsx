@@ -105,7 +105,7 @@ export default function TeacherListPreview({ auth, user_id }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Schedule" />
+            <Head title="Edit Teacher" />
             <form
                 className="bg-white p-4 shadow-md rounded-md  w-full md:w-1/2 mx-auto mt-8"
                 onSubmit={handleSubmit}

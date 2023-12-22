@@ -53,9 +53,9 @@ export default function AddMaterial({ auth, subjectDetails }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Add Material" />
+            <Head title="Edit Material" />
             <div className="my-8">
-                <h1 className="text-2xl text-center">Add Material</h1>
+                <h1 className="text-2xl text-center">Edit Material</h1>
                 <form
                     onSubmit={handleSubmit}
                     className="max-w-md mx-auto p-6 bg-white border rounded-md shadow-md mt-4"

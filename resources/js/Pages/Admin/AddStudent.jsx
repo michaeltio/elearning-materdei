@@ -44,6 +44,7 @@ export default function AddStudent({ auth }) {
         } catch (error) {
             console.log(error);
         }
+        router.visit("/admin/student-list");
     };
     return (
         <AuthenticatedLayout user={auth.user}>

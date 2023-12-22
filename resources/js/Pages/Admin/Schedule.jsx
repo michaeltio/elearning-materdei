@@ -1,20 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import "../../../css/Schedule.css";
 
-import Calendar from '@toast-ui/react-calendar';
-import 'react-toastify/dist/ReactToastify.css';
-import '@toast-ui/calendar/dist/toastui-calendar.min.css';
+import Calendar from "@toast-ui/react-calendar";
+import "react-toastify/dist/ReactToastify.css";
+import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import Filter from '../../../../public/Assets/filter.svg';
-import Add from '../../../../public/Assets/add.svg';
+import Filter from "../../../../public/Assets/filter.svg";
+import Add from "../../../../public/Assets/add.svg";
 
-import axios from 'axios';
+import axios from "axios";
+import { Head } from "@inertiajs/react";
 
 export default function Schedule({ auth, user }) {
     const calendarRef = useRef(null);
-    const [currentDateRange, setCurrentDateRange] = useState('');
-    const [currentView, setCurrentView] = useState('');
+    const [currentDateRange, setCurrentDateRange] = useState("");
+    const [currentView, setCurrentView] = useState("");
     const [showInfo, setShowInfo] = useState(false);
     const [eventStart, setEventStart] = useState(null);
     const [eventEnd, setEventEnd] = useState(null);
@@ -33,9 +34,9 @@ export default function Schedule({ auth, user }) {
         const calendarInstance = calendarRef.current.getInstance();
         const getDate = calendarInstance.getDate().toDate();
 
-        const options = { month: 'long', year: 'numeric' };
+        const options = { month: "long", year: "numeric" };
 
-        const formattedDate = getDate.toLocaleDateString('en-US', options);
+        const formattedDate = getDate.toLocaleDateString("en-US", options);
 
         setCurrentDateRange(`${formattedDate}`);
     };
@@ -81,7 +82,9 @@ export default function Schedule({ auth, user }) {
         setEventEnd(new Date());
     };
 
-    const handlePopUpClass = () => { setIsPopUpClass(!isPopUpClass) };
+    const handlePopUpClass = () => {
+        setIsPopUpClass(!isPopUpClass);
+    };
 
     const handleEventButtonEdit = () => {
         setIsEventPopUpDesc(!isEventPopUpDesc);
@@ -105,19 +108,22 @@ export default function Schedule({ auth, user }) {
                 hourStart: 6,
                 hourEnd: 19,
                 taskView: false,
-                eventView: ['time'],
+                eventView: ["time"],
                 today: {
-                    color: 'blue',
+                    color: "blue",
                 },
             },
             isReadOnly: false,
         });
 
-        calendarInstance.changeView('week');
+        calendarInstance.changeView("week");
 
-        calendarInstance.on('clickEvent', (event) => {
-            const eventDesc = calendarInstance.getEvent(event.event.id, event.event.calendarId);
-            console.log('Selected Event:', eventDesc);
+        calendarInstance.on("clickEvent", (event) => {
+            const eventDesc = calendarInstance.getEvent(
+                event.event.id,
+                event.event.calendarId
+            );
+            console.log("Selected Event:", eventDesc);
             setSelectedEvent(eventDesc);
             setIsEventPopUpDesc(!isEventPopUpDesc);
         });
@@ -135,12 +141,14 @@ export default function Schedule({ auth, user }) {
             // Assuming 'timezone' is a valid IANA time zone identifier, you can get the offset
             const offsetMinutes = new Date(dateTimeString).getTimezoneOffset();
             const offsetHours = Math.abs(offsetMinutes) / 60;
-            const offsetSign = offsetMinutes < 0 ? '+' : '-';
+            const offsetSign = offsetMinutes < 0 ? "+" : "-";
 
             // Construct the ISO string with the offset
-            const isoString = `${dateTimeString}${offsetSign}${String(offsetHours).padStart(2, '0')}:00`;
+            const isoString = `${dateTimeString}${offsetSign}${String(
+                offsetHours
+            ).padStart(2, "0")}:00`;
 
-            console.log('Formatted date:', isoString);
+            console.log("Formatted date:", isoString);
             return isoString;
         };
 
@@ -150,14 +158,24 @@ export default function Schedule({ auth, user }) {
             title: e.target.event_name.value,
             location: e.target.event_location.value,
             attendees: e.target.event_classes.value,
-            start_date: formatDate(e.target.event_start_date.value, e.target.event_start_time.value, 'your_timezone'),
-            end_date: formatDate(e.target.event_end_date.value, e.target.event_end_time.value, 'your_timezone'),
+            start_date: formatDate(
+                e.target.event_start_date.value,
+                e.target.event_start_time.value,
+                "your_timezone"
+            ),
+            end_date: formatDate(
+                e.target.event_end_date.value,
+                e.target.event_end_time.value,
+                "your_timezone"
+            ),
         };
 
-
-        if (e.target.event_name.value.trim() !== '') {
+        if (e.target.event_name.value.trim() !== "") {
             try {
-                const response = await axios.post('/api/newAdminEvent', newEventForm);
+                const response = await axios.post(
+                    "/api/newAdminEvent",
+                    newEventForm
+                );
 
                 // Handle the response as needed
                 console.log(response.data);
@@ -168,7 +186,7 @@ export default function Schedule({ auth, user }) {
                 setShowInfo(false);
             } catch (error) {
                 // Handle errors
-                console.error('Error creating event:', error);
+                console.error("Error creating event:", error);
             }
         }
     };
@@ -176,12 +194,12 @@ export default function Schedule({ auth, user }) {
     const handleUpdateFormSubmit = async (e, eventId, classId) => {
         e.preventDefault();
 
-        console.log('Raw date input:', e.target.event_start_date.value);
-        console.log('Raw time input:', e.target.event_start_time.value);
+        console.log("Raw date input:", e.target.event_start_date.value);
+        console.log("Raw time input:", e.target.event_start_time.value);
 
         const formatDate = (date, time) => {
             const isoString = `${date}T${time}`;
-            console.log('Formatted date:', isoString);
+            console.log("Formatted date:", isoString);
             return isoString;
         };
 
@@ -191,13 +209,22 @@ export default function Schedule({ auth, user }) {
             title: e.target.event_name.value,
             location: e.target.event_location.value,
             attendees: e.target.event_classes.value,
-            start_date: formatDate(e.target.event_start_date.value, e.target.event_start_time.value),
-            end_date: formatDate(e.target.event_end_date.value, e.target.event_end_time.value),
+            start_date: formatDate(
+                e.target.event_start_date.value,
+                e.target.event_start_time.value
+            ),
+            end_date: formatDate(
+                e.target.event_end_date.value,
+                e.target.event_end_time.value
+            ),
         };
 
         try {
-            console.log('Request Payload:', updatedEventForm);
-            const response = await axios.post(`/api/updateEvent/${eventId}/${classId}`, updatedEventForm);
+            console.log("Request Payload:", updatedEventForm);
+            const response = await axios.post(
+                `/api/updateEvent/${eventId}/${classId}`,
+                updatedEventForm
+            );
 
             // Handle the response as needed
             console.log(response.data);
@@ -206,7 +233,7 @@ export default function Schedule({ auth, user }) {
             setIsEventPopUpEdit(false);
         } catch (error) {
             // Handle errors
-            console.error('Error updating event:', error);
+            console.error("Error updating event:", error);
         }
     };
 
@@ -215,10 +242,15 @@ export default function Schedule({ auth, user }) {
 
         try {
             // Remove the event from the calendar visually
-            calendarInstance.deleteEvent(selectedEvent.id, selectedEvent.calendarId);
+            calendarInstance.deleteEvent(
+                selectedEvent.id,
+                selectedEvent.calendarId
+            );
 
             // Perform the deletion
-            const response = await axios.delete(`/api/deleteEvent/${selectedEvent.id}`);
+            const response = await axios.delete(
+                `/api/deleteEvent/${selectedEvent.id}`
+            );
             console.log(response.data); // Log the response for debugging
 
             // Close the delete popup
@@ -226,7 +258,7 @@ export default function Schedule({ auth, user }) {
             setIsEventPopUpDesc(false);
         } catch (error) {
             // Handle errors
-            console.error('Error deleting event:', error);
+            console.error("Error deleting event:", error);
 
             // Close the delete popup in case of an error
             setIsEventPopUpDelete(false);
@@ -235,7 +267,9 @@ export default function Schedule({ auth, user }) {
 
     const handleClassClick = async (selectedClass) => {
         try {
-            const response = await axios.get(`/api/showEventStudent/${selectedClass}`);
+            const response = await axios.get(
+                `/api/showEventStudent/${selectedClass}`
+            );
             console.log(response.data);
 
             const fetchedEvents = response.data;
@@ -260,7 +294,7 @@ export default function Schedule({ auth, user }) {
             });
         } catch (error) {
             // Handle errors
-            console.error('Error fetching events:', error);
+            console.error("Error fetching events:", error);
         }
 
         // Close the popup after handling the click
@@ -269,7 +303,9 @@ export default function Schedule({ auth, user }) {
 
     const handleTeacherClick = async (teacherId) => {
         try {
-            const response = await axios.get(`/api/showEventTeacher/${teacherId}`);
+            const response = await axios.get(
+                `/api/showEventTeacher/${teacherId}`
+            );
             console.log(response.data);
 
             const fetchedEvents = response.data;
@@ -294,7 +330,7 @@ export default function Schedule({ auth, user }) {
             });
         } catch (error) {
             // Handle errors
-            console.error('Error fetching events:', error);
+            console.error("Error fetching events:", error);
         }
 
         // Close the popup after handling the click
@@ -306,24 +342,25 @@ export default function Schedule({ auth, user }) {
             const calendarInstance = calendarRef.current.getInstance();
 
             if (window.innerWidth <= 468) {
-                calendarInstance.changeView('day');
+                calendarInstance.changeView("day");
             } else {
-                calendarInstance.changeView('week');
+                calendarInstance.changeView("week");
             }
         };
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
         handleResize();
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener("resize", handleResize);
         };
     }, []);
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <div className='container-toast-ui bg-white'>
-                <div className='pt-3 sm:pt-5 px-5 flex flex-col md:flex-row justif-center sm:justify-between '>
-                    <div className='flex items-center justify-center space-x-1 sm:space-x-4 sm:mb-3'>
+            <Head title="Schedule" />
+            <div className="container-toast-ui bg-white">
+                <div className="pt-3 sm:pt-5 px-5 flex flex-col md:flex-row justif-center sm:justify-between ">
+                    <div className="flex items-center justify-center space-x-1 sm:space-x-4 sm:mb-3">
                         <button
                             onClick={handlePrevButtonClick}
                             type="button"
@@ -335,11 +372,15 @@ export default function Schedule({ auth, user }) {
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-4 h-4"
                             >
-                                <path d="M14.2893 5.70708C13.8988 5.31655 13.2657 5.31655 12.8751 5.70708L7.98768 10.5993C7.20729 11.3805 7.2076 12.6463 7.98837 13.427L12.8787 18.3174C13.2693 18.7079 13.9024 18.7079 14.293 18.3174C14.6835 17.9269 14.6835 17.2937 14.293 16.9032L10.1073 12.7175C9.71678 12.327 9.71678 11.6939 10.1073 11.3033L14.2893 7.12129C14.6799 6.73077 14.6799 6.0976 14.2893 5.70708Z" fill="#0F0F0F">
-                                </path>
+                                <path
+                                    d="M14.2893 5.70708C13.8988 5.31655 13.2657 5.31655 12.8751 5.70708L7.98768 10.5993C7.20729 11.3805 7.2076 12.6463 7.98837 13.427L12.8787 18.3174C13.2693 18.7079 13.9024 18.7079 14.293 18.3174C14.6835 17.9269 14.6835 17.2937 14.293 16.9032L10.1073 12.7175C9.71678 12.327 9.71678 11.6939 10.1073 11.3033L14.2893 7.12129C14.6799 6.73077 14.6799 6.0976 14.2893 5.70708Z"
+                                    fill="#0F0F0F"
+                                ></path>
                             </svg>
                         </button>
-                        <span className='font-medium text-sm sm:text-md md:text-lg'>{currentDateRange}</span>
+                        <span className="font-medium text-sm sm:text-md md:text-lg">
+                            {currentDateRange}
+                        </span>
                         <button
                             onClick={handleNextButtonClick}
                             type="button"
@@ -358,49 +399,59 @@ export default function Schedule({ auth, user }) {
                             </svg>
                         </button>
                     </div>
-                    <div className='flex items-center justify-center space-x-4'>
+                    <div className="flex items-center justify-center space-x-4">
                         <button
-                            className='py-2 px-4 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500'
+                            className="py-2 px-4 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500"
                             onClick={() => handlePopUpClass()}
                         >
-                            <img src={Filter} className='w-4 h-4' />
+                            <img src={Filter} className="w-4 h-4" />
                             Class
                         </button>
 
                         <button
-                            className='py-2 px-4 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500'
-                            onClick={() =>
-                                handleButton()
-                            }
+                            className="py-2 px-4 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500"
+                            onClick={() => handleButton()}
                         >
-                            <img src={Add} className='w-4 h-4' />
+                            <img src={Add} className="w-4 h-4" />
                             Add
                         </button>
                         <button
                             onClick={handleTodayButtonClick}
-                            className='py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500'
+                            className="py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500"
                         >
                             Today
                         </button>
                         <div className="inline-flex rounded-lg shadow-sm triple-view-button">
                             <button
-                                onClick={() => handleViewButtonClick('day')}
+                                onClick={() => handleViewButtonClick("day")}
                                 type="button"
-                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${currentView === 'day' ? 'bg-white text-blue-500' : 'border-gray-200 text-gray-800 shadow-sm bg-gray-50'}`}
+                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${
+                                    currentView === "day"
+                                        ? "bg-white text-blue-500"
+                                        : "border-gray-200 text-gray-800 shadow-sm bg-gray-50"
+                                }`}
                             >
                                 Day
                             </button>
                             <button
-                                onClick={() => handleViewButtonClick('week')}
+                                onClick={() => handleViewButtonClick("week")}
                                 type="button"
-                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${currentView === 'week' ? 'bg-white text-blue-500' : 'border-gray-200 text-gray-800 shadow-sm bg-gray-50'}`}
+                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${
+                                    currentView === "week"
+                                        ? "bg-white text-blue-500"
+                                        : "border-gray-200 text-gray-800 shadow-sm bg-gray-50"
+                                }`}
                             >
                                 Week
                             </button>
                             <button
-                                onClick={() => handleViewButtonClick('month')}
+                                onClick={() => handleViewButtonClick("month")}
                                 type="button"
-                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${currentView === 'month' ? 'bg-white text-blue-500' : 'border-gray-200 text-gray-800 shadow-sm bg-gray-50'}`}
+                                className={`py-2 px-3 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs sm:text-sm font-medium focus:z-10 border ${
+                                    currentView === "month"
+                                        ? "bg-white text-blue-500"
+                                        : "border-gray-200 text-gray-800 shadow-sm bg-gray-50"
+                                }`}
                             >
                                 Month
                             </button>
@@ -417,8 +468,19 @@ export default function Schedule({ auth, user }) {
                                     className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-red-500 hover:text-gray-50 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
                                     onClick={() => setShowInfo(false)}
                                 >
-                                    <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    <svg
+                                        className="w-3 h-3"
+                                        aria-hidden="true"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                        />
                                     </svg>
                                 </button>
                                 <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -435,7 +497,10 @@ export default function Schedule({ auth, user }) {
                                             >
                                                 <div className="grid grid-cols-2 gap-x-4">
                                                     <div>
-                                                        <label htmlFor="event_name" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        <label
+                                                            htmlFor="event_name"
+                                                            className="block mb-2 text-sm font-medium text-gray-900"
+                                                        >
                                                             Event Name
                                                         </label>
                                                         <input
@@ -448,7 +513,10 @@ export default function Schedule({ auth, user }) {
                                                         />
                                                     </div>
                                                     <div>
-                                                        <label htmlFor="event_location" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        <label
+                                                            htmlFor="event_location"
+                                                            className="block mb-2 text-sm font-medium text-gray-900"
+                                                        >
                                                             Location
                                                         </label>
                                                         <input
@@ -462,7 +530,10 @@ export default function Schedule({ auth, user }) {
                                                 </div>
 
                                                 <div>
-                                                    <label htmlFor="event_classes" className="block mb-2 text-sm font-medium text-gray-900">
+                                                    <label
+                                                        htmlFor="event_classes"
+                                                        className="block mb-2 text-sm font-medium text-gray-900"
+                                                    >
                                                         Class (comma-seperated)
                                                     </label>
                                                     <input
@@ -475,7 +546,10 @@ export default function Schedule({ auth, user }) {
                                                 </div>
 
                                                 <div>
-                                                    <label htmlFor="event_teacher" className="block mb-2 text-sm font-medium text-gray-900">
+                                                    <label
+                                                        htmlFor="event_teacher"
+                                                        className="block mb-2 text-sm font-medium text-gray-900"
+                                                    >
                                                         Teacher Id
                                                     </label>
                                                     <input
@@ -489,7 +563,10 @@ export default function Schedule({ auth, user }) {
 
                                                 <div className="grid grid-cols-2 gap-x-4">
                                                     <div>
-                                                        <label htmlFor="event_start" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        <label
+                                                            htmlFor="event_start"
+                                                            className="block mb-2 text-sm font-medium text-gray-900"
+                                                        >
                                                             Start Time
                                                         </label>
                                                         <input
@@ -509,7 +586,10 @@ export default function Schedule({ auth, user }) {
                                                     </div>
 
                                                     <div>
-                                                        <label htmlFor="event_end" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        <label
+                                                            htmlFor="event_end"
+                                                            className="block mb-2 text-sm font-medium text-gray-900"
+                                                        >
                                                             End Time
                                                         </label>
                                                         <input
@@ -553,18 +633,48 @@ export default function Schedule({ auth, user }) {
                                     className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-red-500 hover:text-gray-50 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
                                     onClick={() => setIsEventPopUpDesc(false)}
                                 >
-                                    <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    <svg
+                                        className="w-3 h-3"
+                                        aria-hidden="true"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                        />
                                     </svg>
                                 </button>
                                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
                                     {selectedEvent && (
                                         <div>
-                                            <p className='text-3xl font-bold pb-3'>{selectedEvent.title}</p>
-                                            <p>Location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {selectedEvent.location}</p>
-                                            <p>Attendees&nbsp;&nbsp;&nbsp;: {selectedEvent.attendees}</p>
-                                            <p>Start Date&nbsp;&nbsp;&nbsp;: {new Date(selectedEvent.start.d).toLocaleString()}</p>
-                                            <p>End Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {new Date(selectedEvent.end.d).toLocaleString()}</p>
+                                            <p className="text-3xl font-bold pb-3">
+                                                {selectedEvent.title}
+                                            </p>
+                                            <p>
+                                                Location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{" "}
+                                                {selectedEvent.location}
+                                            </p>
+                                            <p>
+                                                Attendees&nbsp;&nbsp;&nbsp;:{" "}
+                                                {selectedEvent.attendees}
+                                            </p>
+                                            <p>
+                                                Start Date&nbsp;&nbsp;&nbsp;:{" "}
+                                                {new Date(
+                                                    selectedEvent.start.d
+                                                ).toLocaleString()}
+                                            </p>
+                                            <p>
+                                                End
+                                                Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{" "}
+                                                {new Date(
+                                                    selectedEvent.end.d
+                                                ).toLocaleString()}
+                                            </p>
                                             {/* Display other event details as needed */}
                                         </div>
                                     )}
@@ -573,14 +683,16 @@ export default function Schedule({ auth, user }) {
                                     <button
                                         onClick={() => handleEventButtonEdit()}
                                         type="button"
-                                        className='py-2 px-4 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500'
+                                        className="py-2 px-4 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500"
                                     >
                                         Edit
                                     </button>
                                     <button
-                                        onClick={() => handleEventButtonDelete()}
+                                        onClick={() =>
+                                            handleEventButtonDelete()
+                                        }
                                         type="button"
-                                        className='py-2 px-4 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500'
+                                        className="py-2 px-4 sm:py-3 sm:px-4 inline-flex items-center gap-x-2 ms-px rounded-md text-xs sm:text-sm font-medium focus:z-10 border border-gray-200 text-gray-800 shadow-sm bg-gray-50 hover:bg-white hover:text-blue-500"
                                     >
                                         Delete
                                     </button>
@@ -599,8 +711,19 @@ export default function Schedule({ auth, user }) {
                                     className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-red-500 hover:text-gray-50 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
                                     onClick={() => setIsEventPopUpEdit(false)}
                                 >
-                                    <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    <svg
+                                        className="w-3 h-3"
+                                        aria-hidden="true"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                        />
                                     </svg>
                                 </button>
                                 <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -611,11 +734,20 @@ export default function Schedule({ auth, user }) {
                                             </h1>
                                             <form
                                                 className="space-y-4 md:space-y-6"
-                                                onSubmit={(e) => handleUpdateFormSubmit(e, selectedEvent.id, selectedEvent.calendarId)}
+                                                onSubmit={(e) =>
+                                                    handleUpdateFormSubmit(
+                                                        e,
+                                                        selectedEvent.id,
+                                                        selectedEvent.calendarId
+                                                    )
+                                                }
                                             >
                                                 <div className="grid grid-cols-2 gap-x-4">
                                                     <div>
-                                                        <label htmlFor="event_name" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        <label
+                                                            htmlFor="event_name"
+                                                            className="block mb-2 text-sm font-medium text-gray-900"
+                                                        >
                                                             Event Name
                                                         </label>
                                                         <input
@@ -623,13 +755,20 @@ export default function Schedule({ auth, user }) {
                                                             name="event_name"
                                                             id="event_name"
                                                             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                            placeholder={selectedEvent.title}
-                                                            defaultValue={selectedEvent.title}
+                                                            placeholder={
+                                                                selectedEvent.title
+                                                            }
+                                                            defaultValue={
+                                                                selectedEvent.title
+                                                            }
                                                             required=""
                                                         />
                                                     </div>
                                                     <div>
-                                                        <label htmlFor="event_location" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        <label
+                                                            htmlFor="event_location"
+                                                            className="block mb-2 text-sm font-medium text-gray-900"
+                                                        >
                                                             Location
                                                         </label>
                                                         <input
@@ -637,14 +776,21 @@ export default function Schedule({ auth, user }) {
                                                             name="event_location"
                                                             id="event_location"
                                                             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                            placeholder={selectedEvent.location}
-                                                            defaultValue={selectedEvent.location}
+                                                            placeholder={
+                                                                selectedEvent.location
+                                                            }
+                                                            defaultValue={
+                                                                selectedEvent.location
+                                                            }
                                                         />
                                                     </div>
                                                 </div>
 
                                                 <div>
-                                                    <label htmlFor="event_classes" className="block mb-2 text-sm font-medium text-gray-900">
+                                                    <label
+                                                        htmlFor="event_classes"
+                                                        className="block mb-2 text-sm font-medium text-gray-900"
+                                                    >
                                                         Class (comma-seperated)
                                                     </label>
                                                     <input
@@ -652,14 +798,21 @@ export default function Schedule({ auth, user }) {
                                                         name="event_classes"
                                                         id="event_classes"
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder={selectedEvent.attendees}
-                                                        defaultValue={selectedEvent.attendees}
+                                                        placeholder={
+                                                            selectedEvent.attendees
+                                                        }
+                                                        defaultValue={
+                                                            selectedEvent.attendees
+                                                        }
                                                         required=""
                                                     />
                                                 </div>
 
                                                 <div>
-                                                    <label htmlFor="event_teacher" className="block mb-2 text-sm font-medium text-gray-900">
+                                                    <label
+                                                        htmlFor="event_teacher"
+                                                        className="block mb-2 text-sm font-medium text-gray-900"
+                                                    >
                                                         Teacher Id
                                                     </label>
                                                     <input
@@ -667,15 +820,22 @@ export default function Schedule({ auth, user }) {
                                                         name="event_teacher"
                                                         id="event_teacher"
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                        placeholder={selectedEvent.body}
-                                                        defaultValue={selectedEvent.body}
+                                                        placeholder={
+                                                            selectedEvent.body
+                                                        }
+                                                        defaultValue={
+                                                            selectedEvent.body
+                                                        }
                                                         required=""
                                                     />
                                                 </div>
 
                                                 <div className="grid grid-cols-2 gap-x-4">
                                                     <div>
-                                                        <label htmlFor="event_start" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        <label
+                                                            htmlFor="event_start"
+                                                            className="block mb-2 text-sm font-medium text-gray-900"
+                                                        >
                                                             Start Time
                                                         </label>
                                                         <input
@@ -683,7 +843,15 @@ export default function Schedule({ auth, user }) {
                                                             name="event_start_date"
                                                             id="event_start_date"
                                                             className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                            defaultValue={new Date(selectedEvent.start.d).toISOString().split('T')[0]} // Extract date part
+                                                            defaultValue={
+                                                                new Date(
+                                                                    selectedEvent.start.d
+                                                                )
+                                                                    .toISOString()
+                                                                    .split(
+                                                                        "T"
+                                                                    )[0]
+                                                            } // Extract date part
                                                             required=""
                                                         />
                                                         <input
@@ -691,13 +859,25 @@ export default function Schedule({ auth, user }) {
                                                             name="event_start_time"
                                                             id="event_start_time"
                                                             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                            defaultValue={new Date(selectedEvent.start.d).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false })} // Extract time part
+                                                            defaultValue={new Date(
+                                                                selectedEvent.start.d
+                                                            ).toLocaleTimeString(
+                                                                "en-US",
+                                                                {
+                                                                    hour: "numeric",
+                                                                    minute: "numeric",
+                                                                    hour12: false,
+                                                                }
+                                                            )} // Extract time part
                                                             required=""
                                                         />
                                                     </div>
 
                                                     <div>
-                                                        <label htmlFor="event_end" className="block mb-2 text-sm font-medium text-gray-900">
+                                                        <label
+                                                            htmlFor="event_end"
+                                                            className="block mb-2 text-sm font-medium text-gray-900"
+                                                        >
                                                             End Time
                                                         </label>
                                                         <input
@@ -705,7 +885,15 @@ export default function Schedule({ auth, user }) {
                                                             name="event_end_date"
                                                             id="event_end_date"
                                                             className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                            defaultValue={new Date(selectedEvent.end.d).toISOString().split('T')[0]} // Extract date part
+                                                            defaultValue={
+                                                                new Date(
+                                                                    selectedEvent.end.d
+                                                                )
+                                                                    .toISOString()
+                                                                    .split(
+                                                                        "T"
+                                                                    )[0]
+                                                            } // Extract date part
                                                             required=""
                                                         />
                                                         <input
@@ -713,7 +901,16 @@ export default function Schedule({ auth, user }) {
                                                             name="event_end_time"
                                                             id="event_end_time"
                                                             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10"
-                                                            defaultValue={new Date(selectedEvent.end.d).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false })} // Extract time part
+                                                            defaultValue={new Date(
+                                                                selectedEvent.end.d
+                                                            ).toLocaleTimeString(
+                                                                "en-US",
+                                                                {
+                                                                    hour: "numeric",
+                                                                    minute: "numeric",
+                                                                    hour12: false,
+                                                                }
+                                                            )} // Extract time part
                                                             required=""
                                                         />
                                                     </div>
@@ -743,35 +940,75 @@ export default function Schedule({ auth, user }) {
                                     className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-red-500 hover:text-gray-50 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
                                     onClick={() => setIsPopUpClass(false)}
                                 >
-                                    <svg className="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    <svg
+                                        className="w-3 h-3"
+                                        aria-hidden="true"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                        />
                                     </svg>
                                 </button>
                                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
                                     <div className="w-full pb-4 md:pr-8 md:max-w-md sm:max-w-sm">
                                         <div className="z-10">
                                             <div className="flex py-2 text-sm text-gray-700">
-                                                {["7", "8", "9"].map((classNumber) => (
-                                                    <div key={classNumber} className="flex flex-col mr-4">
-                                                        <a
-                                                            href="#"
-                                                            className="block p-3"
-                                                            onClick={() => handleClassClick(classNumber)}
+                                                {["7", "8", "9"].map(
+                                                    (classNumber) => (
+                                                        <div
+                                                            key={classNumber}
+                                                            className="flex flex-col mr-4"
                                                         >
-                                                            {classNumber}
-                                                        </a>
-                                                        {["A", "B", "C", "D", "E", "F"].map((classLetter) => (
                                                             <a
                                                                 href="#"
-                                                                key={classNumber + classLetter}
-                                                                className="block p-3 hover:bg-gray-100 rounded-full"
-                                                                onClick={() => handleClassClick(classNumber + classLetter)}
+                                                                className="block p-3"
+                                                                onClick={() =>
+                                                                    handleClassClick(
+                                                                        classNumber
+                                                                    )
+                                                                }
                                                             >
-                                                                {classNumber + classLetter}
+                                                                {classNumber}
                                                             </a>
-                                                        ))}
-                                                    </div>
-                                                ))}
+                                                            {[
+                                                                "A",
+                                                                "B",
+                                                                "C",
+                                                                "D",
+                                                                "E",
+                                                                "F",
+                                                            ].map(
+                                                                (
+                                                                    classLetter
+                                                                ) => (
+                                                                    <a
+                                                                        href="#"
+                                                                        key={
+                                                                            classNumber +
+                                                                            classLetter
+                                                                        }
+                                                                        className="block p-3 hover:bg-gray-100 rounded-full"
+                                                                        onClick={() =>
+                                                                            handleClassClick(
+                                                                                classNumber +
+                                                                                    classLetter
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        {classNumber +
+                                                                            classLetter}
+                                                                    </a>
+                                                                )
+                                                            )}
+                                                        </div>
+                                                    )
+                                                )}
                                                 <div className="flex flex-col">
                                                     <div className="flex flex-col mr-4">
                                                         <a
@@ -780,16 +1017,36 @@ export default function Schedule({ auth, user }) {
                                                         >
                                                             Teacher
                                                         </a>
-                                                        {["1", "2", "3", "4", "5"].map((teacherNumber) => (
-                                                            <a
-                                                                href="#"
-                                                                key={"Teacher" + teacherNumber}
-                                                                className="block p-3 hover:bg-gray-100 rounded-full"
-                                                                onClick={() => handleTeacherClick(200000000 + teacherNumber)}
-                                                            >
-                                                                Teacher 200000000{teacherNumber}
-                                                            </a>
-                                                        ))}
+                                                        {[
+                                                            "1",
+                                                            "2",
+                                                            "3",
+                                                            "4",
+                                                            "5",
+                                                        ].map(
+                                                            (teacherNumber) => (
+                                                                <a
+                                                                    href="#"
+                                                                    key={
+                                                                        "Teacher" +
+                                                                        teacherNumber
+                                                                    }
+                                                                    className="block p-3 hover:bg-gray-100 rounded-full"
+                                                                    onClick={() =>
+                                                                        handleTeacherClick(
+                                                                            200000000 +
+                                                                                teacherNumber
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Teacher
+                                                                    200000000
+                                                                    {
+                                                                        teacherNumber
+                                                                    }
+                                                                </a>
+                                                            )
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
@@ -806,15 +1063,39 @@ export default function Schedule({ auth, user }) {
                         <div className="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
                             <div className="">
                                 <div className="text-center p-5 flex-auto justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 -m-1 flex items-center text-red-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-4 h-4 -m-1 flex items-center text-red-500 mx-auto"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
                                     </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16 flex items-center text-red-500 mx-auto" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-16 h-16 flex items-center text-red-500 mx-auto"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                            clipRule="evenodd"
+                                        />
                                     </svg>
-                                    <p className="text-xl font-bold py-4">Are you sure?</p>
-                                    <p className="text-sm text-gray-500 px-8">Do you really want to delete this event?
-                                        This process cannot be undone</p>
+                                    <p className="text-xl font-bold py-4">
+                                        Are you sure?
+                                    </p>
+                                    <p className="text-sm text-gray-500 px-8">
+                                        Do you really want to delete this event?
+                                        This process cannot be undone
+                                    </p>
                                 </div>
                                 <div className="p-3  mt-2 text-center space-x-4 md:block">
                                     <button
@@ -842,6 +1123,6 @@ export default function Schedule({ auth, user }) {
                 )}
                 <Calendar ref={calendarRef} />
             </div>
-        </AuthenticatedLayout >
+        </AuthenticatedLayout>
     );
 }

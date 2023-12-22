@@ -58,7 +58,7 @@ export default function AddSubject({ auth, classId }) {
         } catch (error) {
             console.log(error);
         }
-        router.visit("/admin/subject-list");
+        router.visit("/admin/subject-list/" + formData.classId);
     };
 
     return (
@@ -162,12 +162,12 @@ export default function AddSubject({ auth, classId }) {
                         </select>
                     </div>
                     <div className="flex justify-between">
-                        {/* <Link
+                        <Link
                             className="bg-primaryBlue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green"
-                            href={route(`adminStudentList`)}
+                            href={route("adminSubjectPreview", classId)}
                         >
                             Back
-                        </Link> */}
+                        </Link>
                         <button
                             type="submit"
                             className="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green"

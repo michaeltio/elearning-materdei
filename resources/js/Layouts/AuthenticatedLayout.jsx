@@ -78,8 +78,8 @@ export default function Authenticated({ user, children, className }) {
 
                             <div className="pt-2 pb-3 space-y-1">
                                 <ResponsiveNavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    href={route("adminSchedule")}
+                                    active={route().current("adminSchedule")}
                                 >
                                     Schedule
                                 </ResponsiveNavLink>
@@ -100,8 +100,8 @@ export default function Authenticated({ user, children, className }) {
 
                             <div className="pt-2 pb-3 space-y-1">
                                 <ResponsiveNavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    href={route("teacherSchedule")}
+                                    active={route().current("teacherSchedule")}
                                 >
                                     Schedule
                                 </ResponsiveNavLink>
@@ -133,8 +133,8 @@ export default function Authenticated({ user, children, className }) {
 
                             <div className="pt-2 pb-3 space-y-1">
                                 <ResponsiveNavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    href={route("studentSchedule")}
+                                    active={route().current("studentSchedule")}
                                 >
                                     Schedule
                                 </ResponsiveNavLink>

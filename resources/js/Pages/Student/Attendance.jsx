@@ -18,7 +18,8 @@ export default function Attendance({ auth }) {
 
     //buat data date sekarang
     const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString("id-ID", {
+
+    const formattedDate = currentDate.toLocaleDateString("en-EN", {
         weekday: "long",
         day: "numeric",
         month: "long",
@@ -30,7 +31,9 @@ export default function Attendance({ auth }) {
             minute: "numeric",
             hourCycle: "h12",
         })
-        .substring(10, 16);
+        .substring(11, 19);
+
+    console.log(formattedTime);
 
     //button untuk absen
     const handleAttend = async () => {

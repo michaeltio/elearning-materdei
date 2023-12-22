@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "@inertiajs/react";
+import { router, Link } from "@inertiajs/react";
 
 export default function AddStudent({ auth }) {
     const [formData, setFormData] = useState({
@@ -42,6 +42,7 @@ export default function AddStudent({ auth }) {
         } catch (error) {
             console.log(error);
         }
+        router.visit("/admin/teacher-list");
     };
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -174,7 +175,7 @@ export default function AddStudent({ auth }) {
                     <div className="flex justify-between">
                         <Link
                             className="bg-primaryBlue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green"
-                            href={route(`adminStudentList`)}
+                            href={route(`adminTeacherList`)}
                         >
                             Back
                         </Link>

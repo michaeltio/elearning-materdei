@@ -1,9 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import AttendanceCard from "@/Components/AttendanceCard/AttendanceCard";
+import { Head } from "@inertiajs/react";
 
 export default function SubjectList({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title="Subject" />
             <h1 className="text-center mt-8 text-xl mb-4">Subjects</h1>
             <p className="text-center mb-4">Filtered by Class</p>
             <div className="flex flex-wrap justify-around gap-8 w-10/12 mx-auto mb-4">

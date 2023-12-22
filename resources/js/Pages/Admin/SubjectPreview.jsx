@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "@inertiajs/react";
+import { router, Link } from "@inertiajs/react";
 
 export default function SubjectPreview({ auth, subject_id, class_id }) {
     const [subject, setSubject] = useState({
@@ -77,11 +77,12 @@ export default function SubjectPreview({ auth, subject_id, class_id }) {
         } catch (error) {
             console.log(error);
         }
+        router.visit("/admin/subject-list/" + class_id);
     };
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Edit Preview" />
+            <Head title="Edit Subject" />
             <form
                 className="bg-white p-4 shadow-md rounded-md w-full md:w-1/2 mx-auto mt-8"
                 onSubmit={handleSubmit}
@@ -131,7 +132,10 @@ export default function SubjectPreview({ auth, subject_id, class_id }) {
                 <h1></h1>
 
                 <div className="flex justify-center flex-wrap gap-2">
-                    <Link className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">
+                    <Link
+                        href={route("adminSubjectPreview", class_id)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                    >
                         Back
                     </Link>
                     <button

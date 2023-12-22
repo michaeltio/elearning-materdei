@@ -1,10 +1,12 @@
 import Abstract from "/public/Assets/abstract.png";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import MeetingCard from "@/Components/MeetingCard/MeetingCard";
+import { Head } from "@inertiajs/react";
 
 export default function Subject({ auth, subjectData }) {
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title="Subject" />
             <div className="p-6">
                 <p className="font-bold text-sm text-slate-400 cursor-pointer">
                     Subject / {subjectData.subjectName}

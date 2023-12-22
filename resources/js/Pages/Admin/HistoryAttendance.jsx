@@ -1,9 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import AttendanceCard from "@/Components/AttendanceCard/AttendanceCard";
+import { Head } from "@inertiajs/react";
 
 export default function HistoryAttendance({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title="Attendance" />
             <h1 className="text-center mt-8 text-xl mb-4">
                 History Attendance
             </h1>
